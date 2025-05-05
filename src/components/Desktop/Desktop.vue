@@ -35,7 +35,8 @@
       <BottomBar v-if="true"/>
       <SideBar/>
     </div>
-    <div id="live2d-widget" class="live2d-container"></div>
+    // fule
+    //  <div id="live2d-widget" class="live2d-container"></div>       
   </div>
   
 </template>
@@ -43,7 +44,7 @@
 
 
 <script>
-import { loadOml2d } from 'oh-my-live2d';
+// import { loadOml2d } from 'oh-my-live2d';
 import BottomBar from './BottomBar.vue'
 import DesktopFileArray from './DesktopFileArray.vue'
 import SideBar from './SideBar.vue'
@@ -96,23 +97,23 @@ export default {
   },
   mounted(){
        // 全局 OML2D 来自 public/index.html 中的 CDN 脚本
-      loadOml2d({
-      models: [
-        {
-          parentElement: '#live2d-widget', 
-          path: 'https://model.hacxy.cn/HK416-1-normal/model.json' ,
-          position: [-30, 150],
-          scale: 0.05,
-          stageStyle: { height: 450 }
-        }
-      ],
-      modelId: 0,
-      onLoad(model) {
-        console.log('模型已加载：', model);  // 调试用
-      }
+    //   loadOml2d({
+    //   models: [
+    //     {
+    //       parentElement: '#live2d-widget', 
+    //       path: 'https://model.hacxy.cn/HK416-1-normal/model.json' ,
+    //       position: [-30, 150],
+    //       scale: 0.05,
+    //       stageStyle: { height: 450 }
+    //     }
+    //   ],
+    //   modelId: 0,
+    //   onLoad(model) {
+    //     console.log('模型已加载：', model);  // 调试用
+    //   }
        
-    });
-    console.log(document.querySelector('#live2d-widget'));
+    // });
+    // console.log(document.querySelector('#live2d-widget'));
 
   },
   watch:{
@@ -237,7 +238,7 @@ export default {
 
 <style scoped>
 
-
+/*
 .live2d-container {
   position: fixed;
   left: 20px;
@@ -248,7 +249,7 @@ export default {
   pointer-events: none;
   background: rgba(0,0,0,0.1);
 }
-
+*/
 
 </style>
 
