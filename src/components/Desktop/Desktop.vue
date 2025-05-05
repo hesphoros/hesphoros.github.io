@@ -100,8 +100,8 @@ export default {
         {
           parentElement: '#live2d-widget', 
           path: 'https://model.hacxy.cn/HK416-1-normal/model.json' ,
-          position: [0, 18],
-          scale: 0.08,
+          position: [-30, 150],
+          scale: 0.05,
           stageStyle: { height: 450 }
         }
       ],

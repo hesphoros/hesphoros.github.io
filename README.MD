@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/GoodManWEN/GoodManWEN.github.io/main/misc/figure.png)
+![](https://raw.githubusercontent.com/hesphoros/hesphoros.github.io/main/misc/figure.png)
 
 # About hesphoros.github.io
 
