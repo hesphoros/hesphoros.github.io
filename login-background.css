@@ -1,0 +1,65 @@
+
+.glass-background {                           
+    background-image: linear-gradient(to bottom, #A3A29E 0%, #B1B0AC 27%, #BCBBB7 49%, #E5E4E0 76%, #F3F2F0 100%);
+   /*backdrop-filter: blur(1.5px);                  背后内容模糊 5px */            
+   /*-webkit-backdrop-filter: blur(5px);          Safari 兼容 */                   
+   border: 1px solid rgba(255,255,255,0.2);    /* 可选：半透明白边框 */            
+   box-shadow: 0 2px 15px rgba(0,0,0,0.1);      /* 可选：轻微阴影 */               
+   border-radius: 1rem;                        /* 圆角 */                       
+  
+  }
+  
+
+
+.glass-background {                           
+    background: #C4C4C4;
+  background-image: radial-gradient(50% 100%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%),
+  linear-gradient(to left, rgba(255,255,255,0.35) 0%, #929292 99%);
+  background-blend-mode: normal,multiply;
+   /*backdrop-filter: blur(1.5px);                  背后内容模糊 5px */            
+   /*-webkit-backdrop-filter: blur(5px);          Safari 兼容 */                   
+   border: 1px solid rgba(255,255,255,0.2);    /* 可选：半透明白边框 */            
+   box-shadow: 0 2px 15px rgba(0,0,0,0.1);      /* 可选：轻微阴影 */               
+   border-radius: 1rem;                        /* 圆角 */                       
+  
+  }
+
+/* 1-The Bridge: */
+.theBridge {
+    background:
+        linear-gradient(227deg, #EBEBEB 0%, #C5C6C8 100%),
+        linear-gradient(155deg, rgba(255,255,255,0.50) 5%, rgba(0,0,0,0.50) 100%);
+    background-blend-mode: multiply;
+  }
+
+
+
+.wolverine {
+    background:
+      linear-gradient(90deg, #BDBFBA 4%, #5A5C5B 98%),
+      linear-gradient(74deg, rgba(255,255,255,0.50) 54%, rgba(0,0,0,0.50) 100%);
+    background-blend-mode: multiply;
+  }
+
+/* silverLake 5 */
+background: #CCCCCC;
+background-image: linear-gradient(-180deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%);
+
+/* //icarus 6 */
+/* 34-Icarus: */
+.icarus {
+  background: #A2A2A2;
+  background-image: radial-gradient(at 50% 90%, #B8B4B3 0%, #3B3A38 100%);
+  background-blend-mode: normal,multiply;
+  }
+
+/* //7 */
+/* 49-Comet: */
+.comet {
+  background-color: #646770;
+  background-image: 
+      linear-gradient(0deg, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 100%),
+      radial-gradient(at 50% 87%, rgba(255,255,255,0.30) 0%, rgba(0,0,0,0.30) 100%);
+  
+  background-blend-mode: multiply,normal;
+}

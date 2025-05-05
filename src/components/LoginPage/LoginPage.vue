@@ -1,5 +1,6 @@
 <template>
-  <div class="tw-w-screen tw-h-screen main-background tw-select-none tw-overflow-hidden">
+  <div class="tw-w-screen tw-h-screen glass-background tw-select-none tw-overflow-hidden">
+     <!-- 省略顶部键盘 & 背景部分 -->
     <div ref="background_image" class="tw-absolute tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-center tw-items-center" v-if="show_keyboard">
       <div style="height:60vh"></div>
       <KeyBoard class="tw-z-20" @vkey_pressed="vkey_pressed"/>
@@ -7,21 +8,21 @@
     <div ref="content" class="tw-flex tw-flex-col tw-w-full tw-h-full">
       <div ref="background_image" class="tw-absolute tw-w-full tw-h-full tw-flex tw-flex-row tw-justify-center tw-items-center">
           <div class="tw-w-140"></div>
-          <img src="../../assets/images/deepin_3.png" alt="" class="tw-w-160" style="opacity:.03;min-width:600px" @load="bgloaded">
+          <img src="../../assets/images/background.png" alt="" class="tw-w-160" style="opacity:.03;min-width:600px" @load="bgloaded">
       </div>
       <div ref="header" class="tw-w-full tw-h-32 tw-flex-none tw-flex tw-flex-col tw-items-center tw-justify-center  tw-z-10">
         <div class="tw-text-4xl tw-tracking-wider tw-light tw-font-sans">{{PrefixZero(date_hour,2)}}:{{PrefixZero(date_minute,2)}}</div>
         <div class="tw-mt-1.5 tw-text-sm">{{date_year}}/{{date_month}}/{{date_date}} {{date_weekday_display}}</div>
       </div>
       <div ref="middle" class="tw-w-full tw-h-20 tw-flex-grow tw-flex  tw-flex-col tw-justify-center tw-items-center  tw-z-10" style="min-height:300px">
-        <div class="tw-w-72 tw-h-40 tw-rounded-xl tw-flex tw-flex-col tw-flex-nowrap" style="background-color:rgba(81,90,156)" v-if="show_middle">
+        <div class="tw-w-72 tw-h-40 tw-rounded-xl tw-flex tw-flex-col tw-flex-nowrap" style="background-color:rgba(255,255,255,0.2)" v-if="show_middle">
           <div class="tw-h-10 tw-flex 
           tw-justify-center tw-items-end ">
             <div class="tw-h-full " style="width:31%">
               <div class="ratio-container">
                 <div class="ratio-content tw-rounded-lg 
                 tw-bg-center
-                tw-bg-cover" :style="{ backgroundImage: 'url(' + require('@/assets/images/avatar.jpg') + ')' }">
+                tw-bg-cover" :style="{ backgroundImage: 'url(' + require('@/assets/images/head.jpg') + ')' }">
                 </div>
               </div>
             </div>
@@ -42,13 +43,14 @@
           <RestartButton :typename="'restart'" @click.native="restart_clicked"/>
           <RestartButton :typename="'sleep'" @click.native="halt_clicked"/>
         </div>
+        
       </div>
-      <div ref="footer" class="tw-w-full tw-h-32 tw-flex-none tw-flex  tw-z-10 tw-flex-wrap">
+      <div ref="footer" class="tw-w-full tw-h-48 tw-flex-none tw-flex  tw-z-10 tw-flex-wrap ">
         <div class="tw-w-76 tw-h-full flex-none tw-flex tw-justify-center tw-items-center" style="min-width:300px">
-          <img src="../../assets/images/deepin_text_1.png" alt="" class="tw-w-32">
+          <img src="../../assets/images/zack-modified.png" alt="" class="tw-w-auto filter blur-sm">
           <div class="flex-none tw-flex tw-flex-col-reverse tw-pl-3">
             <div class="tw-h-3"></div>
-            <div class="tw-absolute tw-text-gray-400">20.2 Community Edition</div></div>
+            <div class="tw-absolute tw-text-gray-400">Hesphoros OS</div></div>
         </div>
         <div class="tw-h-full tw-flex-grow"></div>
         <div class="tw-h-full flex-none tw-w-76 tw-flex tw-justify-center tw-items-center tw-pr-2" style="min-width:300px">
@@ -59,6 +61,7 @@
             <v-icon class="tw-text-gray-100 ">mdi-power</v-icon>
           </button>
         </div>
+      
       </div>
     </div>
     
@@ -90,9 +93,9 @@ export default {
       date_date:1,
       date_weekday:0,
       // user_name:"Observer",
-      user_name:"Guest",
-      password:"12345678",
-      password_answer:"12345678",
+      user_name:"hesphoros",
+      password:"password",
+      password_answer:"password",
       relay:false,
       show_loading_bar:false,
       button_shaking:false,
@@ -261,10 +264,21 @@ export default {
 </script>
 
 <style scoped>
-.main-background{
-  background-image: linear-gradient(to bottom right, rgba(37,18,108), rgba(17,16,118));
-  color:white
+
+.glass-background {                           
+ 
+  background: #CCCCCC;
+  background-image: linear-gradient(-180deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%);
+ /* backdrop-filter: blur(1.5px);                  背后内容模糊 5px             */
+ /* -webkit-backdrop-filter: blur(5px);          Safari 兼容                    */
+ border: 1px solid rgba(255,255,255,0.2);    /* 可选：半透明白边框 */            
+ box-shadow: 0 2px 15px rgba(0,0,0,0.1);      /* 可选：轻微阴影 */               
+ border-radius: 1rem;                        /* 圆角 */                       
+
 }
+
+
+
 
 ::-webkit-input-placeholder {
   text-align: center;
@@ -305,7 +319,9 @@ export default {
 .process-animation {
   background: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f7f8), color-stop(0.5,#b9b9bb), to(#ebeef0));
   -webkit-border-radius: 10px;
+  border-radius: 10px;
   -webkit-transition: width 0.6s ease-in-out;
+  transition: width 0.6s ease-in-out;
   opacity:0.14
 }
 </style>
