@@ -3,7 +3,7 @@
     <template v-slot:header>
       <div class="tw-flex tw-items-center tw-select-none" style="pointer-events:none;"> 
         <img src="../../assets/images/icons/settings.png" alt="" style="pointer-events:auto;" class=" tw-w-7 tw-h-7 tw-ml-4">
-        <div class=" tw-ml-4 tw-font-bold tw-tracking-wider" style="pointer-events:auto;"> About WEN </div>
+        <div class=" tw-ml-4 tw-font-bold tw-tracking-wider" style="pointer-events:auto;"> About Hesphoros </div>
       </div>
     </template>
     <template v-slot:content>
@@ -32,21 +32,30 @@
               <div class=" tw-w-full tw-h-full" v-if="selected_tag === 'Profile'">
                 <div ref="overall_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col" style="text-align:center" v-if="selected_tag_2 ==='About Me'">
                   <div class=" tw-w-20 tw-h-20 tw-rounded-full tw-overflow-hidden tw-mt-16">
-                    <img src="../../assets/images/goodmanwen.png" alt="" class="tw-bg-red-500">
+                    <img src="../../assets/images/head2.png" alt="" class="tw-bg-red-500">
                   </div>
-                  <div class="tw-mt-3 tw-text-gray-400">GoodManWEN</div>
-                  <div class="tw-text-xl tw-mt-2 tw-tracking-wide"> Hi👋, this is WEN, your solution provider.</div>
-                  <div class="tw-text-lg tw-mt-2 tw-tracking-wide"> As majored in 📊 Big Data & High Performance Computing, I am also interested in, and got an exellent ability in web developing. </div>
+                  <div class="tw-mt-3 tw-text-gray-400">hesphoros</div>
+                  <div class="tw-text-xl tw-mt-2 tw-tracking-wide"> Hi👋, this is hesphoros</div>
+                  <div class="tw-text-lg tw-mt-2 tw-tracking-wide tw-text-left">
+                    🎓 A high school student<br>
+                    💻 Passionate about open-source projects.<br>                    
+                    ⚙️ Skilled in C++, networking, Qt, Server, Python....<br>                  
+                    🤝 Strong team player with real-world dev experience.<br>
+                    🚀 Aspiring to become a senior systems architect.<br>
+                    🌱 Currently learning about AI and machine learning.<br>
+                    💬 Open to collaboration and knowledge sharing.<br>
+                  </div>
+
                 </div>
                 <div ref="github_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col tw-justify-center" style="text-align:center" v-if="selected_tag_2 ==='Github Stats'">
-                  <img src="https://github-readme-stats.vercel.app/api?username=GoodManWEN&show_icons=true&line_height=24" alt="" class="tw-w-140 tw-h-40">
-                  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=goodmanwen" alt="" class="tw-mt-6  tw-w-120 tw-h-72">
+                  <img src="https://github-readme-stats.vercel.app/api?username=hesphoros&show_icons=true&line_height=24" alt="" class="tw-w-140 tw-h-40">
+                  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=hesphoros" alt="" class="tw-mt-6  tw-w-120 tw-h-72">
                 </div>
                 <div ref="github_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col" style="text-align:center" v-if="selected_tag_2 ==='CodeWars'">
                   <div class=" tw-w-20 tw-h-20 tw-rounded-full tw-bg-red-50 tw-overflow-hidden tw-mt-16">
-                    <img src="../../assets/images/goodmanwen.png" alt="" class="tw-bg-red-500">
+                    <img src="../../assets/images/head2.png" alt="" class="tw-bg-red-500">
                   </div>
-                  <img src="https://www.codewars.com/users/GoodManWEN/badges/large" alt="" class="tw-mt-10">
+                  <img src="https://www.codewars.com/users/hesphoros/badges/large" alt="" class="tw-mt-10">
                 </div>
               </div>
               <div class="tw-w-full tw-h-full" v-if="selected_tag === 'Skills'">
