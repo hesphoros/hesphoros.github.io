@@ -5,7 +5,8 @@
         <img src="../../assets/images/desktop_2.jpg" alt="" class="tw-absolute tw-h-full tw-object-cover" @load="bgloaded"/>
       </div>
     </div>
-    <div ref="frontground" class="tw-absolute tw-w-full tw-h-full tw-z-10 tw-overflow-hidden" style="top:0;left:0;pointer-events:none">
+    <!-- 找到 .frontground 容器及其子窗口 wrapper，添加 Tailwind 类 tw-pointer-events-auto 或行内样式 pointer-events: auto： -->
+    <div ref="frontground" class="tw-absolute tw-w-full tw-h-full tw-z-10 tw-overflow-hidden tw-pointer-events-auto" style="top:0;left:0;pointer-events:none">
       
       <WindowMusic v-if="false"/>
       <div v-for="item in window_list" :key="item.uuid"> 
@@ -244,8 +245,8 @@ export default {
   width: 180px;
   height: 280px;
   z-index: 1000;
-  pointer-events: auto;
-   /* background: rgba(0,0,0,0.1);*/ 
+  pointer-events: none;
+  background: rgba(0,0,0,0.1);
 }
 
 
