@@ -69,7 +69,7 @@ root = os.path.abspath('./blog')
 copy_target = os.path.abspath('public')
 
 # clean
-protect_file_list = ('faviiconhes.ico', 'index.html', 'musics.json', 'musiccovers')
+protect_file_list = ('ICON.ico', 'index.html', 'musics.json', 'musiccovers')
 for files in os.walk(copy_target):
     files = files[2]; break
 

@@ -34,6 +34,9 @@ Music player is basic on
 vue-aplayer
 ```
 This project is inspired by:
+- [https://evankarageorgos.github.io/hue/grid.html](https://evankarageorgos.github.io/hue/grid.html)
+- [https://github.com/puruvj/macos-web](https://github.com/puruvj/macos-web)
+- [https://github.com/evankarageorgos/hue](https://github.com/evankarageorgos/hue)
 - [https://github.com/xuanli199/xuanli199.github.io](https://github.com/xuanli199/xuanli199.github.io)
 - [https://github.com/oh-my-live2d/oh-my-live2d](https://github.com/oh-my-live2d/oh-my-live2d)
 - [https://github.com/GoodManWEN/GoodManWEN.github.io](https://github.com/GoodManWEN/GoodManWEN.github.io)

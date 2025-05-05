@@ -3,6 +3,7 @@
     <Interlude/>
     <router-view v-wechat-title="$route.meta.title" />
   </v-app>
+  
 </template>
 
 <script>

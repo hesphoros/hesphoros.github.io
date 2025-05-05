@@ -235,6 +235,7 @@ export default {
 </script>
 
 <style scoped>
+
 .live2d-container {
   position: fixed;
   left: 20px;
@@ -245,5 +246,6 @@ export default {
   pointer-events: none;
    /* background: rgba(0,0,0,0.1); 背景测试 */
 }
+
 </style>
 
