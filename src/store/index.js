@@ -245,13 +245,19 @@ const store = new Vuex.Store({
         }
       }
     },
-    show_context_menu(state){
-      this.commit('refresh_window_focus', {uuid:"ContextMenu"})
-      let e = e || window.event || e.which;
-      state.context_menu_x = e.clientX;
-      state.context_menu_y = e.clientY;
-      state.context_menu_show=true
+    show_context_menu(state,event){
+      if (!event) {
+        console.error('Event object is missing');
+        return;
+      }
+      state.context_menu_x = event.clientX;
+      state.context_menu_y = event.clientY;
+      state.context_menu_show = true;
+    
+      // 刷新焦点
+      this.commit('refresh_window_focus', { uuid: "ContextMenu" });
     },
+
     show_context_menu_bottom_bar(state, payload){
       this.commit('refresh_window_focus', {uuid:"ContextMenuBottomBar"})
       let e = e || window.event || e.which;

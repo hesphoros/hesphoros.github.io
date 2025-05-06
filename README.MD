@@ -44,3 +44,5 @@ This project is inspired by:
 - [https://codepen.io/Krishna1947/pen/KKgZgLd](https://codepen.io/Krishna1947/pen/KKgZgLd)
 - [https://github.com/puruvj/macos-web](https://github.com/puruvj/macos-web)
 
+Resourse from:
+[https://macosicons.com/#/](https://macosicons.com/#/)
