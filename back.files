@@ -1,0 +1,37 @@
+/*
+.live2d-container {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  width: 180px;
+  height: 280px;
+  z-index: 1000;
+  pointer-events: auto;
+  background: rgba(0,0,0,0.1);
+}
+*/
+
+
+ <!-- <div id="live2d-widget" class="live2d-container"></div> -->
+
+
+<script src="https://unpkg.com/oh-my-live2d@latest">
+
+   //    // 全局 OML2D 来自 public/index.html 中的 CDN 脚本
+    //   loadOml2d({
+    //   models: [
+    //     {
+    //       parentElement: '#live2d-widget', 
+    //       path: 'https://model.hacxy.cn/HK416-1-normal/model.json' ,
+    //       position: [-30, 150],
+    //       scale: 0.05,
+    //       stageStyle: { height: 450 }
+    //     }
+    //   ],
+    //   modelId: 0,
+    //   onLoad(model) {
+    //     console.log('模型已加载：', model);  // 调试用
+    //   }
+
+    // });
+    // console.log(document.querySelector('#live2d-widget'));
