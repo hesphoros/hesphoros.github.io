@@ -11,12 +11,14 @@
       <WindowSider :mode="1" v-if="false" />
       <div class="tw-flex-grow tw-flex tw-flex-col tw-justify-center tw-items-center tw-flex-nowrap tw-h-full">
         <WindowSider :mode="0" v-if="false" />
-        <div class="tw-w-full tw-h-12  tw-select-none" :style="{ 'background-color': blacktheme ? '#282828' : '#fcfcfc' }"
+        <div class="tw-w-full tw-h-12  tw-select-none"
+          :style="{ 'background-color': blacktheme ? '#282828' : '#fcfcfc' }"
           :class="{ 'tw-rounded-t-xl': !full_windowed }">
           <div class="tw-w-full tw-h-24 tw-absolute tw-overflow-hidden "
             style="left:-0px;pointer-events:none;opacity:.5" :class="{ 'tw-rounded-xl': !full_windowed }">
             <div class="tw-w-full tw-h-12 tw-absolute" style="pointer-events:none;"
-              :style="{ 'box-shadow': blacktheme ? '0 0px 24px rgba(33,33,33,.8)' : '0 0px 24px rgba(212,212,212,.8)' }"></div>
+              :style="{ 'box-shadow': blacktheme ? '0 0px 24px rgba(33,33,33,.8)' : '0 0px 24px rgba(212,212,212,.8)' }">
+            </div>
           </div>
           <WindowHeaderCursor @mousedown.native="move_clicked" />
           <div class="tw-w-full tw-h-12 cursor-move tw-absolute" v-if="show_cursor_move"
@@ -162,163 +164,160 @@ export default {
       }
       return offset;
     },
-    bottom_resize() {
+    bottom_resize(event) {
       if (this.full_windowed || this.fixedsize) {
         return;
       }
-      this.$emit("resize_start")
+      this.$emit("resize_start");
       let orn_mousedown = document.onmousedown;
-      let e = e || window.event || e.which;
-      let downY = e.clientY;
+      let downY = event.clientY; // 使用事件对象
       let min = this.$refs.window_mainbody.style.top;
-      min = parseFloat(min.substr(0, min.length - 2))
+      min = parseFloat(min.substr(0, min.length - 2));
       min = min + 600 - downY;
       let max = this.fullHeight - downY;
-      let orn_height = this.$refs.window_mainbody.style.height
-      orn_height = parseFloat(orn_height.substr(0, orn_height.length - 2))
-      let mouseMoveHandler = () => {
-        let e = e || window.event || e.which;
-        let moveY = e.clientY;
+      let orn_height = this.$refs.window_mainbody.style.height;
+      orn_height = parseFloat(orn_height.substr(0, orn_height.length - 2));
+      let mouseMoveHandler = (moveEvent) => {
+        let moveY = moveEvent.clientY; // 使用事件对象
         let offsetY = this.getOffset(moveY - downY, min, max);
         this.$refs.window_mainbody.style.height = (offsetY + orn_height) + 'px';
-        this.$emit("height_changed", offsetY + orn_height)
-      }
+        this.$emit("height_changed", offsetY + orn_height);
+      };
       let mouseUpHandler = () => {
         document.onmousemove = null;
         document.onmouseup = null;
         document.onmousedown = orn_mousedown;
-        this.$emit("resize_end")
-      }
+        this.$emit("resize_end");
+      };
       document.onmousemove = mouseMoveHandler;
       document.onmouseup = mouseUpHandler;
       document.onmousedown = () => { };
     },
-    right_resize() {
+
+    right_resize(event) {
       if (this.full_windowed || this.fixedsize) {
         return;
       }
-      this.$emit("resize_start")
+      this.$emit("resize_start");
       let orn_mousedown = document.onmousedown;
-      let e = e || window.event || e.which;
-      let downX = e.clientX;
+      let downX = event.clientX; // 使用事件对象
       let min = this.$refs.window_mainbody.style.left;
-      min = parseFloat(min.substr(0, min.length - 2))
+      min = parseFloat(min.substr(0, min.length - 2));
       min = min + 680 - downX;
       let max = this.fullWidth - downX;
-      let orn_width = this.$refs.window_mainbody.style.width
-      orn_width = parseFloat(orn_width.substr(0, orn_width.length - 2))
-      let mouseMoveHandler = () => {
-        let e = e || window.event || e.which;
-        let moveX = e.clientX;
+      let orn_width = this.$refs.window_mainbody.style.width;
+      orn_width = parseFloat(orn_width.substr(0, orn_width.length - 2));
+      let mouseMoveHandler = (moveEvent) => {
+        let moveX = moveEvent.clientX; // 使用事件对象
         let offsetX = this.getOffset(moveX - downX, min, max);
         this.$refs.window_mainbody.style.width = (offsetX + orn_width) + 'px';
-        this.$emit("width_changed", offsetX + orn_width)
-      }
+        this.$emit("width_changed", offsetX + orn_width);
+      };
       let mouseUpHandler = () => {
         document.onmousemove = null;
         document.onmouseup = null;
         document.onmousedown = orn_mousedown;
-        this.$emit("resize_end")
-      }
+        this.$emit("resize_end");
+      };
       document.onmousemove = mouseMoveHandler;
       document.onmouseup = mouseUpHandler;
       document.onmousedown = () => { };
     },
-    bottom_right_resize() {
+
+    bottom_right_resize(event) {
       if (this.full_windowed || this.fixedsize) {
         return;
       }
-      this.$emit("resize_start")
+      this.$emit("resize_start");
       let orn_mousedown = document.onmousedown;
-      let e = e || window.event || e.which;
-      let downY = e.clientY;
-      let downX = e.clientX;
+      let downY = event.clientY; // 使用事件对象
+      let downX = event.clientX; // 使用事件对象
       let minX = this.$refs.window_mainbody.style.left;
-      minX = parseFloat(minX.substr(0, minX.length - 2))
+      minX = parseFloat(minX.substr(0, minX.length - 2));
       minX = minX + 680 - downX;
       let minY = this.$refs.window_mainbody.style.top;
-      minY = parseFloat(minY.substr(0, minY.length - 2))
+      minY = parseFloat(minY.substr(0, minY.length - 2));
       minY = minY + 600 - downY;
       let maxX = this.fullWidth - downX;
       let maxY = this.fullHeight - downY;
-      let orn_width = this.$refs.window_mainbody.style.width
-      orn_width = parseFloat(orn_width.substr(0, orn_width.length - 2))
-      let orn_height = this.$refs.window_mainbody.style.height
-      orn_height = parseFloat(orn_height.substr(0, orn_height.length - 2))
-      let mouseMoveHandler = () => {
-        let e = e || window.event || e.which;
-        let moveX = e.clientX;
-        let moveY = e.clientY;
+      let orn_width = this.$refs.window_mainbody.style.width;
+      orn_width = parseFloat(orn_width.substr(0, orn_width.length - 2));
+      let orn_height = this.$refs.window_mainbody.style.height;
+      orn_height = parseFloat(orn_height.substr(0, orn_height.length - 2));
+      let mouseMoveHandler = (moveEvent) => {
+        let moveX = moveEvent.clientX; // 使用事件对象
+        let moveY = moveEvent.clientY; // 使用事件对象
         let offsetX = this.getOffset(moveX - downX, minX, maxX);
         let offsetY = this.getOffset(moveY - downY, minY, maxY);
         this.$refs.window_mainbody.style.width = (offsetX + orn_width) + 'px';
         this.$refs.window_mainbody.style.height = (offsetY + orn_height) + 'px';
-        this.$emit("height_changed", offsetY + orn_height)
-        this.$emit("width_changed", offsetX + orn_width)
-      }
+        this.$emit("height_changed", offsetY + orn_height);
+        this.$emit("width_changed", offsetX + orn_width);
+      };
       let mouseUpHandler = () => {
         document.onmousemove = null;
         document.onmouseup = null;
         document.onmousedown = orn_mousedown;
-        this.$emit("resize_end")
+        this.$emit("resize_end");
+      };
+      document.onmousemove = mouseMoveHandler;
+      document.onmouseup = mouseUpHandler;
+      document.onmousedown = () => {};
+    },
+
+    move_clicked(e) {
+      this.$store.commit('close_side_bar');
+      this.$emit("resize_start");
+      this.refocus();
+
+      if (this.full_windowed) {
+        this.$emit("resize_end");
+        return;
       }
+
+      const orn_mousedown = document.onmousedown;
+      this.show_cursor_move = true;
+
+      const downY = e.clientY;
+      const downX = e.clientX;
+      const minX = -e.clientX;
+      const minY = -e.clientY;
+      const maxX = this.fullWidth;
+      const maxY = this.fullHeight;
+
+      let ornX = this.$refs.window_mainbody.style.left;
+      ornX = parseFloat(ornX.slice(0, -2));
+      let ornY = this.$refs.window_mainbody.style.top;
+      ornY = parseFloat(ornY.slice(0, -2));
+
+      const mouseMoveHandler = (moveEvent) => {
+        const moveX = moveEvent.clientX;
+        const moveY = moveEvent.clientY;
+        const offsetX = this.getOffset(moveX - downX, minX, maxX);
+        const offsetY = this.getOffset(moveY - downY, minY, maxY);
+        this.$refs.window_mainbody.style.left = offsetX + ornX + 'px';
+        this.$refs.window_mainbody.style.top = offsetY + ornY + 'px';
+      };
+
+      const mouseUpHandler = () => {
+        this.show_cursor_move = false;
+        document.onmousemove = null;
+        document.onmouseup = null;
+        document.onmousedown = orn_mousedown;
+
+        // 保存最终位置到响应式数据
+        const finalLeft = parseFloat(this.$refs.window_mainbody.style.left);
+        const finalTop = parseFloat(this.$refs.window_mainbody.style.top);
+        this.default_left = finalLeft;
+        this.default_top = finalTop;
+
+        this.$emit("resize_end");
+      };
+
       document.onmousemove = mouseMoveHandler;
       document.onmouseup = mouseUpHandler;
       document.onmousedown = () => { };
     },
-     move_clicked(e) {
-    this.$store.commit('close_side_bar');
-    this.$emit("resize_start");
-    this.refocus();
-  
-    if (this.full_windowed) {
-      this.$emit("resize_end");
-      return;
-    }
-  
-    const orn_mousedown = document.onmousedown;
-    this.show_cursor_move = true;
-  
-    const downY = e.clientY;
-    const downX = e.clientX;
-    const minX = -e.clientX;
-    const minY = -e.clientY;
-    const maxX = this.fullWidth;
-    const maxY = this.fullHeight;
-  
-    let ornX = this.$refs.window_mainbody.style.left;
-    ornX = parseFloat(ornX.slice(0, -2));
-    let ornY = this.$refs.window_mainbody.style.top;
-    ornY = parseFloat(ornY.slice(0, -2));
-  
-    const mouseMoveHandler = (moveEvent) => {
-      const moveX = moveEvent.clientX;
-      const moveY = moveEvent.clientY;
-      const offsetX = this.getOffset(moveX - downX, minX, maxX);
-      const offsetY = this.getOffset(moveY - downY, minY, maxY);
-      this.$refs.window_mainbody.style.left = offsetX + ornX + 'px';
-      this.$refs.window_mainbody.style.top = offsetY + ornY + 'px';
-    };
-  
-    const mouseUpHandler = () => {
-      this.show_cursor_move = false;
-      document.onmousemove = null;
-      document.onmouseup = null;
-      document.onmousedown = orn_mousedown;
-  
-      // 保存最终位置到响应式数据
-      const finalLeft = parseFloat(this.$refs.window_mainbody.style.left);
-      const finalTop = parseFloat(this.$refs.window_mainbody.style.top);
-      this.default_left = finalLeft;
-      this.default_top = finalTop;
-  
-      this.$emit("resize_end");
-    };
-  
-    document.onmousemove = mouseMoveHandler;
-    document.onmouseup = mouseUpHandler;
-    document.onmousedown = () => {};
-  },
 
     close_clicked() {
       this.closed = true

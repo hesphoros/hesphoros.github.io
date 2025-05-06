@@ -18,6 +18,7 @@
         <WindowTerminal v-if="item.type==='terminal'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy" :zindex="item.zindex" :minimized="item.minimized"/>
       </div>
     </div>
+
     <div ref="realbackground" class="tw-absolute tw-w-full tw-h-full realbackground" style="top:0;left:0" @contextmenu.prevent="bg_mr_clicked">
       <div class="tw-absolute tw-w-full " @click="background_clicked" style="pointer-events:auto;height: calc(100% - 100px)">
         <div ref="keyboard_div" class="tw-absolute " style="z-index:1001;width:600px;height:200px;top:0px;left:0px" v-if="desktop_keyboard_show">
@@ -33,11 +34,13 @@
       </div>
       <BottomBar v-if="true"/>
       <SideBar/>
-    </div>
-  </div>
+    </div>   
+    <div id="live2d-widget" class="live2d-container"></div>
+  </div>    
 </template>
 
 <script>
+import { loadOml2d } from 'oh-my-live2d'
 import BottomBar from './BottomBar.vue'
 import DesktopFileArray from './DesktopFileArray.vue'
 import SideBar from './SideBar.vue'
@@ -88,7 +91,27 @@ export default {
       console.log("error:", err)
     })
   },
-  mounted(){
+    mounted() {
+    // 加载看板娘模型
+    
+      // 全局 OML2D 来自 public/index.html 中的 CDN 脚本
+      loadOml2d({
+      models: [
+        {
+          parentElement: '#live2d-widget', 
+          path: 'https://model.hacxy.cn/HK416-1-normal/model.json' ,
+          position: [-30, 150],
+          scale: 0.05,
+          stageStyle: { height: 450 }
+        }
+      ],
+      modelId: 0,
+      onLoad(model) {
+        console.log('模型已加载：', model);  // 调试用
+      }
+
+    });
+   
   },
   watch:{
     desktop_keyboard_show(val) {
@@ -165,8 +188,8 @@ export default {
         this.$store.commit('hide_interlude')
       }, wait_time)
     },
-    bg_mr_clicked(){
-      this.$store.commit('show_context_menu')
+    bg_mr_clicked(event){
+      this.$store.commit('show_context_menu',event)
     },
     deal_with_postfilename(){
       let target = this.$route.params.postfilename
@@ -211,5 +234,13 @@ export default {
 </script>
 
 <style scoped>
-
+.live2d-container {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  width: 180px;
+  height: 280px;
+  z-index: 1000;
+  pointer-events: none; 
+}
 </style>
