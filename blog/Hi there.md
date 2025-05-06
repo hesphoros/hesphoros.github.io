@@ -1,6 +1,6 @@
 # Hi everyone! 👋
 
-Hello, I’m **hesphoros** 👋  
+Hello, I’m hesphoros 👋  
 Welcome to my **blog system**! 🌐  
 
 > 💡 Here you’ll find insights on programming, tech experiments, and more.  
