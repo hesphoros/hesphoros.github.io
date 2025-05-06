@@ -5,7 +5,6 @@
         <img src="../../assets/images/desktop_2.jpg" alt="" class="tw-absolute tw-h-full tw-object-cover" @load="bgloaded"/>
       </div>
     </div>
-    <!-- 找到 .frontground 容器及其子窗口 wrapper，添加 Tailwind 类 tw-pointer-events-auto 或行内样式 pointer-events: auto： -->
     <div ref="frontground" class="tw-absolute tw-w-full tw-h-full tw-z-10 tw-overflow-hidden" style="top:0;left:0;pointer-events:none">
       
       <WindowMusic v-if="false"/>
@@ -35,16 +34,10 @@
       <BottomBar v-if="true"/>
       <SideBar/>
     </div>
-    // fule
-    //  <div id="live2d-widget" class="live2d-container"></div>       
   </div>
-  
 </template>
 
-
-
 <script>
-// import { loadOml2d } from 'oh-my-live2d';
 import BottomBar from './BottomBar.vue'
 import DesktopFileArray from './DesktopFileArray.vue'
 import SideBar from './SideBar.vue'
@@ -96,25 +89,6 @@ export default {
     })
   },
   mounted(){
-       // 全局 OML2D 来自 public/index.html 中的 CDN 脚本
-    //   loadOml2d({
-    //   models: [
-    //     {
-    //       parentElement: '#live2d-widget', 
-    //       path: 'https://model.hacxy.cn/HK416-1-normal/model.json' ,
-    //       position: [-30, 150],
-    //       scale: 0.05,
-    //       stageStyle: { height: 450 }
-    //     }
-    //   ],
-    //   modelId: 0,
-    //   onLoad(model) {
-    //     console.log('模型已加载：', model);  // 调试用
-    //   }
-       
-    // });
-    // console.log(document.querySelector('#live2d-widget'));
-
   },
   watch:{
     desktop_keyboard_show(val) {
@@ -238,18 +212,4 @@ export default {
 
 <style scoped>
 
-/*
-.live2d-container {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  width: 180px;
-  height: 280px;
-  z-index: 1000;
-  pointer-events: none;
-  background: rgba(0,0,0,0.1);
-}
-*/
-
 </style>
-
