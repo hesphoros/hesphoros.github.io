@@ -7,7 +7,7 @@ Welcome to my **blog system**! 🌐
 > 🔍 Feel free to explore, leave comments, and share your thoughts!  
 ---
 
-##🔥 Latest articles
+🔥 Latest articles
 
 >✍️ Weekly posts on programming tips, real coding experiences, and clean code practices.
 >🧪 Explore technology experiments, benchmarking, and behind-the-scenes insights into tools and frameworks.
@@ -24,7 +24,7 @@ The following are some techniques that I often use:
 
 ---
 
-##💬 Join the conversation
+💬 Join the conversation
 
 Let's talk about technology together! Find me:
 
@@ -34,7 +34,7 @@ Let's talk about technology together! Find me:
 
 ---
 
-##✨ Features
+✨ Features
 
 
 *🎧**BGM section ** : Carefully curated background music to enhance your reading experience
