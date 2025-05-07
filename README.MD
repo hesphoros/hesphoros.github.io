@@ -1,4 +1,4 @@
-![](misc//figure.png)
+![](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/figure.png)
 
 # About hesphoros.github.io
 
