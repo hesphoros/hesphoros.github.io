@@ -31,7 +31,9 @@ Let's talk about technology together! Find me:
 * 🐙 [making] (https://github.com/hesphoros)
 * 🐦 Twitter/X (https://twitter.com/hesphoros)
 * 💼 [the company] (https://linkedin.com/in/hesphoros)
-
+* 🔭 [Contact ] (https://qm.qq.com/q/QXjpfnUXoQ)
+* 📧 [Mail] (hesphoros@gmail.com)
+  
 ---
 
 ✨ Features
