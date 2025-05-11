@@ -210,14 +210,13 @@ int a; ///< 定义一个整型变量a
 
 
 ~~~json
-{
-     // Doxygen documentation generator set
-     "doxdocgen.c.triggerSequence": "/",   // 触发自动注释的生成
-     "doxdocgen.c.commentPrefix": " * ",     // 注释行的前缀
-     "doxdocgen.c.firstLine": "/**",         // 注释行的首行
-     "doxdocgen.c.lastLine": "*/",          // 注释行的尾行
- 
-     // Smart text snippet for factory methods/functions.
+ // ========== Doxygen Documentation Generator 设置 ==========
+    "doxdocgen.c.triggerSequence": "/",         // 触发自动注释的字符
+    "doxdocgen.c.commentPrefix": " * ",         // 注释行前缀
+    "doxdocgen.c.firstLine": "/**",             // 注释起始行
+    "doxdocgen.c.lastLine": "*/",               // 注释结束行
+
+       // Smart text snippet for factory methods/functions.
      "doxdocgen.c.factoryMethodText": "Create a {name} object",
      // Smart text snippet for getters.
      "doxdocgen.c.getterText": "Get the {name} object",
@@ -229,60 +228,55 @@ int a; ///< 定义一个整型变量a
      "doxdocgen.cpp.dtorText": "Destroy the {name} object",
      // The template of the template parameter Doxygen line(s) that are generated. If empty it won't get generated at all.
      "doxdocgen.cpp.tparamTemplate": "@tparam {param} ",
- 
-     // 文件注释：版权信息模板
-     "doxdocgen.file.copyrightTag": [
-         "@copyright Copyright (c) {year}  hesphoros",
-     ],
-    //  文件注释：自定义模块，这里我添加一个修改日志
-     "doxdocgen.file.customTag": [
-         "@par 修改日志:",
-         "<table>",
-         "<tr><th>Date       <th>Version <th>Author  <th>Description",
-         "<tr><td>{date} <td>1.0.1     <td>zhoulq     <td>内容",
-         "</table>",
-     ],
-     // 文件注释的组成及其排序
-     "doxdocgen.file.fileOrder": [
-         "file",     // @file
-         "brief",    // @brief 简介
-         "author",   // 作者
-         "version",  // 版本
-         "date",     // 日期
-         "copyright",// 版权
-         "empty",
-         "custom"    // 自定义
-     ],
-     // 下面时设置上面标签tag的具体信息
-     "doxdocgen.file.fileTemplate": "@file {name}",
-     "doxdocgen.file.versionTag": "@version 1.0.1",
-     "doxdocgen.generic.authorEmail": "hesphoros@gmail.com",
-     "doxdocgen.generic.authorName": "hesphoros",
-     "doxdocgen.generic.authorTag": "@author {author} ({email})",
-     // 日期格式与模板
-     "doxdocgen.generic.dateFormat": "YYYY-MM-DD",
-     "doxdocgen.generic.dateTemplate": "@date {date}",
-     
-     // 根据自动生成的注释模板（目前主要体现在函数注释上）
-     "doxdocgen.generic.order": [
-         "brief",
-         "tparam",
-         "param",
-         "return",
-         "retval"
-     ],
-     "doxdocgen.generic.paramTemplate": "@param{indent:8}{param}{indent:8}",
-     "doxdocgen.generic.returnTemplate": "@return {type} ",
-     "doxdocgen.generic.splitCasingSmartText": true,
- 
-     "doxdocgen.generic.includeTypeAtReturn": true,      // return 中包含类型信息
-     "doxdocgen.generic.boolReturnsTrueFalse": false,    // bool 返回值拆分成 true 和 false 两种情况
-     "doxdocgen.generic.linesToGet": 20,                  // 回车后最多向下多少行去找函数声明
-     "doxdocgen.generic.useGitUserName": false,          // {author} 是都根据 git config --get user.name 替换
-     "doxdocgen.generic.useGitUserEmail": false,
-     //declarations or definitions anymore.
 
-}
+    // 函数注释模板设置
+    "doxdocgen.generic.order": [
+        "brief",
+        "tparam",
+        "param",
+        "return"
+    ],
+    "doxdocgen.generic.customTags": [
+        "************************************************************************"
+    ],
+    
+    "doxdocgen.generic.authorTag": "",
+    "doxdocgen.generic.useGitUserName": false,
+    "doxdocgen.generic.useGitUserEmail": false,
+    "doxdocgen.generic.includeTypeAtReturn": true,  // return 中包含类型
+    "doxdocgen.generic.boolReturnsTrueFalse": false,
+    "doxdocgen.generic.linesToGet": 20,
+    "doxdocgen.generic.paramTemplate": "@param{indent:8}{param}{indent:8}",
+    "doxdocgen.generic.returnTemplate": "@return {type} ",
+    "doxdocgen.generic.splitCasingSmartText": true,
+
+ 
+    // 文件头注释保留作者与日期
+    "doxdocgen.file.fileOrder": [
+        "file",
+        "brief",
+        "author",
+        "version",
+        "date",
+        "copyright",
+        "empty",
+        "custom"
+    ],
+
+    "doxdocgen.file.fileTemplate": "@file {name}",
+    "doxdocgen.file.versionTag": "@version 1.0.1",
+    "doxdocgen.generic.authorName": "hesphoros",
+    "doxdocgen.generic.authorEmail": "hesphoros@gmail.com",
+    "doxdocgen.file.copyrightTag": [
+        "@copyright Copyright (c) {year}  hesphoros"
+    ],
+    "doxdocgen.file.customTag": [
+       "************************************************************************",
+    ],
+    "doxdocgen.generic.dateFormat": "YYYY-MM-DD",
+    "doxdocgen.generic.dateTemplate": "@date {date}",    
+ 
+    
 ~~~
 
 # vscode snippet 
@@ -340,10 +334,91 @@ F1 snippet
       "//---------------------------------------------------------------------------"
     ],
     "description": "Insert section divider comment"
+  },
+  "Section Comment Header": {
+    "prefix": "cheader",
+    "body": [
+      "/************************************************************/",
+      "/*===================== ${1:模块名称} ===========================*/",
+      "/************************************************************/"
+    ],
+    "description": "Module delimited header comments"
+  },
+  "Inline Comment Bar": {
+    "prefix": "cbar",
+    "body": [
+      "/***************  === ${1:说明文字} ===  ***********************/"
+    ],
+    "description": "Single-line header comment"
   }
 }
 
 ~~~
 
 
+
+# Better Align
+
+vscode  Better Align 插件
+
+~~~json
+ // ========== Better Comments ==========
+    "better-comments.tags": [
+        {
+            "tag": "!",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "?",
+            "color": "#3498DB",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "//",
+            "color": "#474747",
+            "strikethrough": true,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "*",
+            "color": "#98C379",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        }
+    ],
+~~~
+
+# cpplint
+
+cpplint 插件 ，不过多介绍
+
+~~~json
+"cpplint.cpplintPath": "D:\\Python\\Python310\\Scripts\\cpplint.exe",
+"cpplint.lineLength": 200,
+"cpplint.verbose": 2,
+~~~
 
