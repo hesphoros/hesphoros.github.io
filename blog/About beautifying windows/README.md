@@ -140,7 +140,7 @@ MyDockFinder是一款系统快速启动和控制查看系统功能的软件。�
 
 ## 效果图 
 
-![image-20250722151439196](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20250722151439196.png)
+![image-20250722162841441](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20250722162841441.png)
 
 支持各种效果 
 
