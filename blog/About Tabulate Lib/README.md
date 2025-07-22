@@ -1,8 +1,3 @@
-> 这是对 GitHub 官方仓库 https://github.com/p-ranav/tabulate 内容的系统整理与翻译
-   方便你快速掌握表格构建、格式化、访问和自定义样式等所有核心功能。
-
-好的！下面给你一份基于官方 `tabulate` 仓库的更加**详细、全面**的中文使用文档，涵盖所有主要接口、功能和示例，方便你深入理解和使用。
-
 ---
 
 # `tabulate` C++ 命令行表格库详细使用文档
@@ -17,19 +12,19 @@
 `tabulate` 是一个轻量级的 C++11 表格打印库，支持：
 
 - 多行多列的 ASCII 表格打印
-    
+  
 - 单元格样式（颜色、字体样式、对齐）
-    
+  
 - 行列合并（row span / col span）
-    
+  
 - 自定义边框符号
-    
+  
 - 支持中文和 Unicode
-    
+  
 - 便捷的 API 访问行、列、单元格内容
-    
+  
 - 纯头文件，依赖极少
-    
+  
 
 ---
 
@@ -167,29 +162,29 @@ table[row][col].format()
 ### 7.1 支持字体样式（`FontStyle`）
 
 - `FontStyle::bold` — 粗体
-    
+  
 - `FontStyle::italic` — 斜体
-    
+  
 - `FontStyle::underline` — 下划线
-    
+  
 - `FontStyle::crossed` — 删除线
-    
+  
 
 ### 7.2 支持颜色（`Color`）
 
 - 标准颜色：`red`, `green`, `blue`, `yellow`, `magenta`, `cyan`, `white`, `black`
-    
+  
 - 亮色版本：`bright_red`, `bright_green` 等
-    
+  
 
 ### 7.3 对齐方式（`FontAlign`）
 
 - `left` — 左对齐
-    
+  
 - `center` — 居中
-    
+  
 - `right` — 右对齐
-    
+  
 
 ---
 
