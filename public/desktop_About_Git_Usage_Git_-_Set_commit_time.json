@@ -1,0 +1,1 @@
+{"data": "```powershell\nAdd-Content test.txt \"\u63d0\u4ea4\u4e8e 2025-06-03\"\ngit add test.txt\n$env:GIT_AUTHOR_DATE=\"2025-06-03T12:00:00\"\n$env:GIT_COMMITTER_DATE=\"2025-06-03T12:00:00\"\ngit commit -m \"\u63d0\u4ea4\u4e8e 2025-06-03\"\nRemove-Item Env:GIT_AUTHOR_DATE\nRemove-Item Env:GIT_COMMITTER_DATE\ngit push origin main\n\n```"}
