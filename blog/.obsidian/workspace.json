@@ -1,0 +1,212 @@
+{
+  "main": {
+    "id": "f105ae4d960a7057",
+    "type": "split",
+    "children": [
+      {
+        "id": "ee0ab556ab33217c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0de24a9fab9f2102",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "About HMAC/HMAC.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "HMAC"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ed61394bf3506b8c",
+    "type": "split",
+    "children": [
+      {
+        "id": "f2f6c9d55825b782",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "18e2db462d0652ae",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "8f44d61ba5ead0fc",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "61bde82696d0f7cd",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9f766eaec3cc700f",
+    "type": "split",
+    "children": [
+      {
+        "id": "66e00c0911976c91",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "15336b119aeaea0a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "About Git Usage/Git workflow recommendations for large projects.md",
+                "collapseAll": true,
+                "extraContext": true,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Git workflow recommendations for large projects 的反向链接列表"
+            }
+          },
+          {
+            "id": "c8ae8a207ebd0c11",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "About Git Usage/Git workflow recommendations for large projects.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Git workflow recommendations for large projects 的出链列表"
+            }
+          },
+          {
+            "id": "54fa1527afae1c71",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "f286314f73c68a9b",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "About HMAC/HMAC.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "HMAC 的大纲"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 306.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:创建新数据库": false
+    }
+  },
+  "active": "0de24a9fab9f2102",
+  "lastOpenFiles": [
+    "Hi there.md",
+    "About HMAC/HMAC.md",
+    "About HMAC",
+    "About token/token.md",
+    "About SSL TSL/SSL.md",
+    "About token",
+    "About magic enum/readme.md",
+    "About SSL TSL",
+    "About __builtin_.md/__builtin_.md",
+    "About HeartBeat Mechanism/Heartbeat Mechanism.md",
+    "About atomic/内存序.md",
+    "About HeartBeat Mechanism",
+    "Algorithm/未命名.md",
+    "About atomic/About atomic.md",
+    "About atomic/ABA问题.md",
+    "Algorithm/1- One-dimensional prefix sum and difference.md",
+    "Algorithm/2-dimensional prefix sum and difference.md",
+    "About OpenCV + dlib/README.md",
+    "About beautifying windows/README.md",
+    "About atomic",
+    "About spdlog/README.md",
+    "About Tabulate Lib/README.md",
+    "Algorithm/0-Input and Output.md",
+    "About CMake/FetchContent.md",
+    "About Branch predictive/BranchPre.md",
+    "About CMake",
+    "About Branch predictive/CodeLayer.md",
+    "About __attribute__/__attribute__.md",
+    "About Doxygen/assets/image-20250509153015784.png",
+    "About Doxygen/assets/image-20250509152418483.png",
+    "About Doxygen/assets/image-20250509151935308.png",
+    "About Doxygen/assets/image-20250509151931040.png",
+    "About Git Usage/Git workflow for large projects (collaborative version).md",
+    "About uploader",
+    "About Git Usage/Commitizen Tutorial.md",
+    "About Git Usage/Git workflow recommendations for large projects.md",
+    "About Git Usage/Git-Quick Check of Common Branch Commands.md"
+  ]
+}
