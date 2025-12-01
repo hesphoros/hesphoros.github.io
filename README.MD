@@ -14,7 +14,9 @@ nvm use 16.20.2
 ```
 
 This website (source code here) uses these sources:
+
 ```
+
 @vue/cli 4.5.11, Blank template with ESLint
 vuetify default settings
 node-sass & sass-loader
@@ -24,6 +26,7 @@ vuex
 vue-router
 axios & vue-axios
 vue-wechat-title
+
 ```
 Markdown render is powered by 
 ```
@@ -33,7 +36,9 @@ Music player is basic on
 ```
 vue-aplayer
 ```
+
 This project is inspired by:
+
 - [https://evankarageorgos.github.io/hue/grid.html](https://evankarageorgos.github.io/hue/grid.html)
 - [https://github.com/puruvj/macos-web](https://github.com/puruvj/macos-web)
 - [https://github.com/evankarageorgos/hue](https://github.com/evankarageorgos/hue)
