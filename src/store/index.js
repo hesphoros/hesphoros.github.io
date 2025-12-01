@@ -35,7 +35,7 @@ const store = new Vuex.Store({
     display_article_num:0,
     // 壁纸相关状态
     useVideoWallpaper: true,
-    currentWallpaperIndex: 9,
+    currentWallpaperIndex: 8, // 16:9 壁纸 (共9个视频，索引0-8)
   },
   mutations: {
     open_new_window(state, payload){
