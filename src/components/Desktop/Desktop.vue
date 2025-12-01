@@ -3,8 +3,28 @@
     style="min-height:600px;min-width:800px">
     <div class="tw-w-full tw-h-full tw-relative">
       <div ref="background" class="tw-relative tw-pb-9/16 tw-h-full tw-select-none">
-        <img src="../../assets/images/desktop_2.jpg" alt="" class="tw-absolute tw-h-full tw-object-cover"
-          @load="bgloaded" />
+        <!-- 静态壁纸 (fallback 或用户选择静态时显示) -->
+        <img 
+          v-show="!useVideoWallpaper || !videoLoaded"
+          src="../../assets/images/desktop_2.jpg" 
+          alt="" 
+          class="tw-absolute tw-w-full tw-h-full tw-object-cover"
+          @load="bgloaded" 
+        />
+        <!-- 动态视频壁纸 -->
+        <video
+          v-if="useVideoWallpaper"
+          ref="videoBackground"
+          class="tw-absolute tw-w-full tw-h-full tw-object-cover"
+          :src="videoWallpaperSrc"
+          :key="currentWallpaperIndex"
+          autoplay
+          loop
+          muted
+          playsinline
+          @loadeddata="onVideoLoaded"
+          @error="onVideoError"
+        ></video>
       </div>
     </div>
     <!-- macOS 风格顶部菜单栏 -->
@@ -102,6 +122,21 @@ export default {
   data() {
     return {
       map: [],
+      // 视频壁纸相关
+      videoLoaded: false, // 视频是否已加载
+      // 可用的视频壁纸列表
+      videoWallpapers: [
+        { name: '苍穹', src: require('../../assets/videos/苍穹.mp4') },
+        { name: '海滨公园打伞的澪', src: require('../../assets/videos/海滨公园打伞的澪.mp4') },
+        { name: 'Mona', src: require('../../assets/videos/MonaWallpaperFHD.mp4') },
+        { name: 'Wallpaper 1', src: require('../../assets/videos/wallpaper.mp4') },
+        { name: 'Wallpaper 2', src: require('../../assets/videos/wallpaper2.mp4') },
+        { name: 'Wallpaper 3', src: require('../../assets/videos/wallpaper3.mp4') },
+        { name: 'Wallpaper 4', src: require('../../assets/videos/wallpaper4.mp4') },
+        { name: 'Wallpaper 5', src: require('../../assets/videos/wallpaper5.mp4') },
+        { name: '合成动画', src: require('../../assets/videos/合成 1_1.mp4') },
+        { name: '16:9', src: require('../../assets/videos/16.9.mp4') },
+      ],
     }
   },
   created() {
@@ -160,8 +195,47 @@ export default {
     context_menu_show() {
       return this.$store.state.context_menu_show
     },
+    useVideoWallpaper() {
+      return this.$store.state.useVideoWallpaper
+    },
+    currentWallpaperIndex() {
+      return this.$store.state.currentWallpaperIndex
+    },
+    videoWallpaperSrc() {
+      if (this.videoWallpapers.length > 0 && this.currentWallpaperIndex < this.videoWallpapers.length) {
+        return this.videoWallpapers[this.currentWallpaperIndex].src
+      }
+      return ''
+    },
+    currentWallpaperName() {
+      if (this.videoWallpapers.length > 0 && this.currentWallpaperIndex < this.videoWallpapers.length) {
+        return this.videoWallpapers[this.currentWallpaperIndex].name
+      }
+      return ''
+    }
   },
   methods: {
+    // 壁纸切换方法
+    nextWallpaper() {
+      this.videoLoaded = false
+      this.$store.commit('next_wallpaper', this.videoWallpapers.length)
+    },
+    prevWallpaper() {
+      this.videoLoaded = false
+      this.$store.commit('prev_wallpaper', this.videoWallpapers.length)
+    },
+    setWallpaper(index) {
+      if (index >= 0 && index < this.videoWallpapers.length) {
+        this.videoLoaded = false
+        this.$store.commit('set_wallpaper_index', index)
+      }
+    },
+    toggleVideoWallpaper() {
+      this.$store.commit('toggle_video_wallpaper')
+      if (!this.useVideoWallpaper) {
+        this.videoLoaded = false
+      }
+    },
     background_clicked() {
       this.$store.commit('close_side_bar')
       this.$store.commit('refresh_window_focus', { uuid: "" })
@@ -205,6 +279,23 @@ export default {
       document.onmousedown = () => { };
     },
     bgloaded() {
+      // 如果使用视频壁纸且视频还没加载，等视频加载完再隐藏 interlude
+      if (this.useVideoWallpaper && !this.videoLoaded) {
+        return
+      }
+      this.hideInterlude()
+    },
+    onVideoLoaded() {
+      this.videoLoaded = true
+      this.hideInterlude()
+    },
+    onVideoError(e) {
+      console.warn('视频壁纸加载失败，使用静态壁纸:', e)
+      this.$store.commit('set_video_wallpaper', false)
+      this.videoLoaded = false
+      // 静态壁纸的 bgloaded 会处理 interlude 隐藏
+    },
+    hideInterlude() {
       let ctime = (new Date()).getTime()
       let time_diff = Math.max(ctime - this.$store.state.start_load_time, 0)
       if (isNaN(time_diff) || time_diff === undefined || time_diff === null) {

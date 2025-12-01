@@ -12,24 +12,30 @@
         <div class=" tw-w-52 tw-bg-white tw-h-full tw-flex tw-flex-col tw-px-3 tw-py-2 tw-flex-none" >
           <WindowSettingIcon :tag="'Profile'" :img="'profile'" :selected_tag="selected_tag" @click.native="{selected_tag = 'Profile';selected_tag_2 = 'About Me'}"/>
           <WindowSettingIcon :tag="'Skills'" :img="'skills'" :selected_tag="selected_tag"  @click.native="{selected_tag = 'Skills';selected_tag_2 = 'Badges'}"/>
+          <WindowSettingIcon :tag="'Wallpaper'" :appIcon="'wallpapers'" :selected_tag="selected_tag"  @click.native="{selected_tag = 'Wallpaper';selected_tag_2 = 'Video'}"/>
           <WindowSettingIcon :tag="'Resume'" :img="'paint'" :selected_tag="selected_tag"  @click.native="selected_tag = 'Resume'"/>
         </div>
         <div class=" tw-flex-grow tw-h-full  tw-p-2">
           <div class="tw-w-full tw-h-full  tw-flex">
-            <div class="tw-w-48 tw-flex-none tw-rounded-xl tw-bg-white tw-p-2">
-              <div class="tw-w-full tw-h-full" v-if="selected_tag === 'Profile'">
+            <div class="tw-w-48 tw-flex-none tw-rounded-xl tw-bg-white tw-p-2 tw-overflow-hidden">
+              <div class="tw-w-full" v-show="selected_tag === 'Profile'">
                 <WindowSettingIcon :tag="'About Me'" :mdi="'beaker-question'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'About Me'"/>
                 <WindowSettingIcon :tag="'Github Stats'" :mdi="'card-account-details-star'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'Github Stats'"/>
                 <WindowSettingIcon :tag="'CodeWars'" :mdi="'pistol'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'CodeWars'"/>
               </div>
-              <div class="tw-w-full tw-h-full" v-if="selected_tag === 'Skills'">
+              <div class="tw-w-full" v-show="selected_tag === 'Skills'">
                 <WindowSettingIcon :tag="'Badges'" :mdi="'shield-half-full'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'Badges'"/>
                 <WindowSettingIcon :tag="'And Some Else'" :mdi="'card-account-details-star'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'And Some Else'"/>
               </div>
+              <div class="tw-w-full" v-show="selected_tag === 'Wallpaper'">
+                <WindowSettingIcon :tag="'Video'" :mdi="'video'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'Video'"/>
+              </div>
+              <div class="tw-w-full" v-show="selected_tag === 'Resume'">
+              </div>
             </div>
             <div class="vl"></div>
-            <div class="tw-flex-grow tw-bg-white tw-h-full">
-              <div class=" tw-w-full tw-h-full" v-if="selected_tag === 'Profile'">
+            <div class="tw-flex-grow tw-bg-white tw-h-full tw-overflow-hidden tw-relative">
+              <div class=" tw-w-full tw-h-full tw-absolute tw-inset-0" v-show="selected_tag === 'Profile'">
                 <div ref="overall_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col" style="text-align:center" v-if="selected_tag_2 ==='About Me'">
                   <div class=" tw-w-20 tw-h-20 tw-rounded-full tw-overflow-hidden tw-mt-16">
                     <img src="../../assets/images/head2.png" alt="" class="tw-bg-red-500">
@@ -58,7 +64,7 @@
                   <img src="https://www.codewars.com/users/hesphoros/badges/large" alt="" class="tw-mt-10">
                 </div>
               </div>
-              <div class="tw-w-full tw-h-full" v-if="selected_tag === 'Skills'">
+              <div class="tw-w-full tw-h-full tw-absolute tw-inset-0" v-show="selected_tag === 'Skills'">
                 <div ref="overall_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col tw-justify-center" style="text-align:center" v-if="selected_tag_2 ==='Badges'">
                   <div class="tw-text-xl tw-mt-2 tw-tracking-wide"> Frameworks </div>
                   <div class="tw-flex tw-flex-wrap tw-px-4 tw-py-2 tw-items-center">                    
@@ -114,9 +120,65 @@
                   <div class="tw-text-lg tw-mt-2 tw-tracking-wide tw-mb-10"> Thanks for watching , hope you enjoy it. </div>
                 </div> 
               </div>
-              <div class="tw-w-full tw-h-full" v-if="selected_tag === 'Resume'">
+              <div class="tw-w-full tw-h-full tw-absolute tw-inset-0" v-show="selected_tag === 'Resume'">
                 <div ref="overall_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col tw-justify-center" style="text-align:center">
                   <div class="tw-text-4xl tw-mt-2 tw-tracking-wider"> Coming Soon </div>
+                </div>
+              </div>
+              <!-- 壁纸设置页面 -->
+              <div class="tw-w-full tw-h-full tw-overflow-auto tw-absolute tw-inset-0" v-show="selected_tag === 'Wallpaper'">
+                <div class="tw-w-full tw-p-4" v-if="selected_tag_2 === 'Video'">
+                  <div class="tw-text-xl tw-font-bold tw-mb-4">视频壁纸设置</div>
+                  
+                  <!-- 开关 -->
+                  <div class="tw-flex tw-items-center tw-mb-6 tw-p-3 tw-bg-gray-50 tw-rounded-lg">
+                    <div class="tw-flex-grow">
+                      <div class="tw-font-medium">启用动态壁纸</div>
+                      <div class="tw-text-sm tw-text-gray-500">使用视频作为桌面背景</div>
+                    </div>
+                    <v-switch
+                      :input-value="useVideoWallpaper"
+                      @change="toggleVideoWallpaper"
+                      color="primary"
+                      hide-details
+                      inset
+                      class="tw-mt-0 tw-pt-0"
+                    ></v-switch>
+                  </div>
+                  
+                  <!-- 壁纸选择 -->
+                  <div class="tw-text-lg tw-font-medium tw-mb-3">选择壁纸</div>
+                  <div class="tw-grid tw-grid-cols-3 tw-gap-3">
+                    <div 
+                      v-for="(wallpaper, index) in videoWallpapers" 
+                      :key="index"
+                      @click="setWallpaper(index)"
+                      class="tw-relative tw-cursor-pointer tw-rounded-lg tw-overflow-hidden tw-border-2 tw-transition-all hover:tw-shadow-lg"
+                      :class="currentWallpaperIndex === index ? 'tw-border-blue-500 tw-shadow-md' : 'tw-border-gray-200'"
+                    >
+                      <video 
+                        :src="wallpaper.src" 
+                        class="tw-w-full tw-h-20 tw-object-cover tw-bg-gray-100"
+                        muted
+                        preload="metadata"
+                        @mouseenter="$event.target.play()"
+                        @mouseleave="$event.target.pause(); $event.target.currentTime = 0"
+                        @loadeddata="$event.target.currentTime = 1"
+                      ></video>
+                      <div class="tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-bg-black tw-bg-opacity-50 tw-text-white tw-text-xs tw-p-1 tw-text-center tw-truncate">
+                        {{ wallpaper.name }}
+                      </div>
+                      <div v-if="currentWallpaperIndex === index" class="tw-absolute tw-top-1 tw-right-1 tw-bg-blue-500 tw-rounded-full tw-p-1">
+                        <v-icon small color="white">mdi-check</v-icon>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- 当前壁纸信息 -->
+                  <div class="tw-mt-6 tw-p-3 tw-bg-gray-50 tw-rounded-lg">
+                    <div class="tw-text-sm tw-text-gray-500">当前壁纸</div>
+                    <div class="tw-font-medium">{{ currentWallpaperName }}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,6 +204,19 @@ export default {
     return {
       selected_tag:"Profile",
       selected_tag_2:"About Me",
+      // 视频壁纸列表 (与 Desktop.vue 保持一致)
+      videoWallpapers: [
+        { name: '苍穹', src: require('../../assets/videos/苍穹.mp4') },
+        { name: '海滨公园打伞的澪', src: require('../../assets/videos/海滨公园打伞的澪.mp4') },
+        { name: 'Mona', src: require('../../assets/videos/MonaWallpaperFHD.mp4') },
+        { name: 'Wallpaper 1', src: require('../../assets/videos/wallpaper.mp4') },
+        { name: 'Wallpaper 2', src: require('../../assets/videos/wallpaper2.mp4') },
+        { name: 'Wallpaper 3', src: require('../../assets/videos/wallpaper3.mp4') },
+        { name: 'Wallpaper 4', src: require('../../assets/videos/wallpaper4.mp4') },
+        { name: 'Wallpaper 5', src: require('../../assets/videos/wallpaper5.mp4') },
+        { name: '合成动画', src: require('../../assets/videos/合成 1_1.mp4') },
+        { name: '16:9', src: require('../../assets/videos/16.9.mp4') },
+      ],
     }
   },
   props:{
@@ -173,10 +248,28 @@ export default {
   watch:{
   },
   computed:{
+    useVideoWallpaper() {
+      return this.$store.state.useVideoWallpaper
+    },
+    currentWallpaperIndex() {
+      return this.$store.state.currentWallpaperIndex
+    },
+    currentWallpaperName() {
+      if (this.videoWallpapers.length > 0 && this.currentWallpaperIndex < this.videoWallpapers.length) {
+        return this.videoWallpapers[this.currentWallpaperIndex].name
+      }
+      return ''
+    }
   },
   methods:{
     mr_clicked(){
       this.$store.commit('show_context_menu')
+    },
+    toggleVideoWallpaper() {
+      this.$store.commit('toggle_video_wallpaper')
+    },
+    setWallpaper(index) {
+      this.$store.commit('set_wallpaper_index', index)
     }
   }
 }
