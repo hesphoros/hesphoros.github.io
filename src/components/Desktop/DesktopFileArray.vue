@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-w-1 tw-h-full tw-flex tw-flex-col tw-flex-wrap tw-justify-start tw-items-start tw-select-none">
-    <DesktopFileIcon v-for="(item, i) in folders" :key="i" :item_name="item.name" :item_type="item.mode" @dbclicked="dbclicked"/>
+  <div class="tw-w-full tw-h-full tw-flex tw-flex-col tw-flex-wrap tw-content-start tw-justify-start tw-items-start tw-select-none">
+    <DesktopFileIcon v-for="(item, i) in folders" :key="i" :item_name="item.name" :item_type="item.mode" :item_size="item.size" @dbclicked="dbclicked" style="pointer-events: auto"/>
   </div>
 </template>
 
@@ -32,9 +32,9 @@ export default {
       let result = []
       for (let item of this.filemap) {
         if (item.children === undefined) {
-          result.push({name:item.name,mode:1})
+          result.push({name:item.name,mode:1, size: item.size})
         } else {
-          result.push({name:item.name,mode:0})
+          result.push({name:item.name,mode:0, size: item.size})
         }
       } 
       let sortfunc = (a,b) => {
