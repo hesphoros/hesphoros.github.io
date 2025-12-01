@@ -33,6 +33,9 @@ const store = new Vuex.Store({
     context_menu_bottom_bar_display_mode:false,
     context_menu_bottom_bar_show_target:'terminal',
     display_article_num:0,
+    // 壁纸相关状态
+    useVideoWallpaper: true,
+    currentWallpaperIndex: 9,
   },
   mutations: {
     open_new_window(state, payload){
@@ -297,6 +300,22 @@ const store = new Vuex.Store({
     },
     display_article_num_changed(state, num) {
       state.display_article_num = num
+    },
+    // 壁纸相关 mutations
+    set_wallpaper_index(state, index) {
+      state.currentWallpaperIndex = index
+    },
+    next_wallpaper(state, totalCount) {
+      state.currentWallpaperIndex = (state.currentWallpaperIndex + 1) % totalCount
+    },
+    prev_wallpaper(state, totalCount) {
+      state.currentWallpaperIndex = (state.currentWallpaperIndex - 1 + totalCount) % totalCount
+    },
+    toggle_video_wallpaper(state) {
+      state.useVideoWallpaper = !state.useVideoWallpaper
+    },
+    set_video_wallpaper(state, enabled) {
+      state.useVideoWallpaper = enabled
     }
   },
 })
