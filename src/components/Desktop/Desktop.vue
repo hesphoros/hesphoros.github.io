@@ -46,7 +46,7 @@
           :mode="$store.state.context_menu_bottom_bar_display_mode"
           :target="$store.state.context_menu_bottom_bar_show_target" />
       </div>
-      <div class="tw-absolute tw-w-1" style="height: calc(100% - 20px)">
+      <div class="tw-absolute tw-w-full" style="height: calc(100% - 20px); pointer-events: none">
         <DesktopFileArray :filemap="map" />
       </div>
       <BottomBar v-if="true" />
