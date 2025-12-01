@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-absolute tw-right-0  tw-w-100 tw-p-3 tw-select-none" style="height: calc(100% - 56px);min-height:300px;" :style="{'z-index':show_sidebar_daemon?1000:0}">
+  <div class="tw-absolute tw-right-0 tw-w-100 tw-p-3 tw-select-none" style="top: 28px; height: calc(100% - 84px); min-height:300px;" :style="{'z-index':show_sidebar_daemon?1000:0}">
     <div 
     :class="{'tw-h-full':true,'tw-w-full':true,'tw-rounded-xl':true, 'animate__animated':true, 'animate__slideInRight':true,'animate__slideOutRight':!show_sidebar, 'tw-overflow-hidden':true}"
     style="backdrop-filter: blur(30px); box-shadow:0 0px 30px rgba(16,16,16,.6)" >

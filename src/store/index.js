@@ -66,6 +66,8 @@ const store = new Vuex.Store({
         obj.type="terminal"
       } else if (payload.type === 'vscode') {
         obj.type="vscode"
+      } else if (payload.type === 'calculator') {
+        obj.type="calculator"
       }
       state.window_list.push(obj)
       this.commit('refresh_window_focus', {uuid:new_uuid})

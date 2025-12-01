@@ -7,6 +7,8 @@
           @load="bgloaded" />
       </div>
     </div>
+    <!-- macOS 风格顶部菜单栏 -->
+    <TopBar />
     <div ref="frontground" class="tw-absolute tw-w-full tw-h-full tw-z-10 tw-overflow-hidden"
       style="top:0;left:0;pointer-events:none">
 
@@ -28,13 +30,15 @@
           :zindex="item.zindex" :minimized="item.minimized" />
         <WindowTerminal v-if="item.type === 'terminal'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
           :zindex="item.zindex" :minimized="item.minimized" />
+        <WindowCalculator v-if="item.type === 'calculator'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
+          :zindex="item.zindex" :minimized="item.minimized" />
       </div>
     </div>
 
     <div ref="realbackground" class="tw-absolute tw-w-full tw-h-full realbackground" style="top:0;left:0"
       @contextmenu.prevent="bg_mr_clicked">
       <div class="tw-absolute tw-w-full " @click="background_clicked"
-        style="pointer-events:auto;height: calc(100% - 100px)">
+        style="pointer-events:auto;height: calc(100% - 100px); top: 28px;">
         <div ref="keyboard_div" class="tw-absolute " style="z-index:1001;width:600px;height:200px;top:0px;left:0px"
           v-if="desktop_keyboard_show">
           <KeyBoardMoveIcon @mousedown.native="keyboard_move_down" />
@@ -46,10 +50,10 @@
           :mode="$store.state.context_menu_bottom_bar_display_mode"
           :target="$store.state.context_menu_bottom_bar_show_target" />
       </div>
-      <div class="tw-absolute tw-w-full" style="height: calc(100% - 20px); pointer-events: none">
+      <div class="tw-absolute tw-w-full" style="height: calc(100% - 20px); pointer-events: none; padding-top: 32px;">
         <DesktopFileArray :filemap="map" />
       </div>
-      <BottomBar v-if="true" />
+      <Dock />
       <SideBar />
     </div>
     <div id="live2d-widget" class="live2d-container"></div>
@@ -58,7 +62,8 @@
 
 <script>
 import { loadOml2d } from 'oh-my-live2d'
-import BottomBar from './BottomBar.vue'
+import TopBar from '../TopBar/TopBar.vue'
+import Dock from '../Dock/Dock.vue'
 import DesktopFileArray from './DesktopFileArray.vue'
 import SideBar from './SideBar.vue'
 import WindowFolder from '../WindowChildren/WindowFolder.vue'
@@ -68,6 +73,7 @@ import WindowText from '../WindowChildren/WindowText.vue'
 import WindowTerminal from '../WindowChildren/WindowTerminal.vue'
 import WindowBrowser from '../WindowChildren/WindowBrowser.vue'
 import WindowSetting from '../WindowChildren/WindowSetting.vue'
+import WindowCalculator from '../WindowChildren/WindowCalculator.vue'
 import KeyBoard from '../Keyboard/KeyBoard.vue'
 import KeyBoardMoveIcon from '../Keyboard/KeyBoardMoveIcon.vue'
 import ContextMenu from '../ContextMenu/ContextMenu.vue'
@@ -76,7 +82,8 @@ import ContextMenuBottomBar from '../ContextMenu/ContextMenuBottomBar.vue'
 export default {
   name: 'Desktop',
   components: {
-    BottomBar,
+    TopBar,
+    Dock,
     SideBar,
     WindowText,
     WindowMusic,
@@ -85,6 +92,7 @@ export default {
     WindowVSCode,
     WindowBrowser,
     WindowSetting,
+    WindowCalculator,
     KeyBoard,
     KeyBoardMoveIcon,
     WindowTerminal,

@@ -1,10 +1,10 @@
 <template>
-  <div ref="iconRef" class="tw-pt-4 tw-pb-1 tw-px-6 tw-flex tw-flex-col tw-justify-center tw-items-center tw-relative" style="height:120px;width:120px" @click="oneClick" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" :style="{zIndex: is_hover ? 50 : 'auto'}">
+  <div ref="iconRef" class="tw-pt-2 tw-pb-1 tw-px-2 tw-flex tw-flex-col tw-justify-start tw-items-center tw-relative" style="height:90px;width:80px" @click="oneClick" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" :style="{zIndex: is_hover ? 50 : 'auto'}">
 
-    <img :src="require('../../assets/images/icons/folder.png')" class=" tw-w-12" v-if="item_type==0"/>
-    <img :src="require('../../assets/images/icons/text.png')" class=" tw-w-10" v-if="item_type==1"/>
-    <div class="tw-flex  tw-justify-center tw-items-start tw-overflow-hidden" style="height:46px;width:72px">
-      <div class="tw-mt-1.5 tw-leading-4  tw-pt-1 tw-pb-0.5  tw-px-1 tw-rounded-md tw-text-sm" style="text-align:center;text-shadow:0px 1px 4px rgba(16,16,16,.9);color:#f2f2f2;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;" :class="{'tw-bg-blue-500':global_focus === uuid}">{{item_name}}</div>
+    <img :src="require('../../assets/images/icons/folder.png')" class="tw-w-11 tw-flex-shrink-0" v-if="item_type==0"/>
+    <img :src="require('../../assets/images/icons/text.png')" class="tw-w-9 tw-flex-shrink-0" v-if="item_type==1"/>
+    <div class="tw-flex tw-justify-center tw-items-start tw-overflow-visible tw-mt-1" style="width:76px">
+      <div class="tw-leading-tight tw-py-0.5 tw-px-1 tw-rounded-md" style="font-size:11px;text-align:center;text-shadow:0px 1px 3px rgba(0,0,0,.8);color:#fff;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-word;" :class="{'tw-bg-blue-500':global_focus === uuid}">{{item_name}}</div>
     </div>
   </div>
 </template>

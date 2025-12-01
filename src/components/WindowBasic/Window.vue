@@ -93,6 +93,7 @@ export default {
       backup_left: "0px",
       default_top: 60,
       default_left: 60,
+      TOPBAR_HEIGHT: 28, // TopBar 高度
     }
   },
   props: {
@@ -281,7 +282,7 @@ export default {
       const downY = e.clientY;
       const downX = e.clientX;
       const minX = -e.clientX;
-      const minY = -e.clientY;
+      const minY = this.TOPBAR_HEIGHT - e.clientY; // 限制不能拖到 TopBar 区域
       const maxX = this.fullWidth;
       const maxY = this.fullHeight;
 
@@ -307,7 +308,14 @@ export default {
 
         // 保存最终位置到响应式数据
         const finalLeft = parseFloat(this.$refs.window_mainbody.style.left);
-        const finalTop = parseFloat(this.$refs.window_mainbody.style.top);
+        let finalTop = parseFloat(this.$refs.window_mainbody.style.top);
+        
+        // 确保窗口不会停留在 TopBar 区域
+        if (finalTop < this.TOPBAR_HEIGHT) {
+          finalTop = this.TOPBAR_HEIGHT;
+          this.$refs.window_mainbody.style.top = finalTop + 'px';
+        }
+        
         this.default_left = finalLeft;
         this.default_top = finalTop;
 
@@ -335,10 +343,11 @@ export default {
         this.backup_left = this.$refs.window_mainbody.style.left
         this.backup_top = this.$refs.window_mainbody.style.top
         this.$refs.window_mainbody.style.width = this.fullWidth + 'px';
-        this.$refs.window_mainbody.style.height = (this.fullHeight - 75) + 'px'
-        this.$refs.window_mainbody.style.top = 0 + 'px'
+        // 全屏时从 TopBar 下方开始，减去 TopBar 高度和 Dock 高度
+        this.$refs.window_mainbody.style.height = (this.fullHeight - this.TOPBAR_HEIGHT - 75) + 'px'
+        this.$refs.window_mainbody.style.top = this.TOPBAR_HEIGHT + 'px'
         this.$refs.window_mainbody.style.left = 0 + 'px'
-        this.$emit("height_changed", this.fullHeight - 75)
+        this.$emit("height_changed", this.fullHeight - this.TOPBAR_HEIGHT - 75)
         this.$emit("width_changed", this.fullWidth)
       } else {
         this.full_windowed = false
