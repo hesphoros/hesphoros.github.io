@@ -205,18 +205,17 @@ export default {
       selected_tag:"Profile",
       selected_tag_2:"About Me",
       // 视频壁纸列表 (与 Desktop.vue 保持一致)
-      // 使用 public/videos/ 目录下的视频文件，以支持 GitHub Pages 部署
+      // 使用 GitHub Releases 托管视频文件
       videoWallpapers: [
-        { name: '苍穹', src: '/videos/苍穹.mp4' },
-        { name: '海滨公园打伞的澪', src: '/videos/海滨公园打伞的澪.mp4' },
-        { name: 'Mona', src: '/videos/MonaWallpaperFHD.mp4' },
-        { name: 'Wallpaper 1', src: '/videos/wallpaper.mp4' },
-        { name: 'Wallpaper 2', src: '/videos/wallpaper2.mp4' },
-        { name: 'Wallpaper 3', src: '/videos/wallpaper3.mp4' },
-        { name: 'Wallpaper 4', src: '/videos/wallpaper4.mp4' },
-        { name: 'Wallpaper 5', src: '/videos/wallpaper5.mp4' },
-        { name: '合成动画', src: '/videos/合成 1_1.mp4' },
-        { name: '16:9', src: '/videos/16.9.mp4' },
+        { name: '海滨公园打伞的澪', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/default.mp4' },
+        { name: 'Mona', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/MonaWallpaperFHD.mp4' },
+        { name: 'Wallpaper 1', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/wallpaper.mp4' },
+        { name: 'Wallpaper 2', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/wallpaper2.mp4' },
+        { name: 'Wallpaper 3', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/wallpaper3.mp4' },
+        { name: 'Wallpaper 4', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/wallpaper4.mp4' },
+        { name: 'Wallpaper 5', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/wallpaper5.mp4' },
+        { name: '合成动画', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/1_1.mp4' },
+        { name: '16:9', src: 'https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-videos/16.9.mp4' },
       ],
     }
   },
