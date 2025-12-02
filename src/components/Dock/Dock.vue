@@ -113,6 +113,16 @@
           @click="calculator_clicked"
           @contextmenu.prevent.native="mr_clicked($event, 'calculator', has_calculator)"
         />
+        <DockItem 
+          iconType="appIcon"
+          appIcon="calendar"
+          :mouseX="mouseX"
+          tooltip="Calendar"
+          :isActive="$store.state.current_focus_type === 'calendar'"
+          :isOpen="has_calendar"
+          @click="calendar_clicked"
+          @contextmenu.prevent.native="mr_clicked($event, 'calendar', has_calendar)"
+        />
         <div class="dock-divider"></div>
         <DockItem 
           icon="recycle" 
@@ -178,7 +188,8 @@ export default {
       has_settings: false,
       has_terminal: false,
       has_vscode: false,
-      has_calculator: false
+      has_calculator: false,
+      has_calendar: false
     }
   },
   created() {
@@ -197,7 +208,8 @@ export default {
         settings: false,
         terminal: false,
         vscode: false,
-        calculator: false
+        calculator: false,
+        calendar: false
       }
       let keys = Object.keys(status)
       for (let item of this.$store.state.window_list) {
@@ -298,6 +310,16 @@ export default {
         this.$store.commit('open_new_window', { type: 'calculator' })
       }
       this.$store.commit('refresh_window_focus', { type: 'calculator' })
+    },
+    calendar_clicked() {
+      if (this.has_calendar) {
+        if (this.window_type_all_hide_or_at_the_top({ type: 'calendar' })) {
+          this.$store.commit('switch_global_window_show_status', { type: 'calendar' })
+        }
+      } else {
+        this.$store.commit('open_new_window', { type: 'calendar' })
+      }
+      this.$store.commit('refresh_window_focus', { type: 'calendar' })
     },
     text_clicked() {
       if (this.window_type_all_hide_or_at_the_top({ type: 'text' })) {

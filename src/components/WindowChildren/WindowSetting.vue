@@ -21,6 +21,7 @@
               <div class="tw-w-full" v-show="selected_tag === 'Profile'">
                 <WindowSettingIcon :tag="'About Me'" :mdi="'beaker-question'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'About Me'"/>
                 <WindowSettingIcon :tag="'Github Stats'" :mdi="'card-account-details-star'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'Github Stats'"/>
+                <WindowSettingIcon :tag="'Contributions'" :mdi="'github'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'Contributions'"/>
                 <WindowSettingIcon :tag="'CodeWars'" :mdi="'pistol'" :selected_tag="selected_tag_2"  @click.native="selected_tag_2 = 'CodeWars'"/>
               </div>
               <div class="tw-w-full" v-show="selected_tag === 'Skills'">
@@ -53,10 +54,51 @@
                   </div>
 
                 </div>
-                <div ref="github_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col tw-justify-center" style="text-align:center" v-if="selected_tag_2 ==='Github Stats'">
-                  <img src="https://github-readme-stats.vercel.app/api?username=hesphoros&show_icons=true&line_height=24" alt="" class="tw-w-140 tw-h-40">
-                  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=hesphoros" alt="" class="tw-mt-6  tw-w-120 tw-h-72">
+                <div ref="github_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col tw-justify-center tw-overflow-auto tw-py-4" style="text-align:center" v-if="selected_tag_2 ==='Github Stats'">
+                  <!-- 使用自己部署的 github-readme-stats 实例 -->
+                  <img 
+                    src="https://github-readme-stats-eta-one-38.vercel.app/api?username=hesphoros&show_icons=true&theme=default&hide_border=true&count_private=true" 
+                    alt="GitHub Stats" 
+                    class="tw-max-w-full"
+                    style="max-width: 495px;"
+                  >
+                  <img 
+                    src="https://github-readme-stats-eta-one-38.vercel.app/api/top-langs/?username=hesphoros&layout=compact&hide_border=true&langs_count=8" 
+                    alt="Top Languages" 
+                    class="tw-mt-4 tw-max-w-full"
+                    style="max-width: 350px;"
+                  >
                 </div>
+                <!-- GitHub Contributions 贡献图 -->
+                <div ref="contributions_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col tw-justify-center tw-overflow-auto tw-py-4" style="text-align:center" v-if="selected_tag_2 ==='Contributions'">
+                  <div class="tw-text-xl tw-font-medium tw-mb-4">GitHub 贡献图</div>
+                  
+                  <!-- GitHub 贡献热力图 -->
+                  <img 
+                    src="https://ghchart.rshah.org/hesphoros" 
+                    alt="GitHub Contributions" 
+                    class="tw-max-w-full tw-px-4"
+                    style="max-width: 800px;"
+                  >
+                  
+                  <!-- GitHub Profile 链接 -->
+                  <a 
+                    href="https://github.com/hesphoros" 
+                    target="_blank"
+                    class="tw-mt-6 tw-px-6 tw-py-3 tw-bg-gray-800 tw-text-white tw-rounded-lg tw-no-underline hover:tw-bg-gray-700 tw-transition-colors tw-flex tw-items-center tw-gap-2"
+                    style="text-decoration: none;"
+                  >
+                    <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    访问 GitHub 主页
+                  </a>
+                  
+                  <div class="tw-mt-4 tw-text-gray-500">
+                    @hesphoros
+                  </div>
+                </div>
+                
                 <div ref="github_page" class="tw-w-full tw-h-full tw-items-center tw-flex tw-flex-col" style="text-align:center" v-if="selected_tag_2 ==='CodeWars'">
                   <div class=" tw-w-20 tw-h-20 tw-rounded-full tw-bg-red-50 tw-overflow-hidden tw-mt-16">
                     <img src="../../assets/images/head2.png" alt="" class="tw-bg-red-500">
@@ -241,11 +283,32 @@ export default {
     }
   },
   created(){
+    // 检查是否有初始选项卡设置
+    if (this.$store.state.settings_initial_tab) {
+      this.selected_tag = this.$store.state.settings_initial_tab
+    }
+    if (this.$store.state.settings_initial_tab2) {
+      this.selected_tag_2 = this.$store.state.settings_initial_tab2
+    }
+    // 清除初始选项卡设置，避免下次打开时仍然跳转
+    this.$store.commit('clear_settings_tab')
   },
   mounted(){
     
   },
   watch:{
+    // 监听初始选项卡设置变化，支持在窗口已打开时跳转
+    '$store.state.settings_initial_tab': function(newVal) {
+      if (newVal) {
+        this.selected_tag = newVal
+        // 同时检查 tab2
+        if (this.$store.state.settings_initial_tab2) {
+          this.selected_tag_2 = this.$store.state.settings_initial_tab2
+        }
+        // 清除设置
+        this.$store.commit('clear_settings_tab')
+      }
+    }
   },
   computed:{
     useVideoWallpaper() {
@@ -270,6 +333,11 @@ export default {
     },
     setWallpaper(index) {
       this.$store.commit('set_wallpaper_index', index)
+    },
+    handleImageError(e) {
+      // 图片加载失败时显示占位符
+      e.target.style.display = 'none'
+      console.warn('GitHub Stats image failed to load')
     }
   }
 }

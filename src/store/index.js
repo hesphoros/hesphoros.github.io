@@ -36,6 +36,9 @@ const store = new Vuex.Store({
     // 壁纸相关状态
     useVideoWallpaper: true,
     currentWallpaperIndex: 8, // 16:9 壁纸 (共9个视频，索引0-8)
+    // 设置窗口初始选项卡
+    settings_initial_tab: null,
+    settings_initial_tab2: null
   },
   mutations: {
     open_new_window(state, payload){
@@ -60,8 +63,8 @@ const store = new Vuex.Store({
         obj.default_width= Math.min(state.fullWidth * 0.8 , 1580)
       } else if (payload.type === 'music') {
         obj.type="music"
-        obj.default_width=400
-        obj.default_width=400
+        obj.default_width=500
+        obj.default_height=550
         obj.fixedsize=true
       } else if (payload.type === 'settings') {
         obj.type="settings"
@@ -71,6 +74,8 @@ const store = new Vuex.Store({
         obj.type="vscode"
       } else if (payload.type === 'calculator') {
         obj.type="calculator"
+      } else if (payload.type === 'calendar') {
+        obj.type="calendar"
       }
       state.window_list.push(obj)
       this.commit('refresh_window_focus', {uuid:new_uuid})
@@ -300,6 +305,15 @@ const store = new Vuex.Store({
     },
     display_article_num_changed(state, num) {
       state.display_article_num = num
+    },
+    // 设置窗口选项卡
+    set_settings_tab(state, payload) {
+      state.settings_initial_tab = payload.tab || null
+      state.settings_initial_tab2 = payload.tab2 || null
+    },
+    clear_settings_tab(state) {
+      state.settings_initial_tab = null
+      state.settings_initial_tab2 = null
     },
     // 壁纸相关 mutations
     set_wallpaper_index(state, index) {
