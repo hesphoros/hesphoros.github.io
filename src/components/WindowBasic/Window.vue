@@ -1,8 +1,17 @@
 <template>
   <div ref="window_mainbody" class="tw-absolute animate__animated animate__faster"
     :class="{ 'animate__zoomOut': closed, 'animate__zoomOutDown': minimized, 'animate__zoomIn': !minimized }"
-    style="min-width:680px;min-height:600px;height:600px; width: 1000px;pointer-events:auto;"
-    :style="{ 'top': default_top + 'px', 'left': default_left + 'px', 'z-index': zindex }" @click="window_clicked"
+    :style="{ 
+      'min-width': minWidth + 'px', 
+      'min-height': minHeight + 'px', 
+      'height': actualHeight + 'px', 
+      'width': actualWidth + 'px',
+      'pointer-events': 'auto',
+      'top': default_top + 'px', 
+      'left': default_left + 'px', 
+      'z-index': zindex 
+    }" 
+    @click="window_clicked"
     @contextmenu.prevent="mr_clicked($event)">
     <div
       class="tw-flex tw-justify-center tw-items-center tw-flex-nowrap tw-w-full tw-h-full tw-border tw-border-gray-500 "
@@ -127,19 +136,21 @@ export default {
     blacktheme: {
       type: Boolean,
       default: false,
+    },
+    min_width: {
+      type: Number,
+      default: 680
+    },
+    min_height: {
+      type: Number,
+      default: 600
     }
   },
   created() {
   },
   mounted() {
-    if (this.default_width < 0) {
-      this.$refs.window_mainbody.style.width = Math.max(Math.min(1000, 0.6 * this.fullWidth), 680) + 'px'
-      this.$emit("width_changed", Math.max(Math.min(1000, 0.6 * this.fullWidth), 680))
-    } else {
-      this.$refs.window_mainbody.style.width = this.default_width + 'px'
-      this.$emit("width_changed", this.default_width)
-    }
-    this.$emit("height_changed", 600)
+    this.$emit("width_changed", this.actualWidth)
+    this.$emit("height_changed", this.actualHeight)
     this.default_top = this.startpos_x
     this.default_left = this.startpos_y
   },
@@ -154,6 +165,32 @@ export default {
     },
     global_focus() {
       return this.$store.state.current_focus
+    },
+    minWidth() {
+      // 如果传入了 default_width 并且小于默认最小值，使用 default_width 作为最小值
+      if (this.default_width > 0 && this.default_width < this.min_width) {
+        return this.default_width
+      }
+      return this.min_width
+    },
+    minHeight() {
+      // 如果传入了 default_height 并且小于默认最小值，使用 default_height 作为最小值
+      if (this.default_height > 0 && this.default_height < this.min_height) {
+        return this.default_height
+      }
+      return this.min_height
+    },
+    actualWidth() {
+      if (this.default_width > 0) {
+        return this.default_width
+      }
+      return Math.max(Math.min(1000, 0.6 * this.fullWidth), this.minWidth)
+    },
+    actualHeight() {
+      if (this.default_height > 0) {
+        return this.default_height
+      }
+      return this.minHeight
     },
   },
   methods: {
@@ -174,7 +211,7 @@ export default {
       let downY = event.clientY; // 使用事件对象
       let min = this.$refs.window_mainbody.style.top;
       min = parseFloat(min.substr(0, min.length - 2));
-      min = min + 600 - downY;
+      min = min + this.minHeight - downY;
       let max = this.fullHeight - downY;
       let orn_height = this.$refs.window_mainbody.style.height;
       orn_height = parseFloat(orn_height.substr(0, orn_height.length - 2));
@@ -204,7 +241,7 @@ export default {
       let downX = event.clientX; // 使用事件对象
       let min = this.$refs.window_mainbody.style.left;
       min = parseFloat(min.substr(0, min.length - 2));
-      min = min + 680 - downX;
+      min = min + this.minWidth - downX;
       let max = this.fullWidth - downX;
       let orn_width = this.$refs.window_mainbody.style.width;
       orn_width = parseFloat(orn_width.substr(0, orn_width.length - 2));
@@ -235,10 +272,10 @@ export default {
       let downX = event.clientX; // 使用事件对象
       let minX = this.$refs.window_mainbody.style.left;
       minX = parseFloat(minX.substr(0, minX.length - 2));
-      minX = minX + 680 - downX;
+      minX = minX + this.minWidth - downX;
       let minY = this.$refs.window_mainbody.style.top;
       minY = parseFloat(minY.substr(0, minY.length - 2));
-      minY = minY + 600 - downY;
+      minY = minY + this.minHeight - downY;
       let maxX = this.fullWidth - downX;
       let maxY = this.fullHeight - downY;
       let orn_width = this.$refs.window_mainbody.style.width;

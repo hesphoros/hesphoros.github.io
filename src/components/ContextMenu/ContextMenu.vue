@@ -8,12 +8,7 @@
       <ContextMenuButton disabled :text="'Paste'"/>
       <ContextMenuButton  :text="'Open in Terminal'" @click.native="terminal_clicked"/>
       <div class=" tw-w-full" style="height:1.5px;background-color:rgba(188,188,188,1)"></div>
-      <!--     
-      Wallpapers 选项属于禁用状态。 未被开发者实现 
-      修改wallpaer 参照： https://www.macos-web.app/
-      -->
-      <!-- <ContextMenuButton disabled: text="'Wallpapers'"/> -->
-      <ContextMenuButton disabled :text="'Wallpapers'" @click.native="wallpapers_clicked"/>
+      <ContextMenuButton :text="'Wallpapers'" @click.native="wallpapers_clicked"/>
       <ContextMenuButton  :text="'Settings'" @click.native="settings_clicked"/>
       <ContextMenuButton  :text="'⭐ This Project'" @click.native="open_project"/>
     </div>
@@ -94,8 +89,16 @@ export default {
       location.reload();
     },
     wallpapers_clicked(){
-      // this.$store.commit('hide_context_menu')
-      // this.$store.commit('show_notification', {'text':'This feature is not implemented yet.'})
+      // 设置初始选项卡为 Wallpaper
+      this.$store.commit('set_settings_tab', { tab: 'Wallpaper', tab2: 'Video' })
+      
+      if (this.has_settings) {
+        this.$store.commit('switch_global_window_show_status', {'type':'settings'})
+      } else {
+        this.$store.commit('open_new_window', {'type':'settings'})
+      }
+      this.$store.commit('refresh_window_focus', {'type':'settings'})
+      this.$store.commit('hide_context_menu')
     }
     
   }

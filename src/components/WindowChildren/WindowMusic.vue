@@ -10,7 +10,7 @@
       <div class=" tw-w-full tw-h-full tw-overflow-hidden tw-rounded-b-2xl tw-flex tw-flex-col
       tw-items-center tw-justify-center" @contextmenu.prevent="mr_clicked" >
         <aplayer autoplay
-          style="width:500px;height:500px;overflow:scroll"
+          style="width:100%;height:100%;overflow:auto"
           :music="firstmusic"
           :list="musiclist"
           :repeat="'repeat-all'"
