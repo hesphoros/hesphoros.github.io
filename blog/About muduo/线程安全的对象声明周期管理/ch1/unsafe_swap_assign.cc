@@ -3,9 +3,9 @@
 class Counter {
 
 public:
-    Counter& operator=(Counter& rhs);
+    Counter& operator=(const Counter& rhs);
     int64_t m_value;
-    MutexLock m_mutex;
+    mutable MutexLock m_mutex;
 };
 
 void swap(Counter& a, Counter& b) {
@@ -27,7 +27,7 @@ void swap(Counter& a, Counter& b) {
 // 4. 线程T2继续执行，尝试获得 counterA 的锁，但此时锁已被线程T1持有，T2阻塞等待
 // 结果：线程T1等待线程T2释放 counterB 的锁，线程T2等待线程T1释放 counterA 的锁，形成死锁
 
-Counter& Counter::operator=(Counter& rhs) {
+Counter& Counter::operator=(const Counter& rhs) {
     if (this == &rhs) {
         return *this;
     }
