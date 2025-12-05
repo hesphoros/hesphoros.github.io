@@ -39,9 +39,9 @@ class Observable
   > (3) 在通知每一个观察者时 从何得知Observer对象o是否还存活? 
   >
   > 	一个动态创建的对象是否还活着,光看指针/引用是看不出来的
-  >								
+  >													
   > 	指针就是指向了一块内存.如果这块内存上的对象已经销毁
-  >								
+  >													
   > 	那么就不可能访问,既然不能访问如何又知道对象的状态呢? 
   >
   > **判断一个指针是不是合法的指针没有效的办法? 万一这个新的对象的类型异于老的对象呢?**
@@ -317,30 +317,183 @@ c++ 里可能出现的内存错误大概有以下几个方面
 class Observable
 {
  public:
+  // const std::weak_ptr<Observer>& 亦可
   void register_(boost::weak_ptr<Observer> x);
+  // [[deprecated]] 不再需要此方法
   // void unregister(boost::weak_ptr<Observer> x);
   void notifyObservers();
  private:
   mutable muduo::MutexLock mutex_;
+  // 使用weak_ptr 避免构成强引用
   std::vector<boost::weak_ptr<Observer> > observers_;
   typedef std::vector<boost::weak_ptr<Observer> >::iterator Iterator;
 };
 
+// 惰性删除
 void Observerable::notifyObservers() 
 {
-    muduo::MutexLockGuard lock(mutex_);
-    Iterator it = observers_.begin();
+    muduo::MutexLockGuard lock(mutex_);  // 1. 加锁 保护observers_容器
+    Iterator it = observers_.begin(); 
     while (it != observers_.end()) {
+      // 2. 尝试将 weak_ptr 提升为 shared_ptr
       boost::shared_ptr<Observer> obj(it->lock());
       if (obj) {
+        // 3. 提升成功：说明 Observer 对象还活着 
+        // obj 现在是一个强引用，保证了在这一小段作用域内，Observer 不会被销毁
         obj->update();
-        ++it;
+        ++it; //  继续下一个
       }
       else {
+        // 4. 提升失败：说明 Observer 对象已经被销毁了
         printf("notifyObservers() erase\n");
+        // 对象已经销毁 从容器中移除weak_ptr
         it = observers_.erase(it);
+        // 注意：erase 返回的是被删除元素的下一个元素的迭代器，所以这里不需要 ++it
       }
     }
 }
 
 ```
+
+ *在多线程环境下,这种做法仍然不是完全安全的*
+
+ 1. 锁争用 Lock Contention: 代码中nofityObservers()函数全程持有mutex_
+     如果observers_ 数量过多, 或者 update()函数执行时间过长
+     可能导致其他线程在register_时阻塞较长时间
+  2. 死锁 Deadlock: 
+     - 如果在用户的obj->update()函数中又调用了`register 
+     
+       例如：某个事件触发后需要注册新的监听器），或者调
+       用了其他也需要该锁的方法：
+     1. 如果mutex是不可重入锁(`Reentrant Lock`), 则会导致死锁 (自己等待自己)
+     2. 如果mutex是可重入锁 
+       
+        则程序可以再次加锁,但此时iterators 正在遍历 vector，而 register_ 可能会 push_back 导致 `vector` 扩容重新分配内存，这会导致`notifyObservers` 中的迭代器失效（Iterator Invalidation），进而导致 Core Dump。
+
+# 论shared_ptr的线程安全
+
+虽然我们使用shared_ptr来实现线程安全的对象释放,但是shared_ptr本身并不是完全线程安全的,它的引用计数本身是安全且无锁的,但对象的读写则不是, 因为shared_ptr有两个数据成员,读写操作不能原子化.
+
+shared_ptr的线程安全级别和内建类型 标准库容器 std::string 一样 :
+
+- 一个shared_ptr对象实体可以被多个线程同时读取
+- 两个shared_ptr对象实体可以被多个线程同时写入 "析构"算写操作
+- 如果要从多个线程**读写**同一个share_ptr对象 那么就需要加锁使用mutex进行保护
+
+```cpp
+MutexLock mutex;  // No need for ReaderWriterLock
+shared_ptr<Foo> global_ptr;
+
+// 我们要做的是把global_ptr安全的传给dosomething
+void dosomething(const shared_ptr<Foo>& pFoo);
+```
+
+`global_ptr`能被多个线程看到, 那么它的读写就需要加锁, 此处不必用读写锁,而只是用最简单的互斥锁,因为此处的临界区非常小,用互斥锁也不会阻塞并发读.
+
+为了拷贝global_ptr,需要在他**读**的时候进行加锁:
+
+```cpp
+
+void read() {
+	shared_ptr<Foo> local_ptr;
+	{
+		MutexLockGuard lock<mutex>
+		// 这一步非常快，仅仅是引用计数 +1
+		local_ptr = global_ptr; // read global_ptr 
+	}
+	
+	// use local_ptr since here ,read or write local_ptr dont need lock
+	dosomething(local_ptr);
+}
+
+```
+
+**为什么要这么做？** 因为只要你拷贝成功了（`localPtr` 拿到了引用计数），哪怕下一秒别的线程把 `globalPtr` 给清空了，你手里的 `localPtr` 指向的对象依然是活着的，不会被销毁。通过这种“**拿了快照就走**”的方式，锁被占用的时间极短，性能极高
+
+**写**的时候也需要进行加锁 :
+
+```cpp
+void write() {
+	shared_ptr<Foo> new_ptr(new Foo); // 对象的构造应该在临界区之外
+	
+	{
+		MutexLockGuard lock(mutex);
+		global_ptr = new_ptr; // write to global_ptr
+	}
+	// use new_ptr since heare.don't need mutex
+	dosomething(new_ptr)
+}
+
+```
+
+- **第一步（锁外）：** `new Foo`。创建新对象是很慢的（分配内存、构造函数），这步完全不需要锁，放在锁外面做。
+  
+- **第二步（锁内）：** `MutexLockGuard lock(mutex); global_ptr = new_ptr;`。加锁，仅仅做一次指针赋值（交换），非常快，然后解锁。
+  
+- **第三步（锁外）：** 调用 `dosomething()`。
+
+#问题思考:  在`global_ptr = new_ptr;` 这一句有可能会在临界区内销毁原来global_ptr 指向的Foo对象. 设法将销毁行为移出临界区
+
+---
+在 `write()` 函数里，执行 `globalPtr = newPtr;` 时，原先 `globalPtr` 指向的**旧对象**可能会因为引用计数归零而被销毁。 **如果旧对象的析构函数非常耗时（比如要释放大量内存或断开网络连接），那么这个耗时的析构过程就会发生在锁在这个临界区之内！** 这会阻塞其他线程。
+
+为了把“旧对象的销毁”挪到锁外面，可以这样写：
+
+```cpp
+void write()
+{
+    shared_ptr<Foo> new_ptr(new Foo); // 1. 锁外创建新对象
+    {
+        MutexLockGuard lock(mutex);  // 2. 加锁
+	    std::swap(global_ptr, new_ptr); // 交换！
+        // 此时：
+        // globalPtr 指向了新对象
+        // newPtr 指向了旧对象（替死鬼）
+    } // 3. 解锁
+    
+    // 4. newPtr 离开作用域，旧对象在这里（锁外）被销毁，不占用锁的时间
+    doit(newPtr); 
+}
+```
+
+## 原理解析
+
+### 分析赋值操作
+
+```cpp
+// 假设这里是加锁的临界区
+global_ptr = new_ptr;
+```
+
+在执行赋值操作之前:
+
+- 全局对象global_ptr假设指向**全局存储区**中的A
+- 局部对象new_ptr假设指向的是**堆**上实际数据对象B
+
+![image-20251204221601173](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20251204221601173.png)
+
+进入临界区,执行赋值操作: `global_ptr = new_ptr;`
+
+![image-20251204222751903](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20251204222751903.png)
+- **Step a: 释放旧对象 A**
+  
+    - `global_ptr` 递减对象 **A** 的引用计数 ($N \to N-1$).
+      
+    - **关键：** 如果 $N=1$（即 **A** 只有 `global_ptr` 引用），对象 **A** 将在这里立即被**销毁**（调用析构函数和释放内存）。 “**销毁/析构发生在这里（临界区内！）”**
+    
+- **Step b: 指向新对象 B**
+  
+    - `global_ptr` 指向对象 **B**。
+      
+    - 对象 **B** 的引用计数递增 ($1 \to 2$).
+
+**最终状态**:
+
+| **变量**     | **指向对象** | **引用计数** | **销毁行为**                        |
+| ------------ | ------------ | ------------ | ----------------------------------- |
+| `global_ptr` | **B**        | $2$          | ---                                 |
+| `new_ptr`    | **B**        | $2$          | ---                                 |
+| 对象 A       | ---          | $N-1$        | **若 $N=1$，对象 A 已在锁内被销毁** |
+| 对象 B       | 被共享       | $2$          | ---                                 |
+
+

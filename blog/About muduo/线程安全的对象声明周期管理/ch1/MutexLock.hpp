@@ -5,15 +5,19 @@
 #include <thread>
 #include <mutex>
 #include <assert.h>
+
+#ifdef __linux__
 #include <pthread.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <string>
-#include <errno.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <sys/prctl.h>
 #include <linux/unistd.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#endif
+#include <string>
+#include <errno.h>
+#include <stdio.h>
+
 
 
 #include "NoCopyAble.hpp"

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About muduo/线程安全的对象声明周期管理/线程安全的Observer.md",
+                "file": "About muduo/线程安全的对象声明周期管理/shared_ptr 技术与陷阱.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线程安全的Observer"
+              "title": "shared_ptr 技术与陷阱"
             }
           }
         ]
@@ -172,12 +172,13 @@
   },
   "active": "4918bee0a5a2fbfd",
   "lastOpenFiles": [
+    "About muduo/线程安全的对象声明周期管理/shared_ptr 技术与陷阱.md",
+    "About muduo/线程安全的对象声明周期管理/线程安全的Observer.md",
     "base.base",
     "About muduo/线程安全的对象声明周期管理/析构函数遇到多线程.md",
     "About OpenCV + dlib/env.md",
     "About muduo/线程安全的对象声明周期管理/ch1/Observer.cc",
     "About muduo/Observer.cc",
-    "About muduo/线程安全的对象声明周期管理/线程安全的Observer.md",
     "About muduo/线程安全的对象声明周期管理/ch1/MutexLock.hpp",
     "About muduo/线程安全的对象声明周期管理/ch1/Counter.hpp",
     "About muduo/线程安全的对象声明周期管理/ch1/dctor_mutex.cc",
