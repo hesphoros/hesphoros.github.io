@@ -33,7 +33,9 @@ namespace CurrentThread {
 
     inline int tid() {
         // simplified gettid implementation
+        #ifdef __linux__
         return static_cast<int>(::syscall(SYS_gettid));
+        #endif
     }
 } // namespace CurrentThread
 
@@ -49,7 +51,7 @@ namespace CurrentThread {
  * @see NonCopyAble
  * @note 请在实现中提供必要的线程安全操作与 RAII 辅助类（如 ScopedLock）以便安全使用。
  */
-class MutexLock : public NonCopyAble {
+class MutexLock : public NoCopyAble {
 public:
     MutexLock() : m_holder(0) {
         pthread_mutex_init(&m_mutex, nullptr);
@@ -96,6 +98,7 @@ public:
     }
 
 private:
+
     pthread_mutex_t m_mutex;  // 互斥锁
     pid_t           m_holder; // 记录当前持有锁的线程ID
 };

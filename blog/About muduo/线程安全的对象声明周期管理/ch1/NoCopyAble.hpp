@@ -15,13 +15,13 @@
  *
  * @note 构造函数与析构函数为受保护，以便仅允许继承，而不鼓励直接实例化。
  */
-class NonCopyAble {
+class NoCopyAble {
 protected:
-    NonCopyAble()  = default;
-    ~NonCopyAble() = default;
+    NoCopyAble()  = default;
+    ~NoCopyAble() = default;
 
-    NonCopyAble(const NonCopyAble&) = delete;
-    NonCopyAble& operator=(const NonCopyAble&) = delete;
+    NoCopyAble(const NoCopyAble&) = delete;
+    NoCopyAble& operator=(const NoCopyAble&) = delete;
 };
 
 #endif // __NOCOPYABLE_HPP__
