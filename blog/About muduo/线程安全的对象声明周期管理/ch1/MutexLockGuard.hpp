@@ -50,7 +50,7 @@
  * MutexLockGuard guard(mutex);
  * @endcode
  */
-class MutexLockGuard : public NonCopyAble {
+class MutexLockGuard : public NoCopyAble {
 public:
     explicit MutexLockGuard(MutexLock& mutex) : m_mutex(mutex) {
         m_mutex.lock();
