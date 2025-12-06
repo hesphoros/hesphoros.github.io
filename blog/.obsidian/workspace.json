@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "5922537e7e9fdc89",
+        "id": "eab54d2a579066d4",
         "type": "tabs",
         "children": [
           {
-            "id": "4918bee0a5a2fbfd",
+            "id": "5c27b9eabeb817af",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
+                "file": "Hi there.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "4. 对象池"
+              "title": "Hi there"
             }
           }
         ]
@@ -170,16 +170,18 @@
       "bases:创建新数据库": false
     }
   },
-  "active": "4918bee0a5a2fbfd",
+  "active": "5c27b9eabeb817af",
   "lastOpenFiles": [
-    "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.cpp",
-    "About muduo/线程安全的对象声明周期管理/3. shared_ptr 技术与陷阱.md",
-    "About muduo/线程安全的对象声明周期管理/2. 线程安全的Observer.md",
+    "About OpenCV + dlib/env.md",
+    "未命名.base",
+    "About muduo/线程安全的对象声明周期管理/5. enable_shared_from_this.md",
     "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
     "About muduo/Windows Linux IO模型.md",
+    "About muduo/线程安全的对象声明周期管理/2. 线程安全的Observer.md",
+    "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.cpp",
+    "About muduo/线程安全的对象声明周期管理/3. shared_ptr 技术与陷阱.md",
     "About muduo/线程安全的对象声明周期管理/1. 析构函数遇到多线程.md",
     "base.base",
-    "About OpenCV + dlib/env.md",
     "About muduo/线程安全的对象声明周期管理/ch1/Observer.cc",
     "About muduo/Observer.cc",
     "About muduo/线程安全的对象声明周期管理/ch1/MutexLock.hpp",
@@ -187,8 +189,6 @@
     "About muduo/线程安全的对象声明周期管理/ch1/dctor_mutex.cc",
     "About muduo/线程安全的对象声明周期管理/ch1/NoCopyAble.hpp",
     "About muduo/线程安全的对象声明周期管理/ch1/MutexLockGuard.hpp",
-    "About muduo/线程安全的对象声明周期管理/ch1/unsafe_swap_assign.cc",
-    "About muduo/线程安全的对象声明周期管理/ch1",
     "About High Performance Upload/LUSP_ADAPTATION_SUCCESS.md",
     "About muduo/README.md",
     "About HeartBeat Mechanism/Heartbeat Mechanism.md",
@@ -208,7 +208,6 @@
     "QQ_1761918942065.png",
     "About Build System/Multiboot.md",
     "About flipperzero dev/Enviroment.md",
-    "About Build System/GDT.md",
     "About Doxygen/assets/image-20250509153015784.png",
     "About Doxygen/assets/image-20250509152418483.png",
     "About Doxygen/assets/image-20250509151935308.png",
