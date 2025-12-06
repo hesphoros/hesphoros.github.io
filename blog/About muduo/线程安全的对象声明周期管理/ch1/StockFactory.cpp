@@ -94,3 +94,12 @@ private:
     mutable MutexLock m_mutex;
     std::map<std::string, StockWeakPtr> m_stocks;
 };
+
+
+class StockFactory4 : public  std::enable_shared_from_this<StockFactory4>,
+                      private NoCopyAble
+{
+    using StockPtr      = std::shared_ptr<Stock>;
+    using StockWeakPtr  = std::weak_ptr<Stock>;
+public:
+};
