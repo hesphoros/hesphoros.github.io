@@ -35,6 +35,8 @@ namespace CurrentThread {
         // simplified gettid implementation
         #ifdef __linux__
         return static_cast<int>(::syscall(SYS_gettid));
+        #else
+        return 0; // Windows fallback
         #endif
     }
 } // namespace CurrentThread
