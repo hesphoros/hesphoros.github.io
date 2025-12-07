@@ -170,8 +170,9 @@
       "bases:创建新数据库": false
     }
   },
-  "active": "18e2db462d0652ae",
+  "active": "769cbfda5d7e6d2e",
   "lastOpenFiles": [
+    "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.exe",
     "About muduo/线程安全的对象声明周期管理/5. enable_shared_from_this.md",
     "About muduo/线程安全的对象声明周期管理/6. 弱回调.md",
     "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.o",
@@ -208,7 +209,6 @@
     "About Character encoding/编码基础知识.md",
     "About Calling Convention/Calling Convertion.md",
     "QQ_1761918942065.png",
-    "About Build System/Multiboot.md",
     "About Doxygen/assets/image-20250509153015784.png",
     "About Doxygen/assets/image-20250509152418483.png",
     "About Doxygen/assets/image-20250509151935308.png",

@@ -14,10 +14,15 @@ public:
     explicit Stock(const std::string& stock_key)
         : m_stockKey(stock_key) {
         // 初始化股票对象
+        std::cout << "Stock constructor: " << stock_key << std::endl;
     }
 
     std::string getKey() const {
         return m_stockKey;
+    }
+
+    ~Stock() {
+        std::cout << "Stock destructor: " << m_stockKey << std::endl;
     }
 
 private:
@@ -106,7 +111,7 @@ class StockFactory4 : public std::enable_shared_from_this<StockFactory4>
     using StockWeakPtr  = std::weak_ptr<Stock>;
 public:
     StockFactory4(){ };
-    
+
     StockPtr get(const string& stock_key) {
         StockPtr stock_ptr;
         MutexLockGuard lock(m_mutex);
@@ -141,3 +146,115 @@ private:
 };
 
 std::shared_ptr<StockFactory4> factory4_ptr = std::make_shared<StockFactory4>();
+
+
+// version5 : using enable_shared_from_this without custom deleter weak_ptr cleanup
+class StockFactory5 : public std::enable_shared_from_this<StockFactory5>
+{
+    using StockPtr          = std::shared_ptr<Stock>;
+    using StockWeakPtr      = std::weak_ptr<Stock>;
+    using WkStockFactoryPtr = std::weak_ptr<StockFactory5>;
+    using StockFactoryPtr   = std::shared_ptr<StockFactory5>;
+public:
+    StockFactory5(){ 
+        std::cout << "StockFactory5 constructor" << std::endl;
+    }
+
+    ~StockFactory5() {
+        std::cout << "StockFactory5 destructor" << std::endl;
+    }
+
+    StockPtr get(const string& stock_key) {
+        StockPtr stock_ptr;
+        {
+            MutexLockGuard lock(m_mutex);
+            StockWeakPtr& weak_ptr = m_stocks[stock_key];
+            stock_ptr = weak_ptr.lock(); // 尝试提升为 shared_ptr
+            if (!stock_ptr) {
+                WkStockFactoryPtr weak_factory(shared_from_this());
+                stock_ptr.reset(new Stock(stock_key),
+                    std::bind(&StockFactory5::weakDeleteCallback,
+                              weak_factory,
+                              stock_key,
+                              std::placeholders::_1));
+                weak_ptr = stock_ptr; // 更新 weak_ptr
+            }
+        }
+        return stock_ptr;
+    }
+private:
+
+    void removeStock(Stock* p) {
+        if (p) {
+            MutexLockGuard lock(m_mutex);
+            m_stocks.erase(p->getKey());
+        }
+    }
+
+    static void weakDeleteCallback(const WkStockFactoryPtr& weak_factory,
+                                   const string& stock_key,
+                                   Stock* p) {
+        StockFactoryPtr factory(weak_factory.lock());
+        if (factory) {
+            MutexLockGuard lock(factory->m_mutex);
+            factory->m_stocks.erase(stock_key);
+        }
+        delete p;
+    }
+
+    mutable MutexLock m_mutex;
+    std::map<std::string, StockWeakPtr> m_stocks;
+};
+
+void testLongLifeFactory()
+{
+    shared_ptr<StockFactory5> factory(new StockFactory5());
+    {
+        shared_ptr<Stock> stock1 = factory->get("NYSE:IBM");
+        shared_ptr<Stock> stock2 = factory->get("NYSE:IBM");
+        cout << "Stock1 key: " << stock1->getKey() << endl;
+        cout << "Stock2 key: " << stock2->getKey() << endl;
+        assert(stock1 == stock2);
+        // stock destroyed here
+    }
+    // facory destroyed here
+}
+
+void testShortLifeFactory()
+{
+    shared_ptr<Stock> stock;
+    {
+        shared_ptr<StockFactory5> factoty(new StockFactory5());
+        stock = factoty->get("NYSE:IBM");
+        shared_ptr<Stock> stock2 = factoty->get("NYSE:IBM");
+        cout << "Stock1 key: " << stock->getKey() << endl;
+        assert(stock == stock2);
+        // factory destroyed here
+    }
+    // stock destroyed here
+}
+
+
+
+int main() {
+    testLongLifeFactory();
+    testShortLifeFactory();
+    return 0;
+}
+
+//========================
+// g++ -std=c++11 -o StockFactory.exe StockFactory.cpp
+//=====================================================
+
+// output
+// StockFactory5 constructor
+// Stock constructor: NYSE:IBM
+// Stock1 key: NYSE:IBM
+// Stock2 key: NYSE:IBM
+// Stock destructor: NYSE:IBM
+// StockFactory5 destructor
+// StockFactory5 constructor
+// Stock constructor: NYSE:IBM
+// Stock1 key: NYSE:IBM
+// StockFactory5 destructor
+// Stock destructor: NYSE:IBM
