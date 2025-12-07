@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory>
+#include <iostream>
 #include <map>
 #include <string>
+#include <functional>
 #include "NoCopyAble.hpp"
 #include "MutexLockGuard.hpp"
 #include "MutexLock.hpp"
@@ -95,11 +97,47 @@ private:
     std::map<std::string, StockWeakPtr> m_stocks;
 };
 
-
-class StockFactory4 : public  std::enable_shared_from_this<StockFactory4>,
-                      private NoCopyAble
+// version4 : using enable_shared_from_this
+// 存在问题: StockFactory4 必须通过 shared_ptr 来管理其生命周期，
+// 而且其生命周期被意外延长了
+class StockFactory4 : public std::enable_shared_from_this<StockFactory4>
 {
     using StockPtr      = std::shared_ptr<Stock>;
     using StockWeakPtr  = std::weak_ptr<Stock>;
 public:
+    StockFactory4(){ };
+    
+    StockPtr get(const string& stock_key) {
+        StockPtr stock_ptr;
+        MutexLockGuard lock(m_mutex);
+        StockWeakPtr& weak_ptr = m_stocks[stock_key];
+        stock_ptr = weak_ptr.lock(); // 尝试提升为 shared_ptr
+       
+        if (!stock_ptr) {
+            auto shared_this = shared_from_this();
+            stock_ptr.reset(new Stock(stock_key),
+                std::bind(&StockFactory4::DeleteCallback,
+                          shared_this,
+                          stock_key,
+                          std::placeholders::_1));
+            weak_ptr = stock_ptr; // 更新 weak_ptr
+        }
+        return stock_ptr;
+    }
+private:
+    static void DeleteCallback(const std::shared_ptr<StockFactory4>& Factory,
+                                   const string& stock_key,
+                                   Stock* p) {
+        
+        if (Factory) {
+            MutexLockGuard lock(Factory->m_mutex);
+            Factory->m_stocks.erase(stock_key);
+        }
+        delete p;
+    }
+    
+    mutable MutexLock m_mutex;
+    std::map<std::string, StockWeakPtr> m_stocks;
 };
+
+std::shared_ptr<StockFactory4> factory4_ptr = std::make_shared<StockFactory4>();
