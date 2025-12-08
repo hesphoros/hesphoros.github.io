@@ -43,6 +43,13 @@ const store = new Vuex.Store({
   mutations: {
     open_new_window(state, payload){
       let new_uuid = get_uuid()
+      
+      // 确保初始位置绝对不会覆盖 TopBar (TopBar高度28px + 缓冲20px = 48px)
+      const TOP_BAR_SAFE = 48;
+      if (state.n_spy < TOP_BAR_SAFE) {
+        state.n_spy = TOP_BAR_SAFE;
+      }
+
       let obj = {
         uuid: new_uuid,
         spx:state.n_spx,
@@ -56,6 +63,11 @@ const store = new Vuex.Store({
       } else if (payload.type === 'text') {
         obj.type='text'
         obj.filesrc=payload.filesrc
+        obj.filename=payload.filename
+        obj.size=payload.size
+      } else if (payload.type === 'code') {
+        obj.type='code'
+        obj.filepath=payload.filepath
         obj.filename=payload.filename
         obj.size=payload.size
       } else if (payload.type === 'browser') {
@@ -84,15 +96,25 @@ const store = new Vuex.Store({
       let init_width = Math.min(state.fullWidth * 0.6 , 1000);
       let init_height = 600;
       let padding_y = 100
+      let top_bar_height = 28;
+      
+      // 确保初始位置绝对不会覆盖 TopBar
+      if (state.n_spy < top_bar_height + 20) {
+        state.n_spy = top_bar_height + 20;
+      }
+
       if ((state.fullHeight - state.n_spy - padding_y) < init_height) {
-        state.n_spy = (state.n_spy + state.spy_step + init_height + padding_y) % state.fullHeight
+        // 如果剩余空间不足，重置到顶部附近，但要避开 TopBar
+        state.n_spy = top_bar_height + 20;
       } else {
         state.n_spy = state.n_spy + state.spy_step
       }
+      
       if ((state.fullWidth - state.n_spx) < init_width) {
-        state.n_spx = (state.n_spx + state.spx_step + init_width) % state.fullWidth 
+        state.n_spx = 60; // 重置 X 坐标
       } else {
         state.n_spx = state.n_spx + state.spx_step
+
       }
     },
     close_window_with_uuid(state, payload){
@@ -159,12 +181,12 @@ const store = new Vuex.Store({
     },
     refresh_sizes(state){
       state.fullHeight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight
-      state.fullWidth = document.documentElement.clientWidth || document.body.clientHeight || window.innerWidth
+      state.fullWidth = document.documentElement.clientWidth || document.body.clientWidth || window.innerWidth
       if (state.n_spx > state.fullWidth) {
-        state.n_spx = Math.max(state.fullWidth - 600,0)
+        state.n_spx = Math.max(state.fullWidth - 600, 60)
       }
       if (state.n_spy > state.fullHeight) {
-        state.n_spy = Math.max(state.fullHeight - 600,0)
+        state.n_spy = Math.max(state.fullHeight - 600, 60)
       }
     },
     refresh_scroll(state){
