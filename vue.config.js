@@ -5,6 +5,8 @@ module.exports = {
   outputDir: './docs',
   devServer:{
     host:'0.0.0.0',
+    contentBase: require('path').join(__dirname, './'),
+    contentBasePublicPath: '/',
     proxy:{
       "/dev":{
         target:"http://127.0.0.1:8079",

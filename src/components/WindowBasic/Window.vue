@@ -4,24 +4,24 @@
     :style="{ 
       'min-width': minWidth + 'px', 
       'min-height': minHeight + 'px', 
-      'height': actualHeight + 'px', 
-      'width': actualWidth + 'px',
+      'height': full_windowed ? (fullHeight - TOPBAR_HEIGHT - DOCK_HEIGHT) + 'px' : actualHeight + 'px', 
+      'width': full_windowed ? '100%' : actualWidth + 'px',
       'pointer-events': 'auto',
-      'top': default_top + 'px', 
-      'left': default_left + 'px', 
+      'top': full_windowed ? TOPBAR_HEIGHT + 'px' : default_top + 'px', 
+      'left': full_windowed ? '0px' : default_left + 'px', 
       'z-index': zindex 
     }" 
     @click="window_clicked"
     @contextmenu.prevent="mr_clicked($event)">
     <div
-      class="tw-flex tw-justify-center tw-items-center tw-flex-nowrap tw-w-full tw-h-full tw-border tw-border-gray-500 "
+      class="tw-flex tw-justify-center tw-items-center tw-flex-nowrap tw-w-full tw-h-full"
       :style="{ 'box-shadow': global_focus === uuid ? '0 0px 30px rgba(16,16,16,.6)' : '0 0px 15px rgba(16,16,16,.3)', 'background-color': blacktheme ? '#111111' : '#f8f8f8' }"
-      :class="{ 'tw-rounded-2xl': !full_windowed }">
+      :class="{ 'tw-rounded-2xl': !full_windowed, 'tw-border tw-border-gray-500': !full_windowed }">
       <WindowSider :mode="1" v-if="false" />
       <div class="tw-flex-grow tw-flex tw-flex-col tw-justify-center tw-items-center tw-flex-nowrap tw-h-full">
         <WindowSider :mode="0" v-if="false" />
-        <div class="tw-w-full tw-h-12  tw-select-none"
-          :style="{ 'background-color': blacktheme ? '#282828' : '#fcfcfc' }"
+        <div class="tw-w-full tw-h-12 tw-flex-none tw-select-none"
+          :style="{ 'background-color': blacktheme ? '#282828' : '#fcfcfc', 'z-index': 1, 'position': 'relative' }"
           :class="{ 'tw-rounded-t-xl': !full_windowed }">
           <div class="tw-w-full tw-h-24 tw-absolute tw-overflow-hidden "
             style="left:-0px;pointer-events:none;opacity:.5" :class="{ 'tw-rounded-xl': !full_windowed }">
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="tw-flex-grow tw-w-full tw-flex tw-justify-center tw-items-center">
-          <div ref="user_content" class="tw-flex-none tw-w-full tw-h-full">
+          <div ref="user_content" class="tw-flex-none tw-w-full tw-h-full tw-overflow-hidden">
             <slot name="content"></slot>
           </div>
         </div>
@@ -103,6 +103,9 @@ export default {
       default_top: 60,
       default_left: 60,
       TOPBAR_HEIGHT: 28, // TopBar 高度
+      DOCK_HEIGHT: 47, // Dock 高度
+      custom_width: null,
+      custom_height: null,
     }
   },
   props: {
@@ -151,10 +154,19 @@ export default {
   mounted() {
     this.$emit("width_changed", this.actualWidth)
     this.$emit("height_changed", this.actualHeight)
-    this.default_top = this.startpos_x
-    this.default_left = this.startpos_y
+    // 确保窗口顶部绝对在 TopBar 下方 (TopBar 28px + 安全缓冲 20px = 48px)
+    const MIN_TOP = this.TOPBAR_HEIGHT + 20;
+    this.default_top = Math.max(this.startpos_y, MIN_TOP)
+    this.default_left = Math.max(this.startpos_x, 0)
   },
   watch: {
+    startpos_y(val) {
+      const MIN_TOP = this.TOPBAR_HEIGHT + 20;
+      this.default_top = Math.max(val, MIN_TOP);
+    },
+    startpos_x(val) {
+      this.default_left = val;
+    }
   },
   computed: {
     fullHeight() {
@@ -174,23 +186,35 @@ export default {
       return this.min_width
     },
     minHeight() {
+      let minH = this.min_height;
       // 如果传入了 default_height 并且小于默认最小值，使用 default_height 作为最小值
-      if (this.default_height > 0 && this.default_height < this.min_height) {
-        return this.default_height
+      if (this.default_height > 0 && this.default_height < minH) {
+        minH = this.default_height
       }
-      return this.min_height
+      // 动态调整最小高度，确保不超过屏幕可用高度 (TopBar + Dock + Buffer)
+      const maxAvailable = Math.max(200, this.fullHeight - this.TOPBAR_HEIGHT - this.DOCK_HEIGHT - 40);
+      return Math.min(minH, maxAvailable);
     },
     actualWidth() {
+      if (this.custom_width !== null) {
+        return this.custom_width;
+      }
       if (this.default_width > 0) {
         return this.default_width
       }
       return Math.max(Math.min(1000, 0.6 * this.fullWidth), this.minWidth)
     },
     actualHeight() {
-      if (this.default_height > 0) {
-        return this.default_height
+      if (this.custom_height !== null) {
+        return this.custom_height;
       }
-      return this.minHeight
+      let height = this.minHeight;
+      if (this.default_height > 0) {
+        height = this.default_height
+      }
+      // 限制最大高度，避免遮挡 Dock
+      const maxHeight = this.fullHeight - this.TOPBAR_HEIGHT - this.DOCK_HEIGHT - 20;
+      return Math.min(height, maxHeight);
     },
   },
   methods: {
@@ -225,6 +249,7 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
         document.onmousedown = orn_mousedown;
+        this.custom_height = parseFloat(this.$refs.window_mainbody.style.height);
         this.$emit("resize_end");
       };
       document.onmousemove = mouseMoveHandler;
@@ -255,6 +280,7 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
         document.onmousedown = orn_mousedown;
+        this.custom_width = parseFloat(this.$refs.window_mainbody.style.width);
         this.$emit("resize_end");
       };
       document.onmousemove = mouseMoveHandler;
@@ -296,6 +322,8 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
         document.onmousedown = orn_mousedown;
+        this.custom_width = parseFloat(this.$refs.window_mainbody.style.width);
+        this.custom_height = parseFloat(this.$refs.window_mainbody.style.height);
         this.$emit("resize_end");
       };
       document.onmousemove = mouseMoveHandler;
@@ -318,23 +346,45 @@ export default {
 
       const downY = e.clientY;
       const downX = e.clientX;
-      const minX = -e.clientX;
-      const minY = this.TOPBAR_HEIGHT - e.clientY; // 限制不能拖到 TopBar 区域
-      const maxX = this.fullWidth;
-      const maxY = this.fullHeight;
-
       let ornX = this.$refs.window_mainbody.style.left;
-      ornX = parseFloat(ornX.slice(0, -2));
+      ornX = parseFloat(ornX.slice(0, -2)) || 0;
       let ornY = this.$refs.window_mainbody.style.top;
-      ornY = parseFloat(ornY.slice(0, -2));
+      ornY = parseFloat(ornY.slice(0, -2)) || 0;
+
+      const maxX = this.fullWidth;
+      const maxY = this.fullHeight - 50; // 保留底部空间
 
       const mouseMoveHandler = (moveEvent) => {
         const moveX = moveEvent.clientX;
         const moveY = moveEvent.clientY;
-        const offsetX = this.getOffset(moveX - downX, minX, maxX);
-        const offsetY = this.getOffset(moveY - downY, minY, maxY);
-        this.$refs.window_mainbody.style.left = offsetX + ornX + 'px';
-        this.$refs.window_mainbody.style.top = offsetY + ornY + 'px';
+        
+        // 计算新位置
+        let newLeft = ornX + (moveX - downX);
+        let newTop = ornY + (moveY - downY);
+        
+        // 强制限制：窗口顶部绝对不允许进入 TopBar 区域 (TopBar 高度 28px)
+        // 窗口顶部必须 >= TOPBAR_HEIGHT
+        if (newTop < this.TOPBAR_HEIGHT) {
+          newTop = this.TOPBAR_HEIGHT;
+        }
+        
+        // 限制左边界
+        if (newLeft < -this.actualWidth + 100) {
+          newLeft = -this.actualWidth + 100;
+        }
+        
+        // 限制右边界
+        if (newLeft > maxX - 100) {
+          newLeft = maxX - 100;
+        }
+        
+        // 限制底部
+        if (newTop > maxY) {
+          newTop = maxY;
+        }
+        
+        this.$refs.window_mainbody.style.left = newLeft + 'px';
+        this.$refs.window_mainbody.style.top = newTop + 'px';
       };
 
       const mouseUpHandler = () => {
@@ -344,13 +394,20 @@ export default {
         document.onmousedown = orn_mousedown;
 
         // 保存最终位置到响应式数据
-        const finalLeft = parseFloat(this.$refs.window_mainbody.style.left);
+        let finalLeft = parseFloat(this.$refs.window_mainbody.style.left);
         let finalTop = parseFloat(this.$refs.window_mainbody.style.top);
         
-        // 确保窗口不会停留在 TopBar 区域
+        // 确保窗口绝对不会停留在 TopBar 区域内
+        // TopBar 高度 28px，窗口顶部必须 >= 28px
         if (finalTop < this.TOPBAR_HEIGHT) {
           finalTop = this.TOPBAR_HEIGHT;
           this.$refs.window_mainbody.style.top = finalTop + 'px';
+        }
+        
+        // 确保窗口不会超出左边界
+        if (finalLeft < 0) {
+          finalLeft = 0;
+          this.$refs.window_mainbody.style.left = finalLeft + 'px';
         }
         
         this.default_left = finalLeft;
@@ -375,23 +432,24 @@ export default {
     fullwindow_clicked() {
       if (!this.full_windowed) {
         this.full_windowed = true
-        this.backup_width = this.$refs.window_mainbody.style.width
-        this.backup_height = this.$refs.window_mainbody.style.height
-        this.backup_left = this.$refs.window_mainbody.style.left
-        this.backup_top = this.$refs.window_mainbody.style.top
-        this.$refs.window_mainbody.style.width = this.fullWidth + 'px';
-        // 全屏时从 TopBar 下方开始，减去 TopBar 高度和 Dock 高度
-        this.$refs.window_mainbody.style.height = (this.fullHeight - this.TOPBAR_HEIGHT - 75) + 'px'
-        this.$refs.window_mainbody.style.top = this.TOPBAR_HEIGHT + 'px'
-        this.$refs.window_mainbody.style.left = 0 + 'px'
-        this.$emit("height_changed", this.fullHeight - this.TOPBAR_HEIGHT - 75)
-        this.$emit("width_changed", this.fullWidth)
+        this.backup_width = this.actualWidth + 'px'
+        this.backup_height = this.actualHeight + 'px'
+        this.backup_left = this.default_left
+        this.backup_top = this.default_top
+        // 计算全屏高度: 总高度 - TopBar高度 - Dock高度
+        const fullscreenHeight = this.fullHeight - this.TOPBAR_HEIGHT - this.DOCK_HEIGHT;
+        
+        // 等待DOM更新后再触发高度变化事件
+        this.$nextTick(() => {
+          this.$emit("height_changed", fullscreenHeight)
+          this.$emit("width_changed", this.fullWidth)
+        })
       } else {
         this.full_windowed = false
-        this.$refs.window_mainbody.style.width = this.backup_width;
-        this.$refs.window_mainbody.style.height = this.backup_height;
-        this.$refs.window_mainbody.style.top = this.backup_top;
-        this.$refs.window_mainbody.style.left = this.backup_left;
+        // 恢复原始位置和尺寸
+        this.default_top = this.backup_top
+        this.default_left = this.backup_left
+        
         let targ_height = parseFloat(this.backup_height.substr(0, this.backup_height.length - 2))
         let targ_width = parseFloat(this.backup_width.substr(0, this.backup_width.length - 2))
         this.$emit("height_changed", targ_height)

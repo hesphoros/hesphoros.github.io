@@ -39,6 +39,9 @@
         <WindowText v-if="item.type === 'text'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
           :filesrc="item.filesrc" :filename="item.filename" :size="item.size" :zindex="item.zindex"
           :minimized="item.minimized" />
+        <WindowCode v-if="item.type === 'code'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
+          :filepath="item.filepath" :filename="item.filename" :size="item.size" :zindex="item.zindex"
+          :minimized="item.minimized" />
         <WindowBrowser v-if="item.type === 'browser'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
           :zindex="item.zindex" :default_width="item.default_width" :minimized="item.minimized" />
         <WindowVSCode v-if="item.type === 'vscode'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
@@ -92,6 +95,7 @@ import WindowFolder from '../WindowChildren/WindowFolder.vue'
 import WindowMusic from '../WindowChildren/WindowMusic.vue'
 import WindowVSCode from '../WindowChildren/WindowVSCode.vue'
 import WindowText from '../WindowChildren/WindowText.vue'
+import WindowCode from '../WindowChildren/WindowCode.vue'
 import WindowTerminal from '../WindowChildren/WindowTerminal.vue'
 import WindowBrowser from '../WindowChildren/WindowBrowser.vue'
 import WindowSetting from '../WindowChildren/WindowSetting.vue'
@@ -109,6 +113,7 @@ export default {
     Dock,
     SideBar,
     WindowText,
+    WindowCode,
     WindowMusic,
     DesktopFileArray,
     WindowFolder,

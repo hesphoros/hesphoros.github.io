@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="tw-flex-grow  tw-h-full tw-rounded-br-2xl tw-flex tw-flex-col" >
-          <div ref="main_body" class=" tw-flex-grow tw-w-full tw-flex tw-flex-col" style="background-color:#f8f8f8" :style="{'width':cont_width+'px'}" >
+          <div ref="main_body" class=" tw-flex-grow tw-w-full tw-flex tw-flex-col" style="background-color:#f8f8f8" >
             <div class="tw-w-full tw-h-8 tw-border-b border tw-border-gray-300 tw-flex tw-items-center tw-text-mygray-b6 tw-tracking-tight tw-select-none" style="background-color:#e9e9e9">
               <div ref="name_col" class="tw-h-full tw-flex tw-items-center" style="" :style="{'width':name_col_width + 'px'}" @click="switch_selected('Name')">
                 <div class="tw-flex-none tw-ml-2">Name</div>
@@ -65,20 +65,20 @@
               </div>
             </div>
             <div class="tw-flex-grow tw-w-full tw-flex ">
-              <div ref="name_col_cont" :style="{'width':name_col_width + 4 + 'px'}" class=" tw-h-full">
+              <div ref="name_col_cont" :style="{'width':name_col_width + 9 + 'px'}" class=" tw-h-full">
                 <div class=" tw-w-full tw-text-sm tw-flex tw-items-center" style="height:28px;" :style="{'background-color':current_focus===item.fileuuid?'rgba(0,129,255)':i%2===0?'rgba(255,255,255,0)':'rgba(55,55,55,.04)'}" v-for="(item ,i) in current_dir_list" :key="i" @click="item_oneClick(i)"> 
                   <div :style="{'height':item.children === undefined?'24px':'18px'}" class=" tw-flex tw-justify-center tw-items-center tw-w-7 tw-flex-none tw-ml-7 tw-pb-0.5">
-                    <img :src="require(item.children === undefined?'../../assets/images/icons/text2.png':'../../assets/images/icons/folder.png')" alt="" class="tw-h-full" >
+                    <img :src="getFileIcon(item)" alt="" class="tw-h-full" >
                   </div>
                   <div class=" tw-flex-grow tw-pr-1 tw-pl-2 tw-tracking-wide  tw-text-mygray-b6 tw-font-semibold" style="white-space:nowrap;text-overflow: ellipsis;overflow: hidden;" :style="{'color':current_focus===item.fileuuid?'#fefefe !important':''}"> {{item.name}}</div>
                 </div>
               </div>
-              <div ref="date_col_cont" :style="{'width':date_col_width + 10 + 'px'}" class="tw-h-full">
+              <div ref="date_col_cont" :style="{'width':date_col_width + 9 + 'px'}" class="tw-h-full">
                 <div class=" tw-w-full tw-text-sm tw-flex tw-items-center" style="height:28px;" :style="{'background-color':current_focus===item.fileuuid?'rgba(0,129,255)':i%2===0?'rgba(255,255,255,0)':'rgba(55,55,55,.04)'}" v-for="(item ,i) in current_dir_list" :key="i"> 
                   <div class=" tw-flex-grow tw-pr-1 tw-pl-3 tw-tracking-wide  tw-text-mygray-b7" style="white-space:nowrap;text-overflow: ellipsis;overflow: hidden;" :style="{'color':current_focus===item.fileuuid?'#fefefe !important':''}"> {{time_format_converter(item.lastedittime)}}</div>
                 </div>
               </div>
-              <div ref="size_col_cont" :style="{'width':size_col_width + 4 + 'px'}" class="tw-h-full">
+              <div ref="size_col_cont" :style="{'width':size_col_width + 'px'}" class="tw-h-full tw-flex-grow">
                 <div class=" tw-w-full tw-text-sm tw-flex tw-items-center" style="height:28px;" :style="{'background-color':current_focus===item.fileuuid?'rgba(0,129,255)':i%2===0?'rgba(255,255,255,0)':'rgba(55,55,55,.04)'}" v-for="(item ,i) in current_dir_list" :key="i"> 
                   <div class=" tw-flex-grow tw-pr-1 tw-pl-3 tw-tracking-wide  tw-text-mygray-b7" style="white-space:nowrap;text-overflow: ellipsis;overflow: hidden;" :style="{'color':current_focus===item.fileuuid?'#fefefe !important':''}"> {{size_format_converter(item.size)}}</div>
                 </div>
@@ -117,7 +117,7 @@ export default {
       cont_margin: 50,
       cont_height: 550,
       cont_width: 800,
-      body_margin: 208 + 20,
+      body_margin: 208,
       selected: "Date Modified",
       direction_down: true,
       name_col_width: 160,
@@ -175,7 +175,7 @@ export default {
       }
     },
     current_dir_list() {
-      if (this.file_filemap === [] || this.open_openpath === []) {
+      if (this.file_filemap.length === 0 || this.open_openpath.length === 0) {
         return []
       }
       // else 
@@ -234,6 +234,44 @@ export default {
     },
   },
   methods:{
+    getFileIcon(item) {
+      // 如果是文件夹,返回文件夹图标
+      if (item.children !== undefined) {
+        return require('../../assets/images/icons/folder.png');
+      }
+      
+      // 根据文件扩展名返回相应的图标
+      const fileName = item.name.toLowerCase();
+      const ext = fileName.substring(fileName.lastIndexOf('.'));
+      
+      // 代码文件类型
+      const codeExtensions = ['.cc', '.cpp', '.cxx', '.c', '.h', '.hpp', '.hxx', 
+                             '.py', '.js', '.ts', '.java', '.go', '.rs', 
+                             '.sh', '.bat', '.ps1'];
+      
+      // Markdown文件
+      if (ext === '.md') {
+        return require('../../assets/images/icons/text2.png');
+      }
+      
+      // 代码文件 - 可以使用vscode图标或text2图标
+      if (codeExtensions.includes(ext)) {
+        return require('../../assets/images/icons/vscode.png');
+      }
+      
+      // 配置文件
+      if (['.json', '.xml', '.yaml', '.yml'].includes(ext)) {
+        return require('../../assets/images/icons/text2.png');
+      }
+      
+      // 文本文件
+      if (ext === '.txt') {
+        return require('../../assets/images/icons/text.png');
+      }
+      
+      // 默认文件图标
+      return require('../../assets/images/icons/text2.png');
+    },
     PrefixZero(num, n) {
       return (Array(n).join(0) + num).slice(-n);
     },
@@ -249,11 +287,12 @@ export default {
       this.cont_height = val - this.cont_margin
     },
     window_width_changed(val){
-      this.cont_width = val - this.body_margin
+      this.cont_width = val - this.body_margin - 2
       let sum = this.name_col_width + this.date_col_width + this.size_col_width
-      this.name_col_width = this.name_col_width * this.cont_width / sum
-      this.date_col_width = this.date_col_width * this.cont_width / sum
-      this.size_col_width = this.size_col_width * this.cont_width / sum
+      let available_width = this.cont_width - 18
+      this.name_col_width = this.name_col_width * available_width / sum
+      this.date_col_width = this.date_col_width * available_width / sum
+      this.size_col_width = this.size_col_width * available_width / sum
     },
     right_resize(){
       let orn_mousedown = document.onmousedown;
@@ -275,10 +314,10 @@ export default {
         let moveX = e.clientX;
         let offsetX = this.getOffset(moveX-downX+orn_width,min,max);
         this.$refs.leftbar.style.width = offsetX + 'px';
-        this.body_margin = offsetX + 20
+        this.body_margin = offsetX
         let name_col_width = name_orn_width + orn_width - offsetX ;
         this.$refs.name_col.style.width = name_col_width + 'px';
-        this.$refs.name_col_cont.style.width = name_col_width + 'px';
+        this.$refs.name_col_cont.style.width = (name_col_width + 9) + 'px';
       }
       let mouseUpHandler = () => {
         document.onmousemove = null;
@@ -315,9 +354,9 @@ export default {
         this.$refs.name_col.style.width = offsetX + 'px';
         this.$refs.size_col.style.width = size_col_width + 'px';
         this.$refs.date_col.style.width = date_col_width + 'px';
-        this.$refs.name_col_cont.style.width = (offsetX + 4) + 'px';
-        this.$refs.size_col_cont.style.width = (size_col_width + 4) + 'px';
-        this.$refs.date_col_cont.style.width = (date_col_width  + 10) + 'px';
+        this.$refs.name_col_cont.style.width = (offsetX + 9) + 'px';
+        this.$refs.size_col_cont.style.width = size_col_width + 'px';
+        this.$refs.date_col_cont.style.width = (date_col_width  + 9) + 'px';
       }
       let mouseUpHandler = () => {
         document.onmousemove = null;
@@ -348,8 +387,8 @@ export default {
         let size_col_width = sum - offsetX - name_orn_width;
         this.$refs.date_col.style.width = offsetX + 'px';
         this.$refs.size_col.style.width = size_col_width + 'px';
-        this.$refs.date_col_cont.style.width = offsetX + 10 + 'px';
-        this.$refs.size_col_cont.style.width = size_col_width + 4 + 'px';
+        this.$refs.date_col_cont.style.width = (offsetX + 9) + 'px';
+        this.$refs.size_col_cont.style.width = size_col_width + 'px';
       }
       let mouseUpHandler = () => {
         document.onmousemove = null;
@@ -375,6 +414,13 @@ export default {
         return val + "B"
       }
     },
+    isCodeFile(filename) {
+      const codeExtensions = ['.cc', '.cpp', '.cxx', '.c', '.h', '.hpp', '.hxx', 
+                             '.py', '.js', '.ts', '.java', '.go', '.rs', 
+                             '.sh', '.bat', '.ps1', '.json', '.xml', '.yaml', '.yml'];
+      const ext = filename.substring(filename.lastIndexOf('.')).toLowerCase();
+      return codeExtensions.includes(ext);
+    },
     item_oneClick(val){
       this.current_focus = this.current_dir_list[val].fileuuid
       this.clicks++ 
@@ -391,12 +437,31 @@ export default {
           window.setTimeout(()=>{
             document.body.style.cursor='default'
           },500)
-          this.$store.commit('open_new_window', {
-            type:'text',
-            filesrc: item.path,
-            filename: item.name,
-            size: item.size,
-          })
+          
+          // 判断是否为代码文件
+          if (this.isCodeFile(item.name)) {
+            // 构建实际文件路径
+            let filePath = 'blog/' + this.open_openpath.join('/');
+            if (filePath && !filePath.endsWith('/')) {
+              filePath += '/';
+            }
+            filePath += item.name;
+            
+            this.$store.commit('open_new_window', {
+              type: 'code',
+              filepath: filePath,
+              filename: item.name,
+              size: item.size,
+            })
+          } else {
+            // Markdown文件使用原有方式
+            this.$store.commit('open_new_window', {
+              type: 'text',
+              filesrc: item.path,
+              filename: item.name,
+              size: item.size,
+            })
+          }
         } else {
           // document.body.style.cursor='progress'
           // window.setTimeout(()=>{
