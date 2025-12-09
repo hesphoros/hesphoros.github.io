@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About c-cpp/template/Template Specialization.md",
+                "file": "About muduo/线程安全的对象声明周期管理/8. Observer.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Template Specialization"
+              "title": "8. Observer"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "About c-cpp/template/Template Specialization.md",
+                "file": "About muduo/线程安全的对象声明周期管理/8. Observer.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Template Specialization 的大纲"
+              "title": "8. Observer 的大纲"
             }
           }
         ],
@@ -156,7 +156,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 306.5
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -171,11 +172,12 @@
   },
   "active": "3207bd2435bfd0f2",
   "lastOpenFiles": [
+    "About muduo/线程安全的对象声明周期管理/ch1/signal-slot.drawio",
+    "About c-cpp/template/Template Specialization.md",
     "About muduo/线程安全的对象声明周期管理/ch1/SignalSlot.hpp",
     "About muduo/线程安全的对象声明周期管理/ch1/test.exe",
     "About muduo/线程安全的对象声明周期管理/ch1/test_SignalSlotTrivial.cpp",
     "About muduo/线程安全的对象声明周期管理/8. Observer.md",
-    "About c-cpp/template/Template Specialization.md",
     "About c-cpp/template",
     "About muduo/线程安全的对象声明周期管理/ch1/SignalSlotTrivial.h",
     "About muduo/线程安全的对象声明周期管理/ch1/SignalSlot.cpp",
@@ -194,7 +196,6 @@
     "About Design Pattern/Abstract Factory.md",
     "About Design Pattern/Singleton.md",
     "About Design Pattern",
-    "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.exe",
     "About muduo/线程安全的对象声明周期管理/5. enable_shared_from_this.md",
     "Hi there.md",
     "About OpenCV + dlib/env.md",
