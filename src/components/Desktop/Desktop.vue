@@ -57,6 +57,9 @@
           :zindex="item.zindex" :minimized="item.minimized" />
         <WindowCalendar v-if="item.type === 'calendar'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
           :zindex="item.zindex" :minimized="item.minimized" />
+        <WindowDrawio v-if="item.type === 'drawio'" :uuid='item.uuid' :startpos_x="item.spx" :startpos_y="item.spy"
+          :filesrc="item.filesrc" :filename="item.filename" :size="item.size" :zindex="item.zindex"
+          :minimized="item.minimized" />
       </div>
     </div>
 
@@ -101,6 +104,7 @@ import WindowBrowser from '../WindowChildren/WindowBrowser.vue'
 import WindowSetting from '../WindowChildren/WindowSetting.vue'
 import WindowCalculator from '../WindowChildren/WindowCalculator.vue'
 import WindowCalendar from '../WindowChildren/WindowCalendar.vue'
+import WindowDrawio from '../WindowChildren/WindowDrawio.vue'
 import KeyBoard from '../Keyboard/KeyBoard.vue'
 import KeyBoardMoveIcon from '../Keyboard/KeyBoardMoveIcon.vue'
 import ContextMenu from '../ContextMenu/ContextMenu.vue'
@@ -122,6 +126,7 @@ export default {
     WindowSetting,
     WindowCalculator,
     WindowCalendar,
+    WindowDrawio,
     KeyBoard,
     KeyBoardMoveIcon,
     WindowTerminal,
