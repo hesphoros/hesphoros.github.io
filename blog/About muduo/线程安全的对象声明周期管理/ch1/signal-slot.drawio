@@ -1,0 +1,114 @@
+<mxfile host="65bd71144e">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="Signal-Slot Architecture">
+        <mxGraphModel dx="1002" dy="774" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Signal&lt;RET(ARGS...)&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="80" width="300" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="- impl_: std::shared_ptr&lt;SignalImplType&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="2" vertex="1">
+                    <mxGeometry y="30" width="300" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#6c8ebf;" parent="2" vertex="1">
+                    <mxGeometry y="56" width="300" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="+ connect(slot): shared_ptr&lt;void&gt;&#xa;  // 连接槽，返回槽句柄&#xa;+ connect(slot, tie): shared_ptr&lt;void&gt;&#xa;  // 带生命周期绑定的连接&#xa;+ call(args...): void&#xa;  // 触发信号，调用所有槽&#xa;- add(slot): void&#xa;  // 内部添加槽到列表" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontFamily=Consolas;" parent="2" vertex="1">
+                    <mxGeometry y="64" width="300" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="SignalImpl&lt;Callback&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="80" width="320" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="+ slots_: std::shared_ptr&lt;SlotList&gt;&#xa;- mutex_: MutexLock" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="6" vertex="1">
+                    <mxGeometry y="30" width="320" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#d6b656;" parent="6" vertex="1">
+                    <mxGeometry y="74" width="320" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="+ copyOnWrite(): void&#xa;  // 写时复制：确保独占访问&#xa;  // 检查 !slots_.unique() 则复制&#xa;+ clean(): void&#xa;  // 清理已失效的 weak_ptr&#xa;  // 遍历删除 expired() 的槽" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontFamily=Consolas;" parent="6" vertex="1">
+                    <mxGeometry y="82" width="320" height="88" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="SlotList&#xa;std::vector&lt;std::weak_ptr&lt;SlotImpl&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="300" width="320" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="SlotImpl&lt;Callback&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="430" width="320" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="+ data_: std::weak_ptr&lt;SignalImpl&gt;&#xa;+ callback_: Callback&#xa;+ tie_: std::weak_ptr&lt;void&gt;&#xa;+ tied_: bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="11" vertex="1">
+                    <mxGeometry y="30" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="line;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#82b366;" parent="11" vertex="1">
+                    <mxGeometry y="110" width="320" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="+ ~SlotImpl()&#xa;  // 析构时调用 data_.lock()&#xa;  // 如果 SignalImpl 存在则 clean()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontFamily=Consolas;" parent="11" vertex="1">
+                    <mxGeometry y="118" width="320" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="owns (shared_ptr)" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=2;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" parent="1" source="3" target="6" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="380" y="155" as="sourcePoint"/>
+                        <mxPoint x="500" y="155" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="500" y="155"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="owns (shared_ptr)" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;strokeColor=#d6b656;fontSize=12;fontStyle=1;" parent="1" source="6" target="10" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="660" y="230" as="sourcePoint"/>
+                        <mxPoint x="660" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="observes (weak_ptr)" style="endArrow=open;endSize=12;dashed=1;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;strokeColor=#9673a6;dashPattern=8 8;fontSize=12;fontStyle=1;" parent="1" source="10" target="11" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="660" y="360" as="sourcePoint"/>
+                        <mxPoint x="660" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="references (weak_ptr)" style="endArrow=open;endSize=12;dashed=1;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;strokeWidth=2;strokeColor=#82b366;dashPattern=8 8;fontSize=12;fontStyle=1;" parent="1" source="30" target="6" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="820" y="510" as="sourcePoint"/>
+                        <mxPoint x="820" y="155" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;🔄 Copy-on-Write Signal-Slot Pattern&lt;/b&gt;&#xa;&lt;span style=&quot;font-size: 13px;&quot;&gt;线程安全的信号槽实现架构 (Muduo-style)&lt;/span&gt;" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=14;fontStyle=1;shadow=1;glass=0;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="10" width="800" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;🔑 核心设计要点&lt;/b&gt;&#xa;&#xa;• &lt;b&gt;智能指针管理&lt;/b&gt;: Signal 通过 shared_ptr 拥有 SignalImpl&#xa;• &lt;b&gt;写时复制&lt;/b&gt;: SignalImpl 用 shared_ptr 管理 SlotList (COW)&#xa;• &lt;b&gt;避免循环引用&lt;/b&gt;: SlotList 用 weak_ptr 观察 SlotImpl&#xa;• &lt;b&gt;反向引用&lt;/b&gt;: SlotImpl 用 weak_ptr 引用 SignalImpl&#xa;• &lt;b&gt;生命周期绑定&lt;/b&gt;: tie_ 用于对象生命周期管理&#xa;• &lt;b&gt;线程安全&lt;/b&gt;: mutex_ 保护 slots_ 的修改操作" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;fontColor=#333333;shadow=1;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="660" width="380" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;📊 内存布局示意&lt;/b&gt;&#xa;&#xa;Signal::impl_ ──────► SignalImpl&#xa;                        │&#xa;                        ├─ slots_ ───► SlotList&#xa;                        │                │&#xa;                        │                ├─ weak_ptr&lt;Slot1&gt;&#xa;                        │                ├─ weak_ptr&lt;Slot2&gt;&#xa;                        │                └─ weak_ptr&lt;Slot3&gt;&#xa;                        │&#xa;                        └─ mutex_" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;fontColor=#333333;shadow=1;spacingLeft=10;fontFamily=Courier New;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="630" width="380" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="&lt;div style=&quot;color: rgb(187, 187, 187); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;span&gt;&lt;span style=&quot;color: rgb(187, 187, 187);&quot;&gt;vector&lt;/span&gt;&lt;span style=&quot;color: rgb(224, 108, 117);&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: rgb(187, 187, 187);&quot;&gt;std&lt;/span&gt;&lt;span style=&quot;color: rgb(171, 178, 191);&quot;&gt;::&lt;/span&gt;&lt;span style=&quot;color: rgb(187, 187, 187);&quot;&gt;weak_ptr&lt;/span&gt;&lt;span style=&quot;color: rgb(224, 108, 117);&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: rgb(187, 187, 187);&quot;&gt;SlotImpl&lt;/span&gt;&lt;span style=&quot;color: rgb(224, 108, 117);&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: rgb(187, 187, 187);&quot;&gt;Callback&lt;/span&gt;&lt;span style=&quot;color: rgb(224, 108, 117);&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(187, 187, 187);&quot;&gt; &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad9d5;strokeColor=#ae4132;fontSize=10;align=left;spacingLeft=5;fontFamily=Courier New;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="350" width="340" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="&lt;b&gt;📝 调用流程&lt;/b&gt;&#xa;&#xa;1. signal.call(args...)&#xa;2. 获取 slots_ 副本 (无锁读取)&#xa;3. 遍历 SlotList&#xa;4. 对每个 weak_ptr 调用 lock()&#xa;5. 如果成功，检查 tied_&#xa;6. 如果绑定对象存在，调用 callback_&#xa;7. 继续下一个槽" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=10;fontColor=#000000;shadow=1;spacingLeft=10;spacingTop=5;fontFamily=Consolas;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="270" width="340" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="&lt;b&gt;🔒 线程安全机制&lt;/b&gt;&#xa;&#xa;&lt;b&gt;写操作 (connect/disconnect):&lt;/b&gt;&#xa;• MutexLockGuard 加锁&#xa;• copyOnWrite() 确保独占&#xa;• 修改新副本&#xa;• 原子替换 slots_ 指针&#xa;&#xa;&lt;b&gt;读操作 (call):&lt;/b&gt;&#xa;• 快速复制 shared_ptr&#xa;• 无需加锁&#xa;• 遍历旧副本" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=10;fontColor=#000000;shadow=1;spacingLeft=10;spacingTop=5;fontFamily=Consolas;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="460" width="340" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="⚠️ 避免循环引用" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;position2=0.5;base=20;size=20;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="360" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="meO-5Bj2SNIODsf30AGX-30" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="25" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="meO-5Bj2SNIODsf30AGX-31" value="" style="endArrow=open;endSize=12;dashed=1;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;strokeWidth=2;strokeColor=#82b366;dashPattern=8 8;fontSize=12;fontStyle=1;" edge="1" parent="1" source="11" target="30">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="820" y="510" as="sourcePoint"/>
+                        <mxPoint x="820" y="165" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="880" y="510"/>
+                            <mxPoint x="880" y="155"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="30" value="💡 懒清理策略" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;position2=0.2;base=20;size=20;" vertex="1" parent="1">
+                    <mxGeometry x="830" y="490" width="120" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
