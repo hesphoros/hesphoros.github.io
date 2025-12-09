@@ -202,8 +202,13 @@ export default {
         this.loading = true
         this.error = false
         
-        // 构建文件 URL
-        const fileUrl = '/' + this.filesrc.replace(/^\.?\//, '')
+        // 构建文件 URL - 需要对路径的每个部分进行编码
+        let fileUrl = '/' + this.filesrc.replace(/^\.?\//, '')
+        
+        // 将路径拆分,对每个部分单独编码(保留斜杠)
+        const parts = fileUrl.split('/')
+        fileUrl = parts.map(part => encodeURIComponent(part)).join('/')
+        
         console.log('正在加载 Draw.io 文件:', fileUrl)
         
         // 使用 fetch 获取文件内容
