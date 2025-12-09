@@ -1,5 +1,5 @@
 const path = require('path')
-const fs = require('fs-extra')
+const fs = require('fs')
 const glob = require('glob')
 
 // 自定义插件:复制 drawio 文件
@@ -26,9 +26,22 @@ class CopyDrawioPlugin {
       
       // 复制每个文件
       const promises = allFiles.map(file => {
-        const src = path.join(blogDir, file)
-        const dest = path.join(docsDir, 'blog', file)
-        return fs.copy(src, dest)
+        return new Promise((resolve, reject) => {
+          const src = path.join(blogDir, file)
+          const dest = path.join(docsDir, 'blog', file)
+          const destDir = path.dirname(dest)
+          
+          // 递归创建目录
+          fs.mkdir(destDir, { recursive: true }, (err) => {
+            if (err) return reject(err)
+            
+            // 复制文件
+            fs.copyFile(src, dest, (err) => {
+              if (err) return reject(err)
+              resolve()
+            })
+          })
+        })
       })
       
       Promise.all(promises)
