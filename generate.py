@@ -22,9 +22,13 @@ def is_code_file(file_name):
     )
     return os.path.splitext(file_name)[1].lower() in code_extensions
 
+def is_drawio_file(file_name):
+    """判断是否为 Draw.io 文件"""
+    return os.path.splitext(file_name)[1].lower() in ('.drawio', '.dio')
+
 def determine_supported_file(file_name):
     """判断文件是否应该显示在文件列表中"""
-    return determine_markdown_file(file_name) or is_code_file(file_name)
+    return determine_markdown_file(file_name) or is_code_file(file_name) or is_drawio_file(file_name)
 
 def get_modify_time(file_path):
     return int(os.path.getmtime(file_path) + 0.5)
@@ -86,6 +90,17 @@ def mywalk(directory, append_pointer, header, copy_target):
                     with open(output_target,'w',encoding='utf-8') as fp:
                         fp.write(json.dumps({'data':content}))
                 
+                elif is_drawio_file(file):
+                    # Draw.io 文件: 记录实际文件路径 (相对于项目根目录,包含 blog/ 前缀)
+                    relative_path = os.path.relpath(file_path, os.path.dirname(root)).replace('\\', '/')
+                    append_pointer.append({
+                        'name': file,
+                        'path': relative_path,  # 使用相对路径,包含 blog/ 前缀
+                        'lastedittime': last_edit_time,
+                        'title': file,
+                        'abstract': 'Draw.io diagram',
+                        'size': file_size,
+                    })
                 elif is_code_file(file):
                     # 代码文件: 只记录信息,不生成 JSON
                     append_pointer.append({

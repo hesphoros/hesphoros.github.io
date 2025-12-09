@@ -66,12 +66,27 @@ export default {
         } else if (item_type === 1) {
           for (let loop_item of this.filemap) {
             if (loop_item.name === item_name) {
-              this.$store.commit('open_new_window', {
-                type:'text',
-                filesrc: loop_item.path,
-                filename: loop_item.name,
-                size: loop_item.size,
-              })
+              // 判断文件类型
+              const fileName = loop_item.name.toLowerCase();
+              const ext = fileName.substring(fileName.lastIndexOf('.'));
+              
+              if (ext === '.drawio' || ext === '.dio') {
+                // Draw.io 文件
+                this.$store.commit('open_new_window', {
+                  type: 'drawio',
+                  filesrc: loop_item.path,
+                  filename: loop_item.name,
+                  size: loop_item.size,
+                })
+              } else {
+                // 其他文本文件
+                this.$store.commit('open_new_window', {
+                  type:'text',
+                  filesrc: loop_item.path,
+                  filename: loop_item.name,
+                  size: loop_item.size,
+                })
+              }
             }
           }
         }

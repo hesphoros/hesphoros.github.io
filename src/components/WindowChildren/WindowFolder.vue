@@ -254,6 +254,11 @@ export default {
         return require('../../assets/images/icons/text2.png');
       }
       
+      // Draw.io 文件
+      if (ext === '.drawio' || ext === '.dio') {
+        return require('../../assets/images/icons/drawio.png');
+      }
+      
       // 代码文件 - 可以使用vscode图标或text2图标
       if (codeExtensions.includes(ext)) {
         return require('../../assets/images/icons/vscode.png');
@@ -438,9 +443,20 @@ export default {
             document.body.style.cursor='default'
           },500)
           
-          // 判断是否为代码文件
-          if (this.isCodeFile(item.name)) {
-            // 构建实际文件路径
+          // 判断文件类型
+          const fileName = item.name.toLowerCase();
+          const ext = fileName.substring(fileName.lastIndexOf('.'));
+          
+          if (ext === '.drawio' || ext === '.dio') {
+            // Draw.io 文件
+            this.$store.commit('open_new_window', {
+              type: 'drawio',
+              filesrc: item.path,
+              filename: item.name,
+              size: item.size,
+            })
+          } else if (this.isCodeFile(item.name)) {
+            // 代码文件
             let filePath = 'blog/' + this.open_openpath.join('/');
             if (filePath && !filePath.endsWith('/')) {
               filePath += '/';
@@ -454,7 +470,7 @@ export default {
               size: item.size,
             })
           } else {
-            // Markdown文件使用原有方式
+            // Markdown 和其他文本文件
             this.$store.commit('open_new_window', {
               type: 'text',
               filesrc: item.path,

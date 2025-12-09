@@ -88,6 +88,11 @@ const store = new Vuex.Store({
         obj.type="calculator"
       } else if (payload.type === 'calendar') {
         obj.type="calendar"
+      } else if (payload.type === 'drawio') {
+        obj.type='drawio'
+        obj.filesrc=payload.filesrc
+        obj.filename=payload.filename
+        obj.size=payload.size
       }
       state.window_list.push(obj)
       this.commit('refresh_window_focus', {uuid:new_uuid})
