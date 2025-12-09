@@ -99,6 +99,10 @@ public:
         return &m_mutex;
     }
 
+    void assertLocked(){
+        assert(isLockedByThisThread());
+    }
+
 private:
 
     pthread_mutex_t m_mutex;  // 互斥锁
