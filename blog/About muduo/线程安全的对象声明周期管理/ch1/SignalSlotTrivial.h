@@ -8,6 +8,15 @@
 template <typename Signature>
 class SignalTrivial;
 
+/**
+ * @brief SignalTrivial 类模板的特化版本，处理函数签名 RET(ARGS...)
+ * @tparam RET 函数返回类型
+ * @tparam ARGS 函数参数类型包
+ * @example 
+ *  * SignalTrivial<void(int)> signal;
+ *  * signal.connect([](int x) { std::cout << x << std::endl; });
+ *  * signal.call(42);
+ */
 template <typename RET, typename... ARGS>
 class SignalTrivial<RET(ARGS...)>
 {
