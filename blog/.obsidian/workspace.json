@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "ccd7f1acdb1abcc4",
+        "id": "4bb71ec19ecd5215",
         "type": "tabs",
         "children": [
           {
-            "id": "769cbfda5d7e6d2e",
+            "id": "3207bd2435bfd0f2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About muduo/线程安全的对象声明周期管理/6. 弱回调.md",
+                "file": "About c-cpp/template/Template Specialization.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "6. 弱回调"
+              "title": "Template Specialization"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "About muduo/线程安全的对象声明周期管理/析构函数遇到多线程.md",
+                "file": "About c-cpp/template/Template Specialization.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "析构函数遇到多线程 的大纲"
+              "title": "Template Specialization 的大纲"
             }
           }
         ],
@@ -156,8 +156,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 306.5,
-    "collapsed": true
+    "width": 306.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,11 +169,30 @@
       "bases:创建新数据库": false
     }
   },
-  "active": "769cbfda5d7e6d2e",
+  "active": "3207bd2435bfd0f2",
   "lastOpenFiles": [
+    "About muduo/线程安全的对象声明周期管理/8. Observer.md",
+    "About c-cpp/template/Template Specialization.md",
+    "About c-cpp/template",
+    "About muduo/线程安全的对象声明周期管理/ch1/SignalSlotTrivial.h",
+    "About muduo/线程安全的对象声明周期管理/ch1/SignalSlot.cpp",
+    "About muduo/线程安全的对象声明周期管理/ch1/Observer_safe.cc",
+    "About muduo/线程安全的对象声明周期管理/7. 实现线程安全的对象回调和析构.md",
+    "About Design Pattern/Observer.md",
+    "About Design Pattern/Facade.md",
+    "About muduo/线程安全的对象声明周期管理/Facade.cpp",
+    "About muduo/线程安全的对象声明周期管理/ch1/Facade.cpp",
+    "About muduo/线程安全的对象声明周期管理/6. 弱回调.md",
+    "About Design Pattern/Prototype.md",
+    "About Design Pattern/Adapter.md",
+    "About Design Pattern/Builder.md",
+    "About Design Pattern/Simple Factory.md",
+    "About Design Pattern/Factory Method.md",
+    "About Design Pattern/Abstract Factory.md",
+    "About Design Pattern/Singleton.md",
+    "About Design Pattern",
     "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.exe",
     "About muduo/线程安全的对象声明周期管理/5. enable_shared_from_this.md",
-    "About muduo/线程安全的对象声明周期管理/6. 弱回调.md",
     "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.o",
     "Hi there.md",
     "About OpenCV + dlib/env.md",
@@ -182,32 +200,13 @@
     "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
     "About muduo/Windows Linux IO模型.md",
     "About muduo/线程安全的对象声明周期管理/2. 线程安全的Observer.md",
-    "About muduo/线程安全的对象声明周期管理/ch1/StockFactory.cpp",
     "About muduo/线程安全的对象声明周期管理/3. shared_ptr 技术与陷阱.md",
     "About muduo/线程安全的对象声明周期管理/1. 析构函数遇到多线程.md",
-    "base.base",
-    "About muduo/线程安全的对象声明周期管理/ch1/Observer.cc",
-    "About muduo/Observer.cc",
-    "About muduo/线程安全的对象声明周期管理/ch1/MutexLock.hpp",
-    "About muduo/线程安全的对象声明周期管理/ch1/Counter.hpp",
-    "About muduo/线程安全的对象声明周期管理/ch1/dctor_mutex.cc",
-    "About muduo/线程安全的对象声明周期管理/ch1/NoCopyAble.hpp",
     "About High Performance Upload/LUSP_ADAPTATION_SUCCESS.md",
     "About muduo/README.md",
     "About HeartBeat Mechanism/Heartbeat Mechanism.md",
     "About Engineering structure plan/如何减少项目的编译时间.md",
     "About c-cpp/lock_guard.md",
-    "About c-cpp/mutable.md",
-    "About muduo/mutable.md",
-    "About RAII/RAII.md",
-    "About beautifying windows/README.md",
-    "未命名.md",
-    "About Character encoding/Unicode.md",
-    "About Character encoding/GB2312、GBK 和 GB18030 ASCII.md",
-    "About Character encoding/ASCII Table.md",
-    "About Character encoding/ASCII 与 非 ASCII编码.md",
-    "About Character encoding/编码基础知识.md",
-    "About Calling Convention/Calling Convertion.md",
     "QQ_1761918942065.png",
     "About Doxygen/assets/image-20250509153015784.png",
     "About Doxygen/assets/image-20250509152418483.png",
