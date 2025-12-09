@@ -1,4 +1,48 @@
-const CopyPlugin = require('copy-webpack-plugin')
+const path = require('path')
+const fs = require('fs-extra')
+const glob = require('glob')
+
+// 自定义插件:复制 drawio 文件
+class CopyDrawioPlugin {
+  apply(compiler) {
+    compiler.hooks.afterEmit.tapAsync('CopyDrawioPlugin', (compilation, callback) => {
+      const blogDir = path.resolve(__dirname, 'blog')
+      const docsDir = path.resolve(__dirname, 'docs')
+      
+      // 查找所有 .drawio 和 .dio 文件
+      const patterns = ['**/*.drawio', '**/*.dio']
+      const allFiles = []
+      
+      patterns.forEach(pattern => {
+        const files = glob.sync(pattern, { cwd: blogDir })
+        allFiles.push(...files)
+      })
+      
+      if (allFiles.length === 0) {
+        console.log('未找到 drawio 文件')
+        callback()
+        return
+      }
+      
+      // 复制每个文件
+      const promises = allFiles.map(file => {
+        const src = path.join(blogDir, file)
+        const dest = path.join(docsDir, 'blog', file)
+        return fs.copy(src, dest)
+      })
+      
+      Promise.all(promises)
+        .then(() => {
+          console.log(`✓ 已复制 ${allFiles.length} 个 drawio 文件到 docs/blog/`)
+          callback()
+        })
+        .catch(error => {
+          console.error('✗ 复制 drawio 文件失败:', error)
+          callback()
+        })
+    })
+  }
+}
 
 module.exports = {
   transpileDependencies: [
@@ -31,13 +75,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      new CopyPlugin([
-        {
-          from: 'blog',
-          to: 'blog',
-          ignore: ['.DS_Store']
-        }
-      ])
+      new CopyDrawioPlugin()
     ]
   }
 }
