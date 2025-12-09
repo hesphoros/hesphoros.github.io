@@ -1,3 +1,5 @@
+const CopyPlugin = require('copy-webpack-plugin')
+
 module.exports = {
   transpileDependencies: [
     'vuetify'
@@ -26,5 +28,16 @@ module.exports = {
       maskIcon: 'favicon.ico',
       msTileImage: 'favicon.ico'
     }
+  },
+  configureWebpack: {
+    plugins: [
+      new CopyPlugin([
+        {
+          from: 'blog',
+          to: 'blog',
+          ignore: ['.DS_Store']
+        }
+      ])
+    ]
   }
 }
