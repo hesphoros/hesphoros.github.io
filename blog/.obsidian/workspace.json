@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "4bb71ec19ecd5215",
+        "id": "bcd52b52684c1fa5",
         "type": "tabs",
         "children": [
           {
-            "id": "3207bd2435bfd0f2",
+            "id": "200308a1eb72a01b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "About muduo/线程安全的对象声明周期管理/8. Observer.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "8. Observer"
+              "title": "新标签页"
             }
           }
         ]
@@ -40,7 +36,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "byModifiedTime",
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
@@ -142,13 +138,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "About muduo/线程安全的对象声明周期管理/8. Observer.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "8. Observer 的大纲"
+              "title": "大纲"
             }
           }
         ],
@@ -156,8 +151,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,8 +164,38 @@
       "bases:创建新数据库": false
     }
   },
-  "active": "3207bd2435bfd0f2",
+  "active": "200308a1eb72a01b",
   "lastOpenFiles": [
+    "About NFTS/CreateEventW.md",
+    "About NFTS/Untitled.md",
+    "About c-cpp/basic_string.md",
+    "About NFTS/CreateFile.md",
+    "About NFTS/Mind MFT.mindmap.md",
+    "About NFTS/NTFS.canvas",
+    "QQ_1766972795716.png",
+    "About NFTS/mft.canvas.md",
+    "About NFTS/NTFS重解析点.md",
+    "About NFTS/q.md",
+    "About NFTS/Untitled Folder",
+    "base.base",
+    "Hi there.md",
+    "About NFTS/BPB.md",
+    "About NFTS/DeviceIoControl function.md",
+    "About NFTS/File System Data .md",
+    "About NFTS/FILE_RECORD_SEGMENT_HEADER.md",
+    "About NFTS/Master File Table.md",
+    "About NFTS/Ntdlr .md",
+    "About NFTS/NTFS.MD",
+    "About NFTS/NTFS-Layout.md",
+    "About NFTS/NTFS相关系统术语.md",
+    "About NFTS/ntfsdoc-Chinese.pdf",
+    "未命名 2.canvas",
+    "2025-12-27.md",
+    "未命名 3.canvas",
+    "About NFTS/多扇区头部修复.md",
+    "未命名 1.canvas",
+    "未命名 4.canvas",
+    "未命名.canvas",
     "About muduo/线程安全的对象声明周期管理/ch1/signal-slot.drawio",
     "About c-cpp/template/Template Specialization.md",
     "About muduo/线程安全的对象声明周期管理/ch1/SignalSlot.hpp",
@@ -181,33 +205,10 @@
     "About c-cpp/template",
     "About muduo/线程安全的对象声明周期管理/ch1/SignalSlotTrivial.h",
     "About muduo/线程安全的对象声明周期管理/ch1/SignalSlot.cpp",
-    "About muduo/线程安全的对象声明周期管理/ch1/Observer_safe.cc",
     "About muduo/线程安全的对象声明周期管理/7. 实现线程安全的对象回调和析构.md",
     "About Design Pattern/Observer.md",
     "About Design Pattern/Facade.md",
-    "About muduo/线程安全的对象声明周期管理/Facade.cpp",
-    "About muduo/线程安全的对象声明周期管理/ch1/Facade.cpp",
     "About muduo/线程安全的对象声明周期管理/6. 弱回调.md",
-    "About Design Pattern/Prototype.md",
-    "About Design Pattern/Adapter.md",
-    "About Design Pattern/Builder.md",
-    "About Design Pattern/Simple Factory.md",
-    "About Design Pattern/Factory Method.md",
-    "About Design Pattern/Abstract Factory.md",
-    "About Design Pattern/Singleton.md",
-    "About Design Pattern",
-    "About muduo/线程安全的对象声明周期管理/5. enable_shared_from_this.md",
-    "Hi there.md",
-    "About OpenCV + dlib/env.md",
-    "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
-    "About muduo/Windows Linux IO模型.md",
-    "About muduo/线程安全的对象声明周期管理/2. 线程安全的Observer.md",
-    "About muduo/线程安全的对象声明周期管理/3. shared_ptr 技术与陷阱.md",
-    "About muduo/线程安全的对象声明周期管理/1. 析构函数遇到多线程.md",
-    "About High Performance Upload/LUSP_ADAPTATION_SUCCESS.md",
-    "About muduo/README.md",
-    "About HeartBeat Mechanism/Heartbeat Mechanism.md",
-    "About Engineering structure plan/如何减少项目的编译时间.md",
     "QQ_1761918942065.png",
     "About Doxygen/assets/image-20250509153015784.png",
     "About Doxygen/assets/image-20250509152418483.png",
