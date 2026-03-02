@@ -1,4 +1,4 @@
-# BIOS Parameter Block
+![](../picture/Pasted%20image%2020260106185150.png)# BIOS Parameter Block
 
 # 什么是BPB
 

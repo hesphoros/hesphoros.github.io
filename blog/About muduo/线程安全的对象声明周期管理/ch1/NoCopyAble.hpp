@@ -38,21 +38,29 @@ struct base_token {};
     class NoCopyAble : base_token
     {
     protected:
-    #if !defined(NO_CXX11_DEFAULTED_FUNCTIONS) && !defined(NO_CXX11_NON_PUBLIC_DEFAULTED_FUNCTIONS)
-        constexpr NoCopyAble() = default;
-        ~NoCopyAble() = default;
-    #else
-        NoCopyAble() {}
-        ~NoCopyAble() {}
-    #endif
-    #if !defined(NO_CXX11_DELETED_FUNCTIONS)
-        NoCopyAble(const NoCopyAble&) = delete;
-        NoCopyAble& operator=(const NoCopyAble&) = delete;
-    #else
+        #if !defined(NO_CXX11_DEFAULTED_FUNCTIONS) && !defined(NO_CXX11_NON_PUBLIC_DEFAULTED_FUNCTIONS)
+            constexpr NoCopyAble() = default;
+            ~NoCopyAble() = default;
+
+            // Move operations are allowed
+            NoCopyAble(NoCopyAble&&) noexcept = default;
+            NoCopyAble& operator=(NoCopyAble&&) noexcept = default;
+        #else
+            NoCopyAble() {}
+            ~NoCopyAble() {}
+
+            // Move operations are allowed
+            NoCopyAble(NoCopyAble&&) noexcept {}
+            NoCopyAble& operator=(NoCopyAble&&) noexcept { return *this; }
+        #endif
+        #if !defined(NO_CXX11_DELETED_FUNCTIONS)
+            NoCopyAble(const NoCopyAble&) = delete;
+            NoCopyAble& operator=(const NoCopyAble&) = delete;
+        #else
     private:  // 强调以下成员是私有的
-        NoCopyAble(const NoCopyAble&);
-        NoCopyAble& operator=(const NoCopyAble&);
-    #endif
+            NoCopyAble(const NoCopyAble&);
+            NoCopyAble& operator=(const NoCopyAble&);
+        #endif
     };
 }
 

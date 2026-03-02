@@ -1,11 +1,12 @@
 ## Formatted disk Layout
+![Ntfs Sturcture](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/Pasted%20image%2020260106184606.png)
 
 ![image-20251219170034549](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20251219170034549.png)
 
 ![image-20251225021434327](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20251225021434327.png)
 
 # 1. Boot Sector / VBR(volume boot recorder)
-
+![](../picture/Pasted%20image%2020260106185145.png)
 Boot sector 可引导分区，用于存储有关卷布局和文件系统结构的信息，以及加载 Ntdlr 的引导代码。
 
 格式化 NTFS 卷时，格式化程序会将前 16 个扇区分配给 $Boot 元数据文件。实际上，第一个扇区是包含“引导”代码的引导扇区，接下来的 15 个扇区是引导扇区的 IPL（初始程序加载器）。为了提高文件系统的可靠性，NTFS 分区的最后一个扇区包含引导扇区的备用副本。
@@ -85,3 +86,4 @@ Physical Sector: Cyl 0, Side 1, Sector 1                    
 ## BIOS PARAMTER BLOCK
 
 [BPB](./BPB.MD)
+![](../picture/Pasted%20image%2020260106185150.png)
