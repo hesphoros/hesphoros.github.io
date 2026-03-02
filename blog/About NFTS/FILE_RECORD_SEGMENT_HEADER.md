@@ -1,5 +1,7 @@
 # FILE_RECORD_SEGMENT_HEADER
 
+![](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/Pasted%20image%2020260106191441.png)
+
 表示文件记录段。这是主文件表（MFT）中每个文件记录段的头部。
 
 ```c++

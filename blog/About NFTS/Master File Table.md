@@ -1,4 +1,5 @@
 # NTFS Master File Table
+![](../picture/Pasted image 20260106184209.png
 
 包含从 NTFS 分区检索文件所需的信息，例如文件的属性。
 
@@ -52,3 +53,8 @@ NTFS 文件系统为 MFT 保留空间，以使 MFT 在增长时尽可能保持�
 # Master File Table Copy 
 
 包括用于在原始副本出现问题时恢复文件系统所必需的记录副本
+
+
+# B* tree
+
+![](../picture/Pasted%20image%2020260106190806.png)
