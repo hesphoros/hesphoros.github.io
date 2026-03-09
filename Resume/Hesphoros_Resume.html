@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesphoros - C++ System Developer Resume</title>
+    <!-- 引入外部字体和图标 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --surface-color: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --text-light: #9ca3af;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #0f172a;
+            --border: #e5e7eb;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --radius-sm: 4px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 2rem 1rem;
+        }
+
+        .resume-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Top Header for Mobile & Print */
+        @media (min-width: 768px) {
+            .resume-wrapper {
+                flex-direction: row;
+            }
+        }
+
+        /* === Left Sidebar Panel === */
+        .sidebar {
+            background-color: #f8fafc;
+            color: var(--secondary);
+            padding: 2.5rem;
+            width: 100%;
+            border-right: 1px solid var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar {
+                width: 31%;
+                min-width: 290px;
+            }
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+            color: var(--secondary);
+        }
+
+        .profile-title {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .badges img {
+            height: 22px;
+            margin: 0.2rem;
+            border-radius: 4px;
+        }
+
+        .contact-list {
+            list-style: none;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-list i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .contact-list a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-list a:hover {
+            color: var(--primary);
+        }
+
+        .sidebar-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-section h3 i {
+            color: var(--primary);
+        }
+
+        .about-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        .about-text strong {
+            color: var(--primary);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            background-color: #e0e7ff;
+            color: var(--primary-hover);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* === Right Main Panel === */
+        .main-content {
+            padding: 2.5rem 3rem;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+        }
+
+        .timeline {
+            position: relative;
+            border-left: 2px solid var(--border);
+            padding-left: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.55rem;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--surface-color);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .item-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--primary);
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .item-desc {
+            margin-top: 0.5rem;
+        }
+
+        .item-desc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .item-desc li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .item-desc li::before {
+            content: "\f105";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .item-desc li strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .item-desc a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--primary);
+        }
+
+        /* Print formatting */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .resume-wrapper {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .sidebar {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .skill-tag {
+                background-color: #e0e7ff !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .section-title i {
+                background: #e0e7ff !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .item-subtitle {
+                background: #f1f5f9 !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="resume-wrapper">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+        <div class="profile-header">
+            <h1>Hesphoros</h1>
+            <div class="profile-title">系统架构 / C++ 开发工程师</div>
+            <div class="badges">
+                <img src="https://img.shields.io/badge/C++-%2300599C.svg?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++" />
+                <img src="https://img.shields.io/badge/Rust-%23000000.svg?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
+                <img src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black" alt="Linux" />
+            </div>
+        </div>
+
+        <ul class="contact-list">
+            <li><i class="fas fa-envelope"></i> <a href="mailto:hesphoros@gmail.com">hesphoros@gmail.com</a></li>
+            <li><i class="fab fa-github"></i> <a href="https://github.com/hesphoros" target="_blank">github.com/hesphoros</a></li>
+            <li><i class="fas fa-globe"></i> <a href="https://hesphoros.github.io" target="_blank">hesphoros.github.io</a></li>
+            <li><i class="fas fa-pen-nib"></i> <a href="https://blog.csdn.net/m0_72703340" target="_blank">CSDN Tech Blog</a></li>
+            <li><i class="fas fa-map-marker-alt"></i> Beijing, China</li>
+            <li><i class="fas fa-fingerprint"></i> Personality: INTJ-A</li>
+        </ul>
+
+        <div class="sidebar-section">
+            <h3><i class="fas fa-user"></i> 个人简介</h3>
+            <p class="about-text">
+                自<strong>小学五年级</strong>起接触编程，现<strong>高三应届生</strong>（目前时间充裕，不受学业强制约束，可全日制参与核心开发）。求职意向：全职/实习研发工程师。专注于操作系统底层、内存管理与高性能分布式系统开发。具备扎实的架构设计能力——能熟练运用 SIMD 指令集进行程序调优、独立实现 32-bit OS 的系统调度，及纯 C 神经网络引擎推导。<br><br>掌握现代软件工程规范（CI/CD、GTest等），累计 <strong>2年自由职业商业项目开发交付经验</strong>；并持续向 libevent、Boost 等顶尖 C++ 开源库贡献代码，深受技术热爱驱使。
+            </p>
+        </div>
+
+        <div class="sidebar-section">
+            <h3><i class="fas fa-microchip"></i> 技术栈矩阵</h3>
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">系统语言 (Core)</div>
+                <div class="skills-container">
+                    <span class="skill-tag">C / C++ (11/17/20)</span>
+                    <span class="skill-tag">Rust</span>
+                    <span class="skill-tag">x86 Assembly</span>
+                    <span class="skill-tag">Python</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">底层与高并发 (Architecture)</div>
+                <div class="skills-container">
+                    <span class="skill-tag">OS Kernel & VMM</span>
+                    <span class="skill-tag">mmap Zero-copy</span>
+                    <span class="skill-tag">SIMD / AVX-512</span>
+                    <span class="skill-tag">Lock-free Design</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">网络生态 (Frameworks)</div>
+                <div class="skills-container">
+                    <span class="skill-tag">Boost.Asio</span>
+                    <span class="skill-tag">gRPC / mTLS</span>
+                    <span class="skill-tag">Qt6 / GUI</span>
+                    <span class="skill-tag">Redis / MySQL</span>
+                </div>
+            </div>
+
+            <div>
+                <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">工程与软技能 (Engineering)</div>
+                <div class="skills-container">
+                    <span class="skill-tag">CMake & VCPKG</span>
+                    <span class="skill-tag">GTest / CI/CD</span>
+                    <span class="skill-tag">ASan / Profiler</span>
+                    <span class="skill-tag">Tech English</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Right Main Content -->
+    <main class="main-content">
+        
+        <h2 class="section-title"><i class="fas fa-briefcase"></i> 项目与开源经历</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">软件开发工程师 (自由职业 / 商业外包)</div>
+                </div>
+                <div class="item-subtitle">后端基础设施及客户端应用设计 (2年以上)</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>商业化研发：</strong> 参与并交付多个高并发后端和系统级应用。能够独立完成需求拆解、系统设计以及异地团队协同开发。</li>
+                        <li><strong>voidImageViewer (Everything 开发者主导项目)：</strong> 作为核心贡献者，深入解决本地文件系统快速索引及重定位的设计挑战 (<a href="https://github.com/voidtools/voidImageViewer/pull/55" target="_blank">PR #55</a>, <a href="https://github.com/voidtools/voidImageViewer/pull/41" target="_blank">PR #41</a>, <a href="https://github.com/voidtools/voidImageViewer/pull/40" target="_blank">#40</a>, <a href="https://github.com/voidtools/voidImageViewer/pull/37" target="_blank">#37</a> 等均被 Merge)。</li>
+                        <li><strong>全球顶级开源库贡献：</strong> 持续关注底层生态，向顶级 C++ 基础库提交并发及系统层的代码并获主分支合并，如 <strong>libevent</strong> (<a href="https://github.com/libevent/libevent/pull/1773" target="_blank">PR #1773</a>)、<strong>Microsoft vcpkg</strong> (<a href="https://github.com/microsoft/vcpkg/pull/50240" target="_blank">PR #50240</a>) 等，保持高频 GitHub 活跃度（190+ Public Repos）。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-rocket"></i> 工程实践与基础架构设计</h2>
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">HesphorosOS —— x86 裸机操作系统内核 <a href="https://github.com/hesphoros/HesphorosOS" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i> C / x86 Assembly / Preemptive Kernel / FAT32</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>系统实现：</strong> 不依赖现有 OS，从汇编 Bootloader 起完全自主编写 32-bit 系统，深入理解 Ring 0 特权级及 GDT/IDT 中断机制。</li>
+                        <li><strong>内存与任务管理：</strong> 实现物理内存池（PMM）与虚拟分页机制（VMM），完成进程的抢占式时钟调度及上下文切换。</li>
+                        <li><strong>文件系统：</strong> 从零编写 FAT32 硬驱动及 VFS 层接口，为操作系统实现基本 IO 功能并兼容 C 标准库（Newlib）。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">HighPerformanceUploadServer —— 高并发上传服务 <a href="https://github.com/hesphoros/HighPerformanceUploadServer" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i>++ C++ / mTLS 1.3 / FlatBuffers / Lock-free Persist Queue</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>安全加密通信：</strong> 基于 mTLS 1.3 双向证书认证建立链路，保障端到端的高并发且安全的大文件分层传输。</li>
+                        <li><strong>高性能缓冲：</strong> 引入 FlatBuffers 代替 JSON 实现内存级别的零拷贝反序列化，并设计无锁持久化队列处理 IO 写入洪峰，提升吞吐稳定性。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">HesChat —— 分布式即时通讯系统 <a href="https://github.com/hesphoros/heschat" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i>++ C++20 / gRPC / Boost.Asio / DB Pool / Qt6</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>集群架构：</strong> 将系统解耦为网关层(Gate)、业务逻辑层(Chat)与状态层(Status)。通过 gRPC 通信并结合 Redis 连接池保证高可用与可扩展性。</li>
+                        <li><strong>智能跨端应用：</strong> 使用 Qt6 构建桌面客户端，并原生集成 dlib 与 OpenCV 的面部特征识别算法，实现快速生物鉴权体系。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">UniConv —— 高性能字符编码转换库 <a href="https://github.com/hesphoros/UniConv" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i>++ C++17 / AVX-512 SIMD / Lock-free / Zero-copy</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>SIMD 加速与极限扩展：</strong> 动态集成 simdutf，借助 AVX-512/NEON 指令集将单核字符转换速度提升 4~12.5 倍（最高达 <strong>12 GB/s</strong>）；同时实现多核批处理架构，吞吐量相较原生提速 17.7 倍至 <strong>10.76 GB/s</strong>。</li>
+                        <li><strong>高并发无锁与零拷贝：</strong> 核心缓存层剥离常规锁机制，采用 4-Way 伪分片哈希表加 O(1) LRU 淘汰策略。实现 <code>string_view</code> 与 <code>BufferLease</code> 结构的 Zero-copy（零拷贝）透传，极限压榨 CPU 计算红利。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">LuspSearchCore / MyTFS —— 底层检索与分布式文件引擎 <a href="https://github.com/hesphoros/LuspSearchCore" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i>++ NTFS MFT ByPass / Trigram Index / mmap Zero-copy</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>全盘秒级高优检索引擎 (LuspSearch)：</strong> 直接解析底层 NTFS $MFT 表结合 USN 日志追踪，实现全盘千万级数据极速并发索引。结合 Trigram 倒排算法，单硬盘千万级文件重建索引最快仅需数分钟，正则/模糊搜查达到毫秒（ms）级响应；具备后台资源温控机制，实现<strong>极低空载占用（CPU < 1%）</strong>与高缓存命中，该工程设计已被应用于商用软件。</li>
+                        <li><strong>自研文件引擎 (MyTFS)：</strong> 基于 C++11 实现海量小文件的存储归档，配合 <code>mmap</code> 的零拷贝（Zero-copy）机制与内存映射回收消除传统 read/write 所带来的模式切换和缓存开销。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">LightLog —— 高性能异步并发日志组件 <a href="https://github.com/hesphoros/LightLogWriteImplWithPanel" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i>++ C++ / Async Queue Core / I/O Optimization</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>异步无阻塞架构：</strong> 设计底层队列结构解决高并发场景下的 IO 慢写堵塞问题，支持由独立后台线程进行平滑的落盘处理。</li>
+                        <li><strong>生命周期管理：</strong> 实现了日志数据的自动化切割与轮转转存机制，保证服务端在极端流量下磁盘空间的稳定性。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="item-header">
+                    <div class="item-title">NNHDC —— 纯 C 语言零依赖神经网络 <a href="https://github.com/hesphoros/NNHDC" target="_blank" style="color: var(--primary); font-size: 0.9rem; margin-left: 8px;"><i class="fab fa-github"></i></a></div>
+                </div>
+                <div class="item-subtitle"><i class="fab fa-cuttlefish"></i> Pure C / CNN / Matrix Calculus / Backprop (高二完成)</div>
+                <div class="item-desc">
+                    <ul>
+                        <li><strong>算法底层推导：</strong> 不依赖任何高阶计算库（如 PyTorch、BLAS），用原生 C 语言指针和多维数组完整实现了局部的图片判读框架。</li>
+                        <li><strong>独立实现求导：</strong> 独立推演了 <code>Conv2d</code>（卷积阵列）和交叉熵的梯度链式求导，成功手写前向推理分析与反向传播的运算更新。</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
