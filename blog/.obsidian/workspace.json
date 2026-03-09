@@ -11,10 +11,14 @@
             "id": "daa9bc86b202e68c",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "srv03rtm on win11/Compile srv03rtm on Windows11.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "Compile srv03rtm on Windows11"
             }
           }
         ]
@@ -138,12 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "srv03rtm on win11/Compile srv03rtm on Windows11.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "Compile srv03rtm on Windows11 的大纲"
             }
           }
         ],
@@ -164,8 +169,12 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "18e2db462d0652ae",
+  "active": "daa9bc86b202e68c",
   "lastOpenFiles": [
+    "picture/QQ_1773064895528.png",
+    "srv03rtm on win11/Compile srv03rtm on Windows11.md",
+    "srv03rtm on win11",
+    "About ReatOS",
     "About Character encoding/unicode.md",
     "About Character encoding/utf16BE UTF16LE等.md",
     "About Character encoding/iconv.md",
@@ -200,8 +209,6 @@
     "picture/Pasted image 20260106190806.png",
     "About NFTS/CreateEventW.md",
     "About NFTS/NTFS相关系统术语.md",
-    "About NFTS/File System Data .md",
-    "About NFTS/DeviceIoControl function.md",
     "About NFTS/MFT.canvas",
     "picture/Pasted image 20260106185150.png",
     "picture/Pasted image 20260106185145.png",
@@ -213,8 +220,6 @@
     "新建文件夹",
     "About NFTS/NTFS.canvas",
     "About NFTS/MTF.canvas",
-    "About NFTS/Untitled Folder",
-    "base.base",
     "未命名 2.canvas",
     "未命名 3.canvas",
     "未命名 1.canvas",
