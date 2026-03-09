@@ -284,4 +284,6 @@ make -j"$(sysctl -n hw.ncpu)"
 make install
 ```
 
-如你在某一步仍遇到错误，建议优先贴出“第一条报错”前后 30 行日志，通常就能快速定位缺哪个工具或哪个路径配置不正确。
+注： 如果你觉得麻烦可以直接使用此跨平台编译方案
+https://github.com/hesphoros/libiconv-native
+
