@@ -3,7 +3,7 @@
 #include "NoCopyAble.hpp"
 #include "MutexLockGuard.hpp"
 
-class Counter : public NonCopyAble {
+class Counter : public NoCopyAble {
 
     //copy-ctor and assignment should be privade by default for class
 public:
@@ -22,7 +22,7 @@ public:
     }
 
 private:
-    int64_t m_count;
+    int64_t           m_count;
     mutable MutexLock m_mutex;
 // In a real world, atomic<int64_t> m_count; would be better
 };
