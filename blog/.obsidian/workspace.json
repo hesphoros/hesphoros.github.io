@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "f0ca91ae56913601",
+        "id": "52e74d20f2801d26",
         "type": "tabs",
         "children": [
           {
-            "id": "daa9bc86b202e68c",
+            "id": "d917f55aefa54dec",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "srv03rtm on win11/Compile srv03rtm on Windows11.md",
+                "file": "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Compile srv03rtm on Windows11"
+              "title": "4. 对象池"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "srv03rtm on win11/Compile srv03rtm on Windows11.md",
+                "file": "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Compile srv03rtm on Windows11 的大纲"
+              "title": "4. 对象池 的大纲"
             }
           }
         ],
@@ -169,10 +169,21 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "daa9bc86b202e68c",
+  "active": "d917f55aefa54dec",
   "lastOpenFiles": [
-    "picture/QQ_1773064895528.png",
+    "About muduo/线程安全的对象声明周期管理/3. shared_ptr 技术与陷阱.md",
+    "About muduo/线程安全的对象声明周期管理/5. enable_shared_from_this.md",
+    "About muduo/线程安全的对象声明周期管理/2. 线程安全的Observer.md",
+    "About SSL TSL/SSL.md",
+    "srv03rtm on win11/Windows IOCP 研究.md",
+    "picture/Pasted image 20260314200426.png",
+    "srv03rtm on win11/深入解析Windows操作系统(第4版).pdf.zip",
+    "srv03rtm on win11/深入解析Windows操作系统(第4版).pdf",
+    "srv03rtm on win11/Windows-Internals-4th Edition.pdf",
     "srv03rtm on win11/Compile srv03rtm on Windows11.md",
+    "Hi there.md",
+    "Pasted image 20260106183858.png",
+    "picture/QQ_1773064895528.png",
     "srv03rtm on win11",
     "About ReatOS",
     "About Character encoding/unicode.md",
@@ -203,21 +214,10 @@
     "picture/Pasted image 20260106191441.png",
     "About NFTS/Master File Table.md",
     "About NFTS/Mind MFT.mindmap.md",
-    "About NFTS/NTFS.MD",
-    "About NFTS/CreateFile.md",
-    "About NFTS/NTFS重解析点.md",
     "picture/Pasted image 20260106190806.png",
-    "About NFTS/CreateEventW.md",
-    "About NFTS/NTFS相关系统术语.md",
     "About NFTS/MFT.canvas",
     "picture/Pasted image 20260106185150.png",
-    "picture/Pasted image 20260106185145.png",
-    "picture/Pasted image 20260106184606.png",
     "About NFTS/ntfsdoc.pdf",
-    "About NFTS/ntfsdoc-Chinese.pdf",
-    "picture/Pasted image 20260106184209.png",
-    "picture",
-    "新建文件夹",
     "About NFTS/NTFS.canvas",
     "About NFTS/MTF.canvas",
     "未命名 2.canvas",
