@@ -27,3 +27,15 @@ __pycache__/
 *$py.class
 
 blog/srv03rtm on win11/深入解析Windows操作系统(第4版).pdf
+
+# generate.py generated artifacts
+public/desktop_*.json
+public/map.json
+docs/desktop_*.json
+docs/map.json
+
+# Obsidian local workspace/config (keep plugins tracked)
+.obsidian/
+blog/.obsidian/**
+!blog/.obsidian/plugins/
+!blog/.obsidian/plugins/**
