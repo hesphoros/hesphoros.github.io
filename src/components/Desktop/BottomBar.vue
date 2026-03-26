@@ -14,7 +14,7 @@
         </div>
         <div class="tw-flex-none tw-w-100 tw-h-full tw-hidden lg:tw-block">
           <div class=" tw-w-full tw-h-full tw-flex tw-items-center tw-justify-center">
-            <Icon :srcc="'explorer'" mode="large" class=" tw-ml-3" @button_clicked="explorer_clicked" :tagcont="'File Manager'" :cfocus="$store.state.current_focus_type==='explorer'" :fshow="has_explorer" v-if="has_explorer" @contextmenu.prevent.native="mr_clicked($event, 'explorer', has_explorer)"/>
+            <Icon :srcc="'explorer'" mode="large" class=" tw-ml-3" @button_clicked="explorer_clicked" :tagcont="'File Manager'" :cfocus="$store.state.current_focus_type==='explorer'" :fshow="true" @contextmenu.prevent.native="mr_clicked($event, 'explorer', has_explorer)"/>
             <Icon :srcc="'doc'" mode="large" class=" tw-ml-3" @button_clicked="text_clicked" :tagcont="'Text Editor'" :cfocus="$store.state.current_focus_type==='text'" :fshow="has_text" v-if="has_text" @contextmenu.prevent.native="mr_clicked($event, 'text', has_text)"/>
             <Icon :srcc="'browser'" mode="large"  class=" tw-ml-3" @button_clicked="browser_clicked" :tagcont="'Browser'" :cfocus="$store.state.current_focus_type==='browser'" :fshow="has_browser" @contextmenu.prevent.native="mr_clicked($event, 'browser', has_browser)"/>
             <Icon :srcc="'music'" mode="large"  class=" tw-ml-3" @button_clicked="music_clicked" :tagcont="'Music'" :cfocus="$store.state.current_focus_type==='music'" :fshow="has_music" @contextmenu.prevent.native="mr_clicked($event, 'music', has_music)"/>
@@ -219,7 +219,9 @@ export default {
       this.$store.commit('refresh_window_focus', {'type':'text'})
     },
     explorer_clicked() {
-      if (this.window_type_all_hide_or_at_the_top({'type':'explorer'})) {
+      if (!this.has_explorer) {
+        this.$store.commit('open_new_window', { type: 'explorer', openpath: [] })
+      } else if (this.window_type_all_hide_or_at_the_top({'type':'explorer'})) {
         this.$store.commit('switch_global_window_show_status', {'type':'explorer'})
       }
       this.$store.commit('refresh_window_focus', {'type':'explorer'})

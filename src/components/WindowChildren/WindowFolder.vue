@@ -3,17 +3,20 @@
     <template v-slot:header>
       <div class=" tw-ml-4 tw-font-bold tw-tracking-wider tw-flex tw-items-center tw-select-none" style="pointer-events:none;" > 
         <img src="../../assets/images/icons/explorer.png" alt="" style="pointer-events:auto;" class=" tw-w-8 tw-h-8">
-        <div class="tw-w-9 tw-h-9 tw-rounded-l-lg tw-flex tw-justify-center tw-items-center tw-ml-6" style="background-color:#f0f0f0;pointer-events:auto;" :style="{'opacity':global_focus===uuid?'1':'0.85'}">
+        <div class="tw-w-9 tw-h-9 tw-rounded-l-lg tw-flex tw-justify-center tw-items-center tw-ml-6 tw-cursor-pointer" style="background-color:#f0f0f0;pointer-events:auto;" :style="{'opacity':global_focus===uuid?'1':'0.85'}" @click="nav_up">
           <v-icon style="color:#b0b4bf">mdi-chevron-left</v-icon>
         </div>
         <div class=" tw-h-9 tw-w-0.5" style="background-color:#ebebeb"></div>
         <div class="tw-w-9 tw-h-9 tw-rounded-r-lg tw-flex tw-justify-center tw-items-center" style="background-color:#f0f0f0;pointer-events:auto;" :style="{'opacity':global_focus===uuid?'1':'0.85'}">
           <v-icon style="color:#b0b4bf">mdi-chevron-right</v-icon>
         </div>
-        <div class="tw-h-9 tw-px-3  tw-flex tw-items-center tw-justify-center tw-bg-mygray-b2  tw-rounded-lg tw-ml-3" style="pointer-events:auto;" :style="{'opacity':global_focus===uuid?'1':'0.85'}">
+        <div class="tw-h-9 tw-px-3  tw-flex tw-items-center tw-justify-center tw-bg-mygray-b2  tw-rounded-lg tw-ml-3 tw-cursor-pointer" style="pointer-events:auto;" :style="{'opacity':global_focus===uuid?'1':'0.85'}" @click="go_breadcrumb_desktop" title="桌面根目录">
           <v-icon small>mdi-home-heart</v-icon>
         </div>
-        <div class="tw-h-9 tw-px-3 tw-flex tw-items-center tw-justify-center tw-rounded-lg tw-ml-3 tw-text-sm tw-text-gray-50 tw-font-normal" style="pointer-events:auto;" v-for="(item,i) in open_openpath" :key="i" :class="{'tw-bg-mygray-b2':i!=(open_openpath.length - 1),'tw-bg-mygray-b4':i===(open_openpath.length - 1),'tw-text-mygray-b6':i!=(open_openpath.length - 1),'tw-text-gray-50':i===(open_openpath.length - 1), 'tw-font-semibold':i!=(open_openpath.length - 1),'hover:tw-bg-mygray-b3':i!=(open_openpath.length - 1),'hover:tw-bg-mygray-b5':i===(open_openpath.length - 1)}" :style="{'opacity':global_focus===uuid?'1':'0.85'}" @click="switch_supr_class(i)">
+        <div class="tw-h-9 tw-px-3 tw-flex tw-items-center tw-justify-center tw-rounded-lg tw-ml-3 tw-text-sm tw-font-normal tw-cursor-pointer" style="pointer-events:auto;" :class="breadcrumbDesktopClass" :style="{'opacity':global_focus===uuid?'1':'0.85'}" @click="go_breadcrumb_desktop">
+          Desktop
+        </div>
+        <div class="tw-h-9 tw-px-3 tw-flex tw-items-center tw-justify-center tw-rounded-lg tw-ml-3 tw-text-sm tw-font-normal tw-cursor-pointer" style="pointer-events:auto;" v-for="(item,i) in open_openpath" :key="'p-'+i" :class="breadcrumbSegmentClass(i)" :style="{'opacity':global_focus===uuid?'1':'0.85'}" @click="go_breadcrumb_at(i)">
           {{item}}
         </div>
       </div>
@@ -22,27 +25,27 @@
       <div class="tw-w-full tw-rounded-b-2xl tw-flex tw-select-none" :style="{'height':cont_height + 'px'}" v-if="true" @contextmenu.prevent="mr_clicked">
         <div ref="leftbar" class="tw-flex-none tw-bg-white tw-rounded-bl-2xl tw-overflow-hidden tw-flex tw-flex-row tw-select-none" style="min-width:160px;max-width:260px;width:208px" :style="{'opacity':global_focus===uuid?'1':'0.85'}">
           <div class=" tw-flex-grow tw-h-full tw-flex tw-items-center tw-flex-col tw-px-3">
-            <WindowFolderIcon :icon="'clock-time-three'" :text="'Recently'"/>
-            <WindowFolderIcon  :icon="'home-heart'" :text="'Home'"/>
-            <WindowFolderIcon  :icon="'television-guide'" :text="'Desktop'"/>
-            <WindowFolderIcon  :icon="'filmstrip'" :text="'Videos'"/>
-            <WindowFolderIcon  :icon="'music'" :text="'Musics'"/>
-            <WindowFolderIcon  :icon="'image'" :text="'Pictures'"/>
-            <WindowFolderIcon  :icon="'file-document'" :text="'Documents'"/>
-            <WindowFolderIcon  :icon="'delete'" :text="'Recycle Bin'"/>
+            <WindowFolderIcon :icon="'clock-time-three'" :text="'Recently'" :disabled="true"/>
+            <WindowFolderIcon :icon="'home-heart'" :text="'Home'" :active="atDesktopRoot" @activate="goSidebarPlace('home')"/>
+            <WindowFolderIcon :icon="'television-guide'" :text="'Desktop'" :active="atDesktopRoot" @activate="goSidebarPlace('desktop')"/>
+            <WindowFolderIcon :icon="'filmstrip'" :text="'Videos'" :disabled="true"/>
+            <WindowFolderIcon :icon="'music'" :text="'Musics'" :disabled="true"/>
+            <WindowFolderIcon :icon="'image'" :text="'Pictures'" :disabled="true"/>
+            <WindowFolderIcon :icon="'file-document'" :text="'Documents'" :disabled="true"/>
+            <WindowFolderIcon :icon="'delete'" :text="'Recycle Bin'" :disabled="true"/>
             <div style="width:100%;height:2px;background-color:#efefef;margin-top:1px;margin-bottom:1px"></div>
-            <WindowFolderIcon  :icon="'desktop-mac-dashboard'" :text="'This PC'"/>
-            <WindowFolderIcon  :icon="'harddisk'" :text="'Root'"/>
+            <WindowFolderIcon :icon="'desktop-mac-dashboard'" :text="'This PC'" :active="atDesktopRoot" @activate="goSidebarPlace('thispc')"/>
+            <WindowFolderIcon :icon="'harddisk'" :text="'Root'" :active="atDesktopRoot" @activate="goSidebarPlace('root')"/>
             <div style="width:100%;height:2px;background-color:#efefef;margin-top:1px;margin-bottom:1px"></div>
-            <WindowFolderIcon  :icon="'earth'" :text="'Network'"/>
+            <WindowFolderIcon :icon="'earth'" :text="'Network'" :disabled="true"/>
           </div>
           <div class="tw-h-full tw-select-none" style="width:1px">
             <WindowSider :mode="1" @mousedown.native="right_resize" />
           </div>
         </div>
         <div class="tw-flex-grow  tw-h-full tw-rounded-br-2xl tw-flex tw-flex-col" >
-          <div ref="main_body" class=" tw-flex-grow tw-w-full tw-flex tw-flex-col" style="background-color:#f8f8f8" >
-            <div class="tw-w-full tw-h-8 tw-border-b border tw-border-gray-300 tw-flex tw-items-center tw-text-mygray-b6 tw-tracking-tight tw-select-none" style="background-color:#e9e9e9">
+          <div ref="main_body" class="tw-flex-grow tw-w-full tw-flex tw-flex-col tw-min-h-0 tw-overflow-hidden" style="background-color:#f8f8f8" >
+            <div class="tw-w-full tw-h-8 tw-border-b border tw-border-gray-300 tw-flex tw-items-center tw-text-mygray-b6 tw-tracking-tight tw-select-none tw-flex-none" style="background-color:#e9e9e9">
               <div ref="name_col" class="tw-h-full tw-flex tw-items-center" style="" :style="{'width':name_col_width + 'px'}" @click="switch_selected('Name')">
                 <div class="tw-flex-none tw-ml-2">Name</div>
                 <div class="tw-flex-grow tw-flex tw-flex-row-reverse">
@@ -64,7 +67,7 @@
                 </div>
               </div>
             </div>
-            <div class="tw-flex-grow tw-w-full tw-flex ">
+            <div class="tw-flex-grow tw-w-full tw-flex tw-min-h-0 tw-overflow-y-auto change-srollbar">
               <div ref="name_col_cont" :style="{'width':name_col_width + 9 + 'px'}" class=" tw-h-full">
                 <div class=" tw-w-full tw-text-sm tw-flex tw-items-center" style="height:28px;" :style="{'background-color':current_focus===item.fileuuid?'rgba(0,129,255)':i%2===0?'rgba(255,255,255,0)':'rgba(55,55,55,.04)'}" v-for="(item ,i) in current_dir_list" :key="i" @click="item_oneClick(i)"> 
                   <div :style="{'height':item.children === undefined?'24px':'18px'}" class=" tw-flex tw-justify-center tw-items-center tw-w-7 tw-flex-none tw-ml-7 tw-pb-0.5">
@@ -101,7 +104,7 @@ import WindowFolderSlider from './WindowFolderSlider.vue'
 import WindowSider from '../WindowBasic/WindowSider.vue'
 
 export default {
-  name: 'WindowText',
+  name: 'WindowFolder',
   components: {
     Window,
     WindowSider,
@@ -124,7 +127,6 @@ export default {
       date_col_width: 110,
       size_col_width: 50,
       current_focus:'',
-      file_filemap:[],
       open_openpath:[],
     }
   },
@@ -152,18 +154,14 @@ export default {
     },
   },
   created(){
-    this.file_filemap = this.filemap
-    this.open_openpath = this.openpath
+    this.open_openpath = Array.isArray(this.openpath) ? [...this.openpath] : []
   },
   mounted(){
     this.$store.commit('refresh_window_focus', {uuid:this.uuid})
   },
   watch:{
-    filemap(val){
-      this.file_filemap = val
-    },
     openpath(val){
-      this.open_openpath = val
+      this.open_openpath = Array.isArray(val) ? [...val] : []
     },
   },
   computed:{
@@ -174,21 +172,32 @@ export default {
         return 'mdi-chevron-up'
       }
     },
+    atDesktopRoot(){
+      return this.open_openpath.length === 0
+    },
+    breadcrumbDesktopClass(){
+      const on = this.atDesktopRoot
+      return {
+        'tw-bg-mygray-b4': on,
+        'tw-bg-mygray-b2': !on,
+        'tw-text-gray-50': on,
+        'tw-text-mygray-b6': !on,
+        'tw-font-semibold': true,
+        'hover:tw-bg-mygray-b5': on,
+        'hover:tw-bg-mygray-b3': !on,
+      }
+    },
     current_dir_list() {
-      if (this.file_filemap.length === 0 || this.open_openpath.length === 0) {
+      const root = this.filemap
+      if (!root || root.length === 0) {
         return []
       }
-      // else 
-      let current_folder_pointer = this.file_filemap
-      for (let dirname of this.open_openpath) {
-        for (let tmp of current_folder_pointer) {
-          if (tmp.name === dirname) {
-            current_folder_pointer = tmp.children
-            break
-          }
-        }
+      const current_folder_pointer = this.open_openpath.length === 0
+        ? root
+        : this.resolvePathChildren(root, this.open_openpath)
+      if (!current_folder_pointer || current_folder_pointer.length === 0) {
+        return []
       }
-      // sort
       let result = JSON.parse(JSON.stringify(current_folder_pointer))
       let compare_tag = "name"
       if (this.selected === "Name") {
@@ -224,9 +233,8 @@ export default {
     },
     folder_name(){
       if (this.open_openpath.length === 0) {
-        return ""
-      } 
-      // else 
+        return 'Desktop'
+      }
       return this.open_openpath[this.open_openpath.length - 1]
     },
     global_focus(){
@@ -234,6 +242,61 @@ export default {
     },
   },
   methods:{
+    breadcrumbSegmentClass(i){
+      const last = i === this.open_openpath.length - 1
+      return {
+        'tw-bg-mygray-b4': last,
+        'tw-bg-mygray-b2': !last,
+        'tw-text-gray-50': last,
+        'tw-text-mygray-b6': !last,
+        'tw-font-semibold': true,
+        'hover:tw-bg-mygray-b5': last,
+        'hover:tw-bg-mygray-b3': !last,
+      }
+    },
+    resolvePathChildren(root, segments){
+      if (!root || !segments || segments.length === 0) {
+        return root
+      }
+      let cur = root
+      for (const name of segments) {
+        let next = null
+        for (const item of cur) {
+          if (item.name === name && item.children !== undefined) {
+            next = item.children
+            break
+          }
+        }
+        if (next == null) {
+          return []
+        }
+        cur = next
+      }
+      return cur
+    },
+    go_breadcrumb_desktop(){
+      this.open_openpath = []
+      this.current_focus = ''
+    },
+    go_breadcrumb_at(i){
+      if (i < 0 || i >= this.open_openpath.length) {
+        return
+      }
+      this.open_openpath = this.open_openpath.slice(0, i + 1)
+      this.current_focus = ''
+    },
+    nav_up(){
+      if (this.open_openpath.length > 0) {
+        this.open_openpath.pop()
+        this.current_focus = ''
+      }
+    },
+    goSidebarPlace(place){
+      const toRoot = ['home', 'desktop', 'thispc', 'root']
+      if (toRoot.indexOf(place) >= 0) {
+        this.go_breadcrumb_desktop()
+      }
+    },
     getFileIcon(item) {
       // 如果是文件夹,返回文件夹图标
       if (item.children !== undefined) {
@@ -479,38 +542,10 @@ export default {
             })
           }
         } else {
-          // document.body.style.cursor='progress'
-          // window.setTimeout(()=>{
-          //   let tmp = JSON.parse(JSON.stringify(this.openpath))
-          //   tmp.push(item.name)
-          //   this.$store.commit('open_new_window', {'type':'explorer','openpath':tmp})
-          //   document.body.style.cursor='default'
-          // },450)
-          this.open_openpath.push(item.name)
-          this.file_filemap = item.children
+          this.open_openpath = this.open_openpath.concat([item.name])
         }
         this.clicks = 0;
       } 
-    },
-    switch_supr_class(val){
-      let diff_num = this.open_openpath.length - 1 - val
-      if (diff_num > 0) {
-        for (let j = 0; j < diff_num; j++) {
-          this.open_openpath.pop()
-        }
-        let folder_pointer = this.filemap
-        for (let dirname of this.open_openpath) {
-          for (let item of folder_pointer) {
-            if (item.children === undefined) {
-              continue
-            }
-            if (item.name === dirname) {
-              folder_pointer = item.children
-            }
-          }
-        }
-        this.file_filemap = folder_pointer
-      }
     },
     mr_clicked(){
       this.$store.commit('show_context_menu')

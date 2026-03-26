@@ -32,7 +32,6 @@
       <!-- 中间应用图标 -->
       <div class="dock-section dock-center">
         <DockItem 
-          v-if="has_explorer"
           iconType="appIcon"
           appIcon="finder"
           :mouseX="mouseX"
@@ -328,7 +327,9 @@ export default {
       this.$store.commit('refresh_window_focus', { type: 'text' })
     },
     explorer_clicked() {
-      if (this.window_type_all_hide_or_at_the_top({ type: 'explorer' })) {
+      if (!this.has_explorer) {
+        this.$store.commit('open_new_window', { type: 'explorer', openpath: [] })
+      } else if (this.window_type_all_hide_or_at_the_top({ type: 'explorer' })) {
         this.$store.commit('switch_global_window_show_status', { type: 'explorer' })
       }
       this.$store.commit('refresh_window_focus', { type: 'explorer' })

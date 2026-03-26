@@ -59,7 +59,7 @@ const store = new Vuex.Store({
       }
       if (payload.type === 'explorer') {
         obj.type = 'explorer'
-        obj.openpath = payload.openpath
+        obj.openpath = Array.isArray(payload.openpath) ? payload.openpath : []
       } else if (payload.type === 'text') {
         obj.type='text'
         obj.filesrc=payload.filesrc
