@@ -1,1 +1,0 @@
-{"data": "```bash\nWSL2: \nDistributor ID: Ubuntu\nDescription:    Ubuntu 24.04.2 LTS\nRelease:        24.04\nCodename:       noble\n```\n\n```bash\n- cmake\n- gcc\n- as86\n- ld86\n- libc6\n- binutils\n- g++\n- grub-efi-amd64\n- xorriso\n- mtools\n- grub-pc-bin\n\n```\n\n"}
