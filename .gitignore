@@ -28,11 +28,12 @@ __pycache__/
 
 blog/srv03rtm on win11/深入解析Windows操作系统(第4版).pdf
 
-# generate.py generated artifacts
+# generate.py generated artifacts (npm build copies these into docs/)
 public/desktop_*.json
 public/map.json
-docs/desktop_*.json
-docs/map.json
+
+# Vue CLI outputDir + full site bundle; CI builds and deploys via GitHub Pages
+/docs/
 
 # Obsidian local workspace/config (keep plugins tracked)
 .obsidian/

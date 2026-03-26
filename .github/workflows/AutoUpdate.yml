@@ -1,12 +1,23 @@
 name: AutoUpdate
 
-on: 
+on:
   push:
     branches:
       - 'main'
       - 'dev'
-      
+
   workflow_dispatch:
+
+# 构建产物通过 Pages artifact 发布，不再提交 docs/ 到仓库。
+# 仓库 Settings → Pages → Build and deployment → Source 请选择「GitHub Actions」。
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -15,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: hesphoros/hesphoros.github.io
+          fetch-depth: 0
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -29,17 +40,22 @@ jobs:
           git config --global core.quotepath false
           git ls-files | while read file; do touch -d $(git log -1 --format="@%ct" "$file") "$file"; done
           python3 generate.py
-          npm install
+          npm ci
           npm run build
-      - name: Commit files
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Action[Bot]"
-          git add -A
-          git commit -m "update built files after user commit"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          
-      
+          path: docs
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
