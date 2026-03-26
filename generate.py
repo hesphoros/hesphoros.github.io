@@ -63,7 +63,7 @@ def get_title_and_abstract(file_path):
     
     return title if title else "", abstract if abstract else ""
 
-def mywalk(directory, append_pointer, header, copy_target):
+def mywalk(directory, append_pointer, header, copy_target, project_root):
     for current_path, sub_paths, files in os.walk(directory):
         for file in files:
             file_path = os.path.join(current_path, file)
@@ -84,15 +84,18 @@ def mywalk(directory, append_pointer, header, copy_target):
                         'size': file_size,
                     })
                     # 生成 JSON 文件
-                    with open(file_path,'r',encoding='utf-8') as fp:
-                        content = fp.read()
-                    output_target = os.path.join(copy_target, f"{header}_{split_file_name(file).replace(' ','_')}.json")
-                    with open(output_target,'w',encoding='utf-8') as fp:
-                        fp.write(json.dumps({'data':content}))
+                    try:
+                        with open(file_path,'r',encoding='utf-8') as fp:
+                            content = fp.read()
+                        output_target = os.path.join(copy_target, f"{header}_{split_file_name(file).replace(' ','_')}.json")
+                        with open(output_target,'w',encoding='utf-8') as fp:
+                            fp.write(json.dumps({'data':content}))
+                    except Exception as e:
+                        print(f"Error processing {file_path}: {e}")
                 
                 elif is_drawio_file(file):
                     # Draw.io 文件: 记录实际文件路径 (相对于项目根目录,包含 blog/ 前缀)
-                    relative_path = os.path.relpath(file_path, os.path.dirname(root)).replace('\\', '/')
+                    relative_path = os.path.relpath(file_path, project_root).replace('\\', '/')
                     append_pointer.append({
                         'name': file,
                         'path': relative_path,  # 使用相对路径,包含 blog/ 前缀
@@ -122,24 +125,37 @@ def mywalk(directory, append_pointer, header, copy_target):
                 'size': -1,
                 'children': new_append_pointer,
             })
-            mywalk(path_path, new_append_pointer, f"{header}_{path.replace(' ','_')}", copy_target)
+            mywalk(path_path, new_append_pointer, f"{header}_{path.replace(' ','_')}", copy_target, project_root)
         break
 
 root = os.path.abspath('./blog')
 copy_target = os.path.abspath('public')
+project_root = os.path.dirname(root)
 
+print("Starting generation script...")
 # clean
 protect_file_list = ('ICON.ico', 'index.html', 'musics.json', 'musiccovers')
+print(f"Cleaning {copy_target}...")
 for files in os.walk(copy_target):
     files = files[2]; break
 
+cleaned_count = 0
 for rm_file in files:
     if rm_file not in protect_file_list:
-        os.remove(os.path.join(copy_target, rm_file))
+        try:
+            os.remove(os.path.join(copy_target, rm_file))
+            cleaned_count += 1
+        except Exception as e:
+            print(f"Error removing {rm_file}: {e}")
+
+print(f"Cleaned {cleaned_count} files")
 
 # copy
+print(f"Starting mywalk for {root}...")
 root_struct = []
 append_pointer = root_struct
-mywalk(root, root_struct, 'desktop', copy_target)
+mywalk(root, root_struct, 'desktop', copy_target, project_root)
+print(f"Finished mywalk, writing map.json...")
 with open(os.path.join(copy_target, 'map.json'),'w',encoding='utf-8') as f:
     f.write(json.dumps(root_struct))
+print("Generation complete!")
