@@ -20,18 +20,43 @@ feature:
 ## 模块
 
 ### 内存管理
-- slab allocator（已完成）
+- system allocator 
+	- Microsoft mimallloc 
+- slab allocator
 - object pool
-- small buffer optimization（已完成）
+- 
 
 ### 基础容器
+https://github.com/kyr0/libsharedmemory
 - ring buffer（已完成）
+	- SPSC  → 单生产者 / 单消费者 (已完成)
+	- folly::ProducerConsumerQueue 
+	- MPSC  → 多生产者 / 单消费者 (已完成)
+		- moodycamel::ReaderWriterQueue 
+	- MPMC  → 多生产者 / 多消费者 (已完成)
+		- concurrentqueue
 - small vector（已完成）
+	- 临时数组
+- FixedVector / StaticVector
+- Small String Optimization（SSO 
 - fixed queue
-- intrusive list
+- intrusive list （已完成）
+- small buffer optimization
+- Lock-free freelist / stack
+- FlatHashMap / Robin Hood Hash（已完成）
+	- 比 std::unordered_map：
+		- cache friendly
+		- contiguous memory
+- Bitmap BitSet
+
+- cache friendly
+- contiguous memory
+- 更快
 
 ### 并发基础（最小可用）
-- mutex / spinlock（已完成）
+- mutex（用户态 / spinlock（已完成）
+- RWLock
+- 
 - lock-free queue（已完成）
 - thread pool（已完成）
 
@@ -46,6 +71,11 @@ feature:
 ### 基础工具
 - 高精度 timer
 - atomic 封装
+
+### 序列化
+- zpp_bits
+- 
+
 
 ---
 
