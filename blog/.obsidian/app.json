@@ -3,5 +3,11 @@
   "newLinkFormat": "relative",
   "promptDelete": false,
   "attachmentFolderPath": "picture",
-  "useMarkdownLinks": true
+  "useMarkdownLinks": true,
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
 }

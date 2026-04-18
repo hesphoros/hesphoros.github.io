@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Build-opensource-project/telegram/telegram desktop/Build telegram desktop on windows11.md",
+                "file": "About LuspKernelCore/LuspKernelCore.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Build telegram desktop on windows11"
+              "title": "LuspKernelCore"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Build-opensource-project/telegram/telegram desktop/Build telegram desktop on windows11.md",
+                "file": "About LuspKernelCore/LuspKernelCore.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Build telegram desktop on windows11 的大纲"
+              "title": "LuspKernelCore 的大纲"
             }
           }
         ],
@@ -171,6 +171,14 @@
   },
   "active": "d917f55aefa54dec",
   "lastOpenFiles": [
+    "About LNCF/Live Network Client Framework Build Guide.md",
+    "About token/token.md",
+    "About LNCF",
+    "About windows/Windows NTFS link(Hard link, Sysbolic link,junction point).md",
+    "About encapsulation techniques/C++ Pimpl.md",
+    "Build-opensource-project/telegram/telegram desktop/Build telegram desktop on windows11.md",
+    "About LuspKernelCore/LuspKernelCore.md",
+    "About LuspKernelCore",
     "About muduo/线程同步精要/1- 并发编程.md",
     "About muduo/线程同步精要",
     "picture/QQ_1774248517450.png",
@@ -178,11 +186,9 @@
     "picture/QQ_1774238102144.png",
     "picture/QQ_1774237904141.png",
     "未命名.md",
-    "Build-opensource-project/telegram/telegram desktop/Build telegram desktop on windows11.md",
     "Build-opensource-project/telegram/telegram desktop",
     "About muduo/线程安全的对象声明周期管理/4. 对象池.md",
     "Build-opensource-project/telegram",
-    "未命名",
     "picture/QQ_1773064895528.png",
     "srv03rtm on win11/Compile srv03rtm on Windows11.md",
     "Hi there.md",
@@ -200,20 +206,14 @@
     "Build-opensource-project/libiconv-macos",
     "Build-opensource-project",
     "About Branch predictive/CodeLayer.md",
-    "About windows/Windows NTFS link(Hard link, Sysbolic link,junction point).md",
     "About Honor of Kings/射手如何c.md",
     "About Honor of Kings/游射与呆射.md",
     "About NFTS/locatee.md",
     "About Honor of Kings",
     "About NFTS/NTFS-Layout.md",
-    "About windows",
     "About NFTS/BPB.md",
     "About NFTS/FILE_RECORD_SEGMENT_HEADER.md",
     "About NFTS/Stucture.md",
-    "About NFTS/Untitled.md",
-    "About NFTS/Master File Table.md",
-    "About NFTS/Mind MFT.mindmap.md",
-    "About NFTS/NTFS.MD",
     "picture/Pasted image 20260106190806.png",
     "About NFTS/MFT.canvas",
     "picture/Pasted image 20260106185150.png",
