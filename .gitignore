@@ -40,3 +40,7 @@ public/map.json
 blog/.obsidian/**
 !blog/.obsidian/plugins/
 !blog/.obsidian/plugins/**
+blog/.obsidian/workspace.json
+blog/.obsidian/cache/
+.DS_Store
+Thumbs.db
