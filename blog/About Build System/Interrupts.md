@@ -1,6 +1,7 @@
-# 中断（Interrupts）与实现 IDT
+w# 中断（Interrupts）与实现 IDT
 
-本文档以 OSDev Wiki（参考：Interrupts / IDT）为基础，给出实现 IDT 的理论背景、数据结构、初始化步骤与可复制的代码示例（包含 PIC 重映射、ISR/IRQ stub、C 处理链与注册接口）。目标读者：实现一个简单的 x86 保护模式内核并能接收外设 IRQ 的内核开发者。
+本文档以 OSDev Wiki（参考：Interrupts / IDT）为基础，给出实现 IDT 的理论背景、数据结构、初始化步骤与可复制的代码示例（包含 PIC 重映射、ISR/IRQ stub、C 处理链与注册接口）。
+目标读者：实现一个简单的 x86 保护模式内核并能接收外设 IRQ 的内核开发者。
 
 > 注：本文使用遗留 BIOS/实模式启动到保护模式后的环境示例，汇编示例采用 NASM/GAS 风格注释并给出对应的 C 接口。若使用 UEFI 或 64-bit long mode，需做相应调整（IDT 描述符与堆栈语义存在差异）。
 
