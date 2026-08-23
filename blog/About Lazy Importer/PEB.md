@@ -1,6 +1,8 @@
 # PEB (**Process Environment Block**)
 
-它是 Windows 内核为每个用户模式进程创建的一个非常核心的数据结构。PEB 存在于**用户态内存**空间中，包含了整个进程的全局配置信息、加载的模块列表、环境变量、堆信息以及进程的运行状态。
+它是 Windows 内核为每个用户模式进程创建的一个非常核心的数据结构。PEB 存在于**用户态内存**空间中.
+
+包含了整个进程的全局配置信息、加载的模块列表、环境变量、堆信息以及进程的运行状态。
 
 PEB其创建流程为
 ```c
@@ -153,8 +155,8 @@ NtCurrentPeb()->ProcessHeap
 ```
 
 # ImageBaseAddress
-映像基地址,记录了当前主程序(.exe)在内存中的起始虚拟地址
 
+映像基地址,记录了当前主程序(.exe)在内存中的起始虚拟地址
 
 # PACTIVATION_CONTEXT_NOTIFY_ROUTINE
 ```c
