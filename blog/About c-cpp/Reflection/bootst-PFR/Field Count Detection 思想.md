@@ -1,0 +1,1 @@
+当前 PFR 的实现会根据语言/编译器能力，在不同机制之间选择，包括 C++26 Reflection、C++26 变参结构化绑定、C++17 structured bindings，以及更早的 loophole 技巧。

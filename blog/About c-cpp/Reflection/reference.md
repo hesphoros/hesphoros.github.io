@@ -1,0 +1,9 @@
+https://zhuanlan.zhihu.com/p/669358870
+https://boost.ac.cn/doc/libs/latest/doc/html/boost_pfr/how_it_works.html
+https://godbolt.org/
+https://www.boost.org/doc/libs/develop/doc/html/boost_pfr.html
+https://github.com/boostorg/pfr
+https://github.com/boostorg/mp11
+https://github.com/boostorg/describe
+https://boost.ac.cn/doc/libs/latest/libs/describe/doc/html/describe.html
+https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p2996r13.html
