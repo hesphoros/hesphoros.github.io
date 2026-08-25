@@ -24,8 +24,6 @@
 
 ## 示例（仅演示，不建议生产使用）
 
-
-
 ```c
 #include <boost/pfr/detail/offset_based_getter.hpp>
 #include <iostream>
@@ -68,6 +66,7 @@ int main() {
     - 不同编译器、ABI、优化选项可能导致成员布局不同。
     - 对非标准布局类型（如有虚函数、继承、多态）的结构体使用可能导致未定义行为。
     - Boost 官方在 [issue #153](https://github.com/boostorg/pfr/issues/153) 中提到，`offset_based_getter` 在某些平台（如非 x86 架构的 Clang）会产生错误结果。
+    
 - **推荐替代**：
   
     ```c++
@@ -91,4 +90,6 @@ int main() {
     
     ```
     
-    
+
+
+
