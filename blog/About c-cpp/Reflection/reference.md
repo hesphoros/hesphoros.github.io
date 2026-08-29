@@ -7,3 +7,4 @@ https://github.com/boostorg/mp11
 https://github.com/boostorg/describe
 https://boost.ac.cn/doc/libs/latest/libs/describe/doc/html/describe.html
 https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p2996r13.html
+https://alexpolt.github.io/type-loophole.html
