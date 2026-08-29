@@ -989,8 +989,19 @@ std::enable_if
 
 ---
 
-# 37. `void_t`
+# 37. `void_t` cpp11
 
+### 成员常量
+
+| 成员常量              |                                                                           |
+| ----------------- | ------------------------------------------------------------------------- |
+| value<br><br>[静态] | 如果 `T` 是 void 类型（可能带 cv 限定符），则为 true，否则为 false。  <br>(public static 成员常量) |
+
+cpp17
+```c
+template< class T >  
+constexpr bool is_void_v = is_void<T>::value;
+```
 这是理解 SFINAE 非常重要的工具：
 
 ```cpp
