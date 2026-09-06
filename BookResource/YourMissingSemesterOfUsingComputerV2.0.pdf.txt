@@ -1,0 +1,3 @@
+https://github.com/hesphoros/hesphoros.github.io/releases/tag/v1.0-book-resource
+
+sha256:26bb9b0eb55cfca3582c88ccea7d7d2d545c53e2bed4b9a1a9441f6258c8b793
