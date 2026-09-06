@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>📚 词性军师 · 四级词缀速查 + 闯关</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<button class="lang-switch" id="langSwitch">🌐 English</button>
+
+<!-- ========== 学习视图 ========== -->
+<div id="studyView" class="study-view view-container">
+  <div class="header">
+    <h1><span id="studyTitle">🔑 词性万能钥匙</span></h1>
+    <div class="subhead" id="studySub">后缀定词性 · 线索秒判断 · 非谓语通关</div>
+  </div>
+
+  <!-- 黄金口诀卡片 (动态渲染，容器保留) -->
+  <div class="golden-rules" id="goldenRulesContainer"></div>
+
+  <!-- 后缀基因库 (静态结构，文字由JS更新) -->
+  <div class="section-title">
+    <h2 id="suffixTitle">🧬 后缀基因库</h2>
+    <span id="suffixSub">看见后缀 = 知道词性</span>
+  </div>
+  <div class="suffix-grid">
+    <!-- 名词 -->
+    <div class="suffix-cat noun">
+      <div class="cat-header"><h3>📦 名词</h3></div>
+      <div class="suffix-list">
+        <div class="suffix-item"><strong>-tion/-sion</strong> <span class="example">action, decision</span></div>
+        <div class="suffix-item"><strong>-ment</strong> <span class="example">development</span></div>
+        <div class="suffix-item"><strong>-ness</strong> <span class="example">kindness</span></div>
+        <div class="suffix-item"><strong>-ity/-ty</strong> <span class="example">activity, honesty</span></div>
+        <div class="suffix-item"><strong>-ance/-ence</strong> <span class="example">importance</span></div>
+        <div class="suffix-item"><strong>-er/-or/-ist</strong> <span class="example">teacher, artist</span></div>
+        <div class="suffix-item"><strong>-ship/-hood</strong> <span class="example">friendship, childhood</span></div>
+        <div class="suffix-item"><strong>-th/-age</strong> <span class="example">truth, usage</span></div>
+        <div class="suffix-item"><strong>-cy/-ny</strong> <span class="example">privacy, harmony</span></div>
+        <div class="suffix-item"><strong>-ism</strong> <span class="example">capitalism</span></div>
+        <div class="suffix-item"><strong>-ture/-let</strong> <span class="example">structure, booklet</span></div>
+      </div>
+    </div>
+    <!-- 动词 -->
+    <div class="suffix-cat verb">
+      <div class="cat-header"><h3>🏃 动词</h3></div>
+      <div class="suffix-list">
+        <div class="suffix-item"><strong>-ate</strong> <span class="example">activate, create</span></div>
+        <div class="suffix-item"><strong>-en</strong> <span class="example">widen, deepen</span></div>
+        <div class="suffix-item"><strong>-ify</strong> <span class="example">beautify, clarify</span></div>
+        <div class="suffix-item"><strong>-ize/-ise</strong> <span class="example">realize, modernize</span></div>
+        <div class="suffix-item"><strong>-ish</strong> <span class="example">finish, publish</span></div>
+        <div class="suffix-item"><strong>-le</strong> <span class="example">sparkle, giggle</span></div>
+      </div>
+      <div style="margin-top: 16px; font-size: 0.9rem; background: #e6f3ec; padding: 8px 12px; border-radius: 20px; color:#1d6742;">
+        ⚡ 非谓语: -ing (主动/进行) , -ed (被动/完成)
+      </div>
+    </div>
+    <!-- 形容词 -->
+    <div class="suffix-cat adj">
+      <div class="cat-header"><h3>🎨 形容词</h3></div>
+      <div class="suffix-list">
+        <div class="suffix-item"><strong>-ful</strong> <span class="example">helpful</span></div>
+        <div class="suffix-item"><strong>-less</strong> <span class="example">hopeless</span></div>
+        <div class="suffix-item"><strong>-ous/-ious</strong> <span class="example">famous, various</span></div>
+        <div class="suffix-item"><strong>-al/-ial</strong> <span class="example">cultural, natural</span></div>
+        <div class="suffix-item"><strong>-ive</strong> <span class="example">active, creative</span></div>
+        <div class="suffix-item"><strong>-able/-ible</strong> <span class="example">comfortable</span></div>
+        <div class="suffix-item"><strong>-y</strong> <span class="example">rainy, cloudy</span></div>
+        <div class="suffix-item"><strong>-ic</strong> <span class="example">economic, poetic</span></div>
+        <div class="suffix-item"><strong>-ent/-ant</strong> <span class="example">different, important</span></div>
+        <div class="suffix-item"><strong>-ary/-ory</strong> <span class="example">literary</span></div>
+        <div class="suffix-item"><strong>-some/-like</strong> <span class="example">awesome, childlike</span></div>
+      </div>
+    </div>
+    <!-- 副词 -->
+    <div class="suffix-cat adv">
+      <div class="cat-header"><h3>🌀 副词</h3></div>
+      <div class="suffix-list">
+        <div class="suffix-item"><strong>-ly</strong> <span class="example">quickly, really</span></div>
+        <div class="suffix-item"><strong>-ward(s)</strong> <span class="example">forward, backwards</span></div>
+        <div class="suffix-item"><strong>-wise</strong> <span class="example">otherwise, clockwise</span></div>
+        <div class="suffix-item"><strong>频率/程度</strong> <span class="example">often, very, too</span></div>
+      </div>
+      <div style="margin-top: 20px; background: #f3eefe; border-radius: 20px; padding: 8px 12px; color:#4b3b7c;">
+        💡 副词修饰动词/形容词/全句
+      </div>
+    </div>
+  </div>
+
+  <!-- 实战线索表 (静态) -->
+  <div class="section-title">
+    <h2 id="clueTitle">🔎 实战线索 · 一眼定词性</h2>
+    <span id="clueSub">前后搭配就是答案</span>
+  </div>
+  <div class="clue-wrapper">
+    <div class="clue-panel">
+      <h3>📌 名词信号 &nbsp; + &nbsp; 🎯 形容词信号</h3>
+      <table class="clue-table">
+        <thead><tr><th>线索</th><th>示例</th></tr></thead>
+        <tbody>
+          <tr><td><span class="clue-signal">a/an/the + n.</span></td><td><span class="clue-example">the problem</span> <span class="example-en">became serious.</span></td></tr>
+          <tr><td><span class="clue-signal">adj. + n.</span></td><td><span class="clue-example">social issues</span> <span class="example-en">need attention.</span></td></tr>
+          <tr><td><span class="clue-signal">my/your/his + n.</span></td><td><span class="clue-example">my idea</span> <span class="example-en">about the topic.</span></td></tr>
+          <tr><td><span class="clue-signal">prep. + n.</span></td><td><span class="clue-example">in the room</span></td></tr>
+          <tr><td><span class="clue-signal">数量词 + n.</span></td><td><span class="clue-example">many people</span></td></tr>
+          <tr><td><span class="clue-signal">n. + of + n.</span></td><td><span class="clue-example">a group of students</span></td></tr>
+          <tr><td style="padding-top:16px;"><span class="clue-signal">系动词 + adj.</span></td><td>be / look / sound / smell + <span class="clue-example">tired</span></td></tr>
+          <tr><td><span class="clue-signal">adv. + adj. + n.</span></td><td>a <span class="clue-example">very interesting</span> book</td></tr>
+          <tr><td><span class="clue-signal">something/anything + adj.</span></td><td>something <span class="clue-example">new</span></td></tr>
+          <tr><td><span class="clue-signal">make/keep + O + adj.</span></td><td>keep the room <span class="clue-example">clean</span></td></tr>
+          <tr><td><span class="clue-signal">比较/最高级</span></td><td>more <span class="clue-example">useful</span> , the most <span class="clue-example">beautiful</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="clue-panel">
+      <h3>⚡ 副词信号 &nbsp;+&nbsp; 📋 动词形式线索</h3>
+      <table class="clue-table">
+        <thead><tr><th>线索</th><th>示例</th></tr></thead>
+        <tbody>
+          <tr><td><span class="clue-signal">v. + adv.</span></td><td>speak <span class="clue-example">loudly</span></td></tr>
+          <tr><td><span class="clue-signal">adv. + v. / adj.</span></td><td><span class="clue-example">really</span> like, <span class="clue-example">very</span> big</td></tr>
+          <tr><td><span class="clue-signal">Adv. , 句子</span></td><td><span class="clue-example">Fortunately,</span> he passed.</td></tr>
+          <tr><td><span class="clue-signal">情态/助动 + adv. + v.</span></td><td>can <span class="clue-example">easily</span> finish</td></tr>
+          <tr><td><span class="clue-signal">频率副词</span></td><td><span class="clue-example">often</span> go, <span class="clue-example">usually</span> play</td></tr>
+          <tr><td style="padding-top:16px;"><span class="clue-signal">be + V-ing</span></td><td>is <span class="clue-example">reading</span> (进行)</td></tr>
+          <tr><td><span class="clue-signal">介词 + V-ing</span></td><td>before <span class="clue-example">leaving</span></td></tr>
+          <tr><td><span class="clue-signal">感官动词 + V-ing</span></td><td>see him <span class="clue-example">running</span></td></tr>
+          <tr><td><span class="clue-signal">be + V-ed</span></td><td>is <span class="clue-example">used</span> (被动)</td></tr>
+          <tr><td><span class="clue-signal">have/has + V-ed</span></td><td>has <span class="clue-example">finished</span> (完成)</td></tr>
+          <tr><td><span class="clue-signal">get sth. V-ed</span></td><td>get it <span class="clue-example">done</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- V-ing / V-ed 对比卡片 -->
+  <div class="verbform-duo">
+    <div class="form-card ing-card">
+      <h4>✨ V-ing 现在分词/动名词</h4>
+      <ul class="form-list">
+        <li><span class="tag">进行时</span> be + V-ing → She is <strong>reading</strong>.</li>
+        <li><span class="tag">主动定语</span> a <strong>rising</strong> sun (正在升起的)</li>
+        <li><span class="tag">动名词主语</span> <strong>Reading</strong> helps.</li>
+        <li><span class="tag">介词后</span> Think before <strong>leaving</strong>.</li>
+        <li><span class="tag">感官主动</span> I saw him <strong>running</strong>.</li>
+        <li><span class="tag">伴随状语</span> <strong>Hearing</strong> the news, he cried.</li>
+      </ul>
+    </div>
+    <div class="form-card ed-card">
+      <h4>🧱 V-ed 过去分词</h4>
+      <ul class="form-list">
+        <li><span class="tag">被动语态</span> be + V-ed → English is <strong>spoken</strong>.</li>
+        <li><span class="tag">完成时</span> have/has + V-ed → She has <strong>finished</strong>.</li>
+        <li><span class="tag">被动定语</span> a <strong>broken</strong> glass (被打碎的)</li>
+        <li><span class="tag">被动完成</span> get sth. <strong>done</strong> → get it <strong>repaired</strong>.</li>
+        <li><span class="tag">固定搭配</span> be <strong>interested</strong> in</li>
+        <li><span class="tag">原因状语(被动)</span> <strong>Surprised</strong> by the result, he shouted.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 随机记忆锦囊 -->
+  <div class="tip-bar">
+    <span class="tip-content" id="tipDisplay">👉 of 前后都是名词</span>
+    <button id="randomTipBtn">🔄 换一条口诀</button>
+  </div>
+  <div class="footer-note" id="footerNote">⚡ 词缀定乾坤 · 线索不丢分</div>
+</div>
+
+<!-- ========== 测验视图 ========== -->
+<div id="quizView" class="quiz-view view-container hidden-view">
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <div class="quiz-header-left">
+        <h2 id="quizTitle">📋 词性闯关</h2>
+        <button class="back-to-study" id="backToStudyBtn">← 返回速查</button>
+      </div>
+    </div>
+    
+    <div class="quiz-toolbar">
+      <div class="lib-selector" id="libSelector">
+        <button class="lib-btn active" data-lib="system">📚 系统词库</button>
+        <button class="lib-btn" data-lib="custom">📝 我的词库</button>
+      </div>
+      <button class="add-word-btn" id="showAddWordBtn" style="display: none;">➕ 添加单词</button>
+      <button class="settle-btn" id="settleBtn">📊 结算分享</button>
+    </div>
+    
+    <div id="quizWordDisplay" class="quiz-word">development</div>
+    
+    <div class="pos-options">
+      <button class="pos-btn" data-pos="n" id="posN">名词</button>
+      <button class="pos-btn" data-pos="v" id="posV">动词</button>
+      <button class="pos-btn" data-pos="adj" id="posAdj">形容词</button>
+      <button class="pos-btn" data-pos="adv" id="posAdv">副词</button>
+    </div>
+    
+    <div class="feedback-area">
+      <div class="feedback-message" id="feedbackMsg">✨ 选择一个词性</div>
+      <div id="featureHint" class="feature-hint"></div>
+    </div>
+    
+    <button class="next-btn" id="nextWordBtn" disabled>⏩ 下一个单词</button>
+    
+    <div class="quiz-stats">
+      <span>✅ <span id="statCorrectLabel">正确</span>: <span id="correctCount">0</span></span>
+      <span>📊 <span id="statTotalLabel">已答</span>: <span id="totalCount">0</span></span>
+      <button id="resetStatsBtn" title="重置进度">↻</button>
+    </div>
+  </div>
+</div>
+
+<!-- 情态动词模态框 -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modalTitle">📌 情态动词 (四级必会)</h3>
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+    </div>
+    <table class="modal-table" id="modalTable"></table>
+    <div class="modal-note" id="modalNote"></div>
+  </div>
+</div>
+
+<!-- 添加单词模态框 -->
+<div class="modal-overlay" id="addWordModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>➕ 添加单词</h3>
+      <button class="close-modal" id="closeAddModal">&times;</button>
+    </div>
+    <div class="form-group">
+      <label>单词</label>
+      <input type="text" id="newWord" placeholder="e.g. book">
+    </div>
+    <div class="form-group">
+      <label>词性</label>
+      <select id="newPos">
+        <option value="n">名词</option>
+        <option value="v">动词</option>
+        <option value="adj">形容词</option>
+        <option value="adv">副词</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>提示 (可选)</label>
+      <input type="text" id="newHint" placeholder="如: 无后缀, 常用名词">
+    </div>
+    <button class="save-btn" id="saveWordBtn">保存到我的词库</button>
+  </div>
+</div>
+
+<!-- 结算分享模态框 -->
+<div class="modal-overlay" id="settleModal">
+  <div class="modal-card share-card" id="shareCardContent">
+    <h3 id="settleTitle">📈 学习报告</h3>
+    <div id="settleLibType"></div>
+    <div class="share-stats" id="settleStats"></div>
+    <div id="settleComment"></div>
+    <button class="share-btn" id="downloadCardBtn">⬇ 下载卡片</button>
+    <button class="close-modal" id="closeSettleBtn">关闭</button>
+  </div>
+</div>
+
+<!-- 浮动按钮组 -->
+<div class="float-actions">
+  <button class="float-btn modal-trigger" id="modalTrigger" title="情态动词速查">📘</button>
+  <button class="float-btn" id="toggleQuizBtn" title="切换测验模式">🎲</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
