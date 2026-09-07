@@ -3,6 +3,7 @@
 /// By combining template instantiation with `friend` function injection, 
 /// the template parameter `T` is "hidden" inside a function named `loophole(tag<N>)`,
 /// and subsequently retrieved using `decltype`.
+/// Compile-time mapping table
 /// Compile with C++14
 
 #include <string>
