@@ -4,4 +4,6 @@
 
 ```
 https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-book-resource/missing-2.0.pdf
+https://github.com/hesphoros/hesphoros.github.io/releases/download/v1.0-mutithread-muduo/Linux.muduo.C++.pdf
+
 ```
