@@ -4,7 +4,9 @@
 
 > **一个普通的 Linux `socket(fd)`，究竟是怎么被 bRPC 包装成 `brpc::Socket`，最后变成一个能够承载 RPC、健康检查、连接复用、事件驱动和并发生命周期管理的对象？**
 
-当前 bRPC 的 `Socket` 已经不是一个简单的 `fd` RAII wrapper。官方项目说明明确把它定位为底层连接抽象，负责 **fd 生命周期、SSL、写缓冲**，并通过 `VersionedRefWithId` 处理安全并发访问。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md?utm_source=chatgpt.com "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+当前 bRPC 的 `Socket` 已经不是一个简单的 `fd` RAII wrapper。官方项目说明明确把它定位为底层连接抽象，负责 **fd 生命周期、SSL、写缓冲**，并通过 `VersionedRefWithId` 处理安全并发访问。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md"brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+
+[VersionedRefWithId](https://zhuanlan.zhihu.com/p/2075513881938679702)
 
 ---
 
@@ -74,7 +76,7 @@ brpc::ProcessInputMessage
 protocol::ProcessRpcResponse
 ```
 
-例如 bRPC 的 issue #2925 中就出现了这一完整路径。([GitHub](https://github.com/apache/brpc/issues/2925?utm_source=chatgpt.com "内存暴涨下，sched_to 参数 pg 值被意外地修改 · Issue #2925 · apache/brpc · GitHub"))
+例如 bRPC 的 issue #2925 中就出现了这一完整路径。([GitHub](https://github.com/apache/brpc/issues/2925 "内存暴涨下，sched_to 参数 pg 值被意外地修改 · Issue #2925 · apache/brpc · GitHub"))
 
 这也是我们阅读 bRPC Socket 源码时最应该抓住的一条主线。
 
@@ -192,7 +194,7 @@ brpc::Socket
 
 > “一个 FD 包装类”。
 
-官方项目文档也明确把 Socket 描述为低层连接抽象，并指出它负责 fd 生命周期、SSL 和写缓冲，同时使用 `VersionedRefWithId` 做并发安全管理。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md?utm_source=chatgpt.com "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+官方项目文档也明确把 Socket 描述为低层连接抽象，并指出它负责 fd 生命周期、SSL 和写缓冲，同时使用 `VersionedRefWithId` 做并发安全管理。([GitHub Cluade](https://github.com/apache/brpc/blob/master/CLAUDE.md))
 
 ---
 
@@ -324,7 +326,7 @@ Revive
 
 组合起来。
 
-官方 bRPC 的当前文档明确提到 `Socket` 使用 `VersionedRefWithId` 做安全并发访问。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md?utm_source=chatgpt.com "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+官方 bRPC 的当前文档明确提到 `Socket` 使用 `VersionedRefWithId` 做安全并发访问。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
 
 ---
 
@@ -808,7 +810,7 @@ ProcessInputMessage
 policy::ProcessRpcResponse
 ```
 
-([GitHub](https://github.com/apache/brpc/issues/2925?utm_source=chatgpt.com "内存暴涨下，sched_to 参数 pg 值被意外地修改 · Issue #2925 · apache/brpc · GitHub"))
+([GitHub](https://github.com/apache/brpc/issues/2925 "内存暴涨下，sched_to 参数 pg 值被意外地修改 · Issue #2925 · apache/brpc · GitHub"))
 
 这条调用链非常重要，建议你以后看 bRPC crash 时第一时间认出它。
 
@@ -831,7 +833,7 @@ RTMP
 RDMA
 ```
 
-等。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md?utm_source=chatgpt.com "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+等。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
 
 所以：
 
@@ -882,7 +884,7 @@ butil::IOBuf
 
 > zero-copy buffer
 
-其内部采用引用计数 block，并使用 SmallView / BigView 优化。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md?utm_source=chatgpt.com "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+其内部采用引用计数 block，并使用 SmallView / BigView 优化。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md"brpc/CLAUDE.md at master · apache/brpc · GitHub"))
 
 这意味着：
 
@@ -987,7 +989,7 @@ RDMA
 
 都非常重要。
 
-bRPC 的 RDMA 文档也特别强调 IOBuf 内存池以及零拷贝路径。([GitHub](https://github.com/apache/brpc/blob/master/docs/cn/rdma.md?utm_source=chatgpt.com "brpc/docs/cn/rdma.md at master · apache/brpc · GitHub"))
+bRPC 的 RDMA 文档也特别强调 IOBuf 内存池以及零拷贝路径。([GitHub](https://github.com/apache/brpc/blob/master/docs/cn/rdma.md"brpc/docs/cn/rdma.md at master · apache/brpc · GitHub"))
 
 ---
 
@@ -1174,7 +1176,7 @@ ReleaseHCRelatedReference()
 
 > Health Check 本身也参与 Socket 生命周期管理。
 
-官方 issue #2998 就直接涉及这两个函数以及 `AddReference()` / `Dereference()` 的行为。([GitHub](https://github.com/apache/brpc/issues/2998?utm_source=chatgpt.com "未开启健康检查时客户端偶发崩溃且易现一直超时 · Issue #2998 · apache/brpc · GitHub"))
+官方 issue #2998 就直接涉及这两个函数以及 `AddReference()` / `Dereference()` 的行为。([GitHub](https://github.com/apache/brpc/issues/2998 "未开启健康检查时客户端偶发崩溃且易现一直超时 · Issue #2998 · apache/brpc · GitHub"))
 
 这也说明为什么你不能把：
 
@@ -1373,7 +1375,7 @@ Connection timed out
 Broken pipe
 ```
 
-([GitHub](https://github.com/apache/brpc/issues/671?utm_source=chatgpt.com "Client与Server出现网络断开25秒，期间一直无法连接 · Issue #671 · apache/brpc · GitHub"))
+([GitHub](https://github.com/apache/brpc/issues/671 "Client与Server出现网络断开25秒，期间一直无法连接 · Issue #671 · apache/brpc · GitHub"))
 
 所以：
 
@@ -1603,7 +1605,7 @@ Socket
 bthread
 ```
 
-官方项目说明明确指出，bRPC 的大多数 callback 在 **bthread** 中执行，而不是普通 pthread。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md?utm_source=chatgpt.com "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
+官方项目说明明确指出，bRPC 的大多数 callback 在 **bthread** 中执行，而不是普通 pthread。([GitHub](https://github.com/apache/brpc/blob/master/CLAUDE.md "brpc/CLAUDE.md at master · apache/brpc · GitHub"))
 
 所以实际路径更接近：
 
@@ -1690,7 +1692,7 @@ Controller::OnResponse
 Controller::EndRPC
 ```
 
-([GitHub](https://github.com/apache/brpc/issues/2925?utm_source=chatgpt.com "内存暴涨下，sched_to 参数 pg 值被意外地修改 · Issue #2925 · apache/brpc · GitHub"))
+([GitHub](https://github.com/apache/brpc/issues/2925"内存暴涨下，sched_to 参数 pg 值被意外地修改 · Issue #2925 · apache/brpc · GitHub"))
 
 这一条栈非常值得记下来。
 
@@ -1889,7 +1891,7 @@ fd
 send()
 ```
 
-([GitHub](https://github.com/apache/brpc/blob/master/docs/cn/rdma.md?utm_source=chatgpt.com "brpc/docs/cn/rdma.md at master · apache/brpc · GitHub"))
+([GitHub](https://github.com/apache/brpc/blob/master/docs/cn/rdma.md "brpc/docs/cn/rdma.md at master · apache/brpc · GitHub"))
 
 ---
 
@@ -1967,7 +1969,7 @@ UBSHM
 URMA
 ```
 
-近期 bRPC 社区讨论和代码变更也在继续扩展 transport abstraction。相关设计中可以看到 `SocketMode` 与 `TransportFactory` 被用于选择不同传输实现。([GitHub](https://github.com/apache/brpc/issues/3401?utm_source=chatgpt.com "基于URMA 的远程内存语义传输层 · Issue #3401 · apache/brpc · GitHub"))
+近期 bRPC 社区讨论和代码变更也在继续扩展 transport abstraction。相关设计中可以看到 `SocketMode` 与 `TransportFactory` 被用于选择不同传输实现。([GitHub](https://github.com/apache/brpc/issues/3401 "基于URMA 的远程内存语义传输层 · Issue #3401 · apache/brpc · GitHub"))
 
 所以未来：
 
@@ -2259,7 +2261,7 @@ IOBuf
 
 > bRPC 实际上在尽量复用上层消息处理框架。
 
-官方文档也明确说明 RDMA 最终仍复用 `Socket` 与 `InputMessenger`。([GitHub](https://github.com/apache/brpc/blob/master/docs/cn/rdma.md?utm_source=chatgpt.com "brpc/docs/cn/rdma.md at master · apache/brpc · GitHub"))
+官方文档也明确说明 RDMA 最终仍复用 `Socket` 与 `InputMessenger`。([GitHub](https://github.com/apache/brpc/blob/master/docs/cn/rdma.md "brpc/docs/cn/rdma.md at master · apache/brpc · GitHub"))
 
 ---
 
@@ -2351,6 +2353,6 @@ Revive()
 AfterRevived()
 ```
 
-把 **SocketId、version、reference counting、对象回收、Revive、HealthCheck 并发关系** 全部扒开。这个部分实际上比 `epoll` 本身更值得研究，也是理解 bRPC 源码最关键的一关。 bRPC 当前源码和实际 issue 中都能看到这套机制与 Socket 崩溃/UAF/健康检查问题直接相关。([GitHub](https://github.com/apache/brpc/issues/3165?utm_source=chatgpt.com "使用ASAN profile显示 logging 有 heap-use-after-free · Issue #3165 · apache/brpc · GitHub"))
+把 **SocketId、version、reference counting、对象回收、Revive、HealthCheck 并发关系** 全部扒开。这个部分实际上比 `epoll` 本身更值得研究，也是理解 bRPC 源码最关键的一关。 bRPC 当前源码和实际 issue 中都能看到这套机制与 Socket 崩溃/UAF/健康检查问题直接相关。([GitHub](https://github.com/apache/brpc/issues/3165 "使用ASAN profile显示 logging 有 heap-use-after-free · Issue #3165 · apache/brpc · GitHub"))
 
-[Apache bRPC 源码仓库](https://github.com/apache/brpc?utm_source=chatgpt.com)
+[Apache bRPC 源码仓库](https://github.com/apache/brpc)
