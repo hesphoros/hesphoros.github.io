@@ -1,5 +1,7 @@
 #  **Boost.PFR (Precise Flat Reflection / std::pfr)**
 
+Boost.PFR 库适用于满足 `SimpleAggregate` 要求的类型：没有基类、`const` 字段、引用或 C 数组的聚合类型
+
 - **特点**：Boost 官方库，号称 **“零宏、零标记、零代码生成”** 的无侵入静态反射。
 
 - **适用场景**：简单结构体（POD/Aggregate type）的遍历、比较、序列化、打印。
