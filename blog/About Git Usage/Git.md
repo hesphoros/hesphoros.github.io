@@ -96,3 +96,27 @@ git log --oneline
 ![image-20250526134633203](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20250526134633203.png)
 
 ![image-20250526134751794](https://cdn.jsdelivr.net/gh/hesphoros/blogimages@main/img/image-20250526134751794.png)
+
+
+# Git 拉取远程分支
+
+#查看远程分支
+git branch -r
+ 
+#查看本地分支
+git branch
+ 
+#拉取远程分支
+git checkout -b 本地分支 origin/远程分支
+ 
+#拉取远程分支
+git pull origin 远程分支　
+ 
+#建立分支
+git branch --set-upstream-to origin/远程分支名  本地分支名
+ 
+#拉取分支
+git pull
+ 
+#遇到本地冲突，先删除本地分支，再重新拉取远程分支
+git branch -D 本地分支名称
